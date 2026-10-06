@@ -36,6 +36,8 @@ def main() -> None:
     parser.add_argument("--install-gsi", action="store_true", help="write the GSI config into the Dota 2 folder and exit")
     parser.add_argument("--dota-dir", type=Path, default=None, help="Dota 2 install folder ('dota 2 beta')")
     parser.add_argument("--no-browser", action="store_true")
+    parser.add_argument("--no-screen", action="store_true", help="don't read picks from the screen")
+    parser.add_argument("--monitor", type=int, default=1, help="which monitor Dota is on (1 = primary)")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
@@ -59,7 +61,19 @@ def main() -> None:
     if not args.no_browser:
         threading.Timer(1.0, webbrowser.open, [url]).start()
     print(f"Dota2Picker running at {url}", flush=True)
-    uvicorn.run(create_app(data, gsi_token=token), host=args.host, port=args.port, log_level="warning")
+    watcher = None
+    if not args.no_screen:
+        from . import capture, vision
+
+        print("Loading hero portraits (first run downloads them from Valve's CDN)...", flush=True)
+        matcher = vision.PortraitMatcher(vision.load_portraits(vision.default_portrait_dir()))
+        watcher = capture.ScreenWatcher(matcher, should_run=lambda: True, monitor=args.monitor)
+
+    app = create_app(data, gsi_token=token, watcher=watcher)
+    if watcher is not None:
+        watcher.should_run = app.state.screen_should_run
+        watcher.start()
+    uvicorn.run(app, host=args.host, port=args.port, log_level="warning")
 
 
 if __name__ == "__main__":

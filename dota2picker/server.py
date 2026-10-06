@@ -22,9 +22,11 @@ class DraftIn(BaseModel):
     bracket: str | None = None
 
 
-def create_app(stats: Stats, gsi_token: str | None = None) -> FastAPI:
+def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> FastAPI:
+    """watcher: an optional capture.ScreenWatcher whose latest reads are exposed in /api/game."""
     app = FastAPI(title="Dota2Picker")
     app.state.game = gsi.GameState()
+    app.state.gsi_seen = False
 
     @app.get("/", response_class=HTMLResponse)
     def index() -> str:
@@ -53,7 +55,20 @@ def create_app(stats: Stats, gsi_token: str | None = None) -> FastAPI:
     @app.get("/api/game")
     def game() -> dict:
         g = app.state.game
-        return {"game_state": g.game_state, "in_draft": g.in_draft, "team": g.team, "hero_id": g.hero_id}
+        out = {"game_state": g.game_state, "in_draft": g.in_draft, "team": g.team, "hero_id": g.hero_id}
+        if watcher is not None:
+            reads = [
+                {"hero_id": d.hero_id, "score": round(d.score, 3)} if d.hero_id else None
+                for d in watcher.latest
+            ]
+            out["screen"] = {"radiant": reads[:5], "dire": reads[5:], "error": watcher.error}
+        return out
+
+    def screen_should_run() -> bool:
+        # With GSI we only read the screen during the draft; without it, always.
+        return app.state.game.in_draft or not app.state.gsi_seen
+
+    app.state.screen_should_run = screen_should_run
 
     @app.post("/gsi")
     async def gsi_update(request: Request) -> dict:
@@ -63,6 +78,7 @@ def create_app(stats: Stats, gsi_token: str | None = None) -> FastAPI:
             if not hmac.compare_digest(token, gsi_token):
                 raise HTTPException(403, "bad GSI token")
         app.state.game = gsi.parse(payload)
+        app.state.gsi_seen = True
         return {}
 
     return app
