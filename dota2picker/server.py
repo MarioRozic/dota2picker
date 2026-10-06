@@ -9,7 +9,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, Field
 
-from . import gsi, heroes, items
+from . import builds, gsi, heroes, items
 from .scoring import Draft, Scorer
 from .stats import BRACKETS, Stats
 
@@ -32,8 +32,19 @@ class RejectIn(BaseModel):
     hero_id: int
 
 
-def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> FastAPI:
-    """watcher: an optional capture.ScreenWatcher whose slots are exposed in /api/game."""
+PHASE_LABELS = {
+    "start": "Start",
+    "early": "Early game (0-10 min)",
+    "mid": "Mid game (10-20 min)",
+    "late": "Late game (20+ min)",
+    "other": "If needed",
+}
+
+
+def create_app(stats: Stats, gsi_token: str | None = None, watcher=None, item_timings=None) -> FastAPI:
+    """watcher: an optional capture.ScreenWatcher whose slots are exposed in /api/game.
+    item_timings: an optional hero id -> OpenDota item timing rows lookup (builds.TimingsCache).
+    """
     app = FastAPI(title="Dota2Picker")
     app.state.game = gsi.GameState()
     app.state.gsi_seen = False
@@ -75,6 +86,24 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
         return {
             "role": items.role_for(known[body.hero_id], body.position),
             "items": [s.to_dict() for s in items.suggest_items(body.hero_id, body.enemies, body.position)],
+        }
+
+    @app.post("/api/build")
+    def item_build(body: ItemsIn) -> dict:
+        known = heroes.by_id()
+        for hid in [body.hero_id, *body.enemies]:
+            if hid not in known:
+                raise HTTPException(400, f"unknown hero id {hid}")
+        timings = item_timings(body.hero_id) if item_timings else None
+        rows = builds.build(body.hero_id, body.enemies, body.position, timings)
+        return {
+            "role": items.role_for(known[body.hero_id], body.position),
+            "timings": bool(timings),
+            "phases": [
+                {"key": p, "label": PHASE_LABELS[p], "items": [e.to_dict() for e in rows[p]]}
+                for p in builds.PHASES
+                if rows[p]
+            ],
         }
 
     @app.get("/api/game")

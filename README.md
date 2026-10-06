@@ -33,10 +33,19 @@ To use it from a phone or second PC on the same network, run with
 Stats are cached in `~/.dota2picker/stats.json` and refreshed once a day;
 `--refresh` forces a download.
 
-## Counter items
+## Item build
 
-Once the app knows your hero, it lists items that answer the enemy lineup,
-each with the enemies it helps against and its cost. Your hero is set
+Once the app knows your hero, it shows an item build split by game phase:
+Start, Early game (0-10 min), Mid game (10-20 min), Late game (20+ min) and
+If needed. Items that answer the enemy lineup are added to the phase where
+they're normally bought, with a gold border and the enemies they help against.
+
+The build starts from Valve's recommended build for the hero (the lists in
+the in-game shop, saved in `dota2picker/data/builds.json`). OpenDota's item
+timings from public games then decide the order and which phase each item
+costing 1400 or more belongs in. They're downloaded the first time you pick
+a hero and kept for a day. Run `python scripts/update_item_data.py` after a
+patch to refresh the item list and Valve's builds. Your hero is set
 automatically by Game State Integration; otherwise click ★ next to your hero
 under Allies, or click a hero in Best picks when you pick it.
 

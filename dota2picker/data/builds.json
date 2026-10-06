@@ -1,0 +1,5224 @@
+{
+ "abaddon": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "ring_of_basilius",
+   "medallion_of_courage"
+  ],
+  "late": [
+   "solar_crest",
+   "assault",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "tranquil_boots",
+   "magic_wand",
+   "urn_of_shadows",
+   "vladmir",
+   "aghanims_shard"
+  ],
+  "other": [
+   "soul_ring",
+   "phase_boots",
+   "sange_and_yasha",
+   "blade_mail",
+   "echo_sabre",
+   "mjollnir",
+   "radiance",
+   "heart",
+   "guardian_greaves",
+   "glimmer_cape",
+   "pipe",
+   "lotus_orb",
+   "ancient_janggo",
+   "abyssal_blade",
+   "mask_of_madness",
+   "aether_lens",
+   "silver_edge",
+   "arcane_boots",
+   "orb_of_corrosion"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "flask",
+   "clarity",
+   "orb_of_venom"
+  ]
+ },
+ "abyssal_underlord": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "headdress"
+  ],
+  "late": [
+   "guardian_greaves",
+   "shivas_guard",
+   "lotus_orb",
+   "black_king_bar"
+  ],
+  "mid": [
+   "arcane_boots",
+   "magic_wand",
+   "mekansm"
+  ],
+  "other": [
+   "soul_ring",
+   "power_treads",
+   "necronomicon_3",
+   "assault",
+   "blade_mail",
+   "radiance",
+   "sheepstick",
+   "crimson_guard",
+   "cyclone",
+   "pipe",
+   "sphere",
+   "blink",
+   "veil_of_discord",
+   "vladmir",
+   "heart",
+   "helm_of_the_dominator",
+   "echo_sabre",
+   "force_staff",
+   "ultimate_scepter",
+   "heavens_halberd"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "clarity",
+   "branches",
+   "flask",
+   "quelling_blade"
+  ]
+ },
+ "alchemist": {
+  "early": [
+   "bottle",
+   "boots",
+   "soul_ring",
+   "magic_stick"
+  ],
+  "late": [
+   "sange_and_yasha",
+   "assault",
+   "abyssal_blade",
+   "heart",
+   "black_king_bar"
+  ],
+  "mid": [
+   "radiance",
+   "travel_boots",
+   "sange_and_yasha"
+  ],
+  "other": [
+   "black_king_bar",
+   "silver_edge",
+   "vladmir",
+   "blade_mail",
+   "mjollnir",
+   "ultimate_scepter",
+   "heavens_halberd",
+   "heart",
+   "solar_crest",
+   "bfury",
+   "hand_of_midas",
+   "moon_shard",
+   "monkey_king_bar",
+   "shivas_guard",
+   "skadi",
+   "lotus_orb",
+   "aghanims_shard"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "quelling_blade",
+   "gauntlets"
+  ]
+ },
+ "ancient_apparition": {
+  "early": [
+   "magic_wand",
+   "boots",
+   "urn_of_shadows",
+   "wind_lace"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "octarine_core",
+   "aeon_disk",
+   "force_staff",
+   "sheepstick"
+  ],
+  "mid": [
+   "tranquil_boots",
+   "cyclone",
+   "glimmer_cape"
+  ],
+  "other": [
+   "hand_of_midas",
+   "power_treads",
+   "glimmer_cape",
+   "veil_of_discord",
+   "aghanims_shard",
+   "mekansm",
+   "sheepstick",
+   "rod_of_atos",
+   "shivas_guard",
+   "guardian_greaves",
+   "lotus_orb",
+   "pipe",
+   "dagon_5",
+   "ethereal_blade",
+   "refresher",
+   "aether_lens",
+   "solar_crest",
+   "spirit_vessel"
+  ],
+  "start": [
+   "branches",
+   "branches",
+   "clarity",
+   "clarity",
+   "tango",
+   "tango",
+   "flask",
+   "faerie_fire"
+  ]
+ },
+ "antimage": {
+  "early": [
+   "ring_of_health",
+   "wraith_band",
+   "boots"
+  ],
+  "late": [
+   "manta",
+   "skadi",
+   "butterfly",
+   "abyssal_blade"
+  ],
+  "mid": [
+   "power_treads",
+   "bfury"
+  ],
+  "other": [
+   "travel_boots_2",
+   "black_king_bar",
+   "heart",
+   "greater_crit",
+   "monkey_king_bar",
+   "bloodthorn",
+   "moon_shard",
+   "sphere",
+   "ultimate_scepter",
+   "rapier",
+   "mjollnir",
+   "skadi",
+   "sange_and_yasha"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "quelling_blade",
+   "circlet"
+  ]
+ },
+ "arc_warden": {
+  "early": [
+   "hand_of_midas",
+   "boots"
+  ],
+  "late": [
+   "mjollnir",
+   "manta",
+   "bloodthorn",
+   "black_king_bar",
+   "sheepstick"
+  ],
+  "mid": [
+   "maelstrom",
+   "travel_boots",
+   "orchid"
+  ],
+  "other": [
+   "blink",
+   "sphere",
+   "necronomicon_3",
+   "diffusal_blade_2",
+   "shivas_guard",
+   "dagon",
+   "butterfly",
+   "greater_crit",
+   "monkey_king_bar",
+   "moon_shard",
+   "silver_edge",
+   "skadi",
+   "octarine_core",
+   "ethereal_blade"
+  ],
+  "start": [
+   "circlet",
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "enchanted_mango"
+  ]
+ },
+ "axe": {
+  "early": [
+   "phase_boots",
+   "magic_stick",
+   "ring_of_health"
+  ],
+  "late": [
+   "blade_mail",
+   "crimson_guard",
+   "heart",
+   "black_king_bar",
+   "overwhelming_blink"
+  ],
+  "mid": [
+   "blink",
+   "vanguard"
+  ],
+  "other": [
+   "force_staff",
+   "cyclone",
+   "pipe",
+   "shivas_guard",
+   "ultimate_scepter",
+   "travel_boots",
+   "assault",
+   "heavens_halberd",
+   "lotus_orb",
+   "sphere",
+   "octarine_core",
+   "radiance",
+   "mjollnir"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "branches",
+   "branches",
+   "quelling_blade",
+   "flask"
+  ]
+ },
+ "bane": {
+  "early": [
+   "magic_stick",
+   "arcane_boots"
+  ],
+  "late": [
+   "aether_lens",
+   "force_staff"
+  ],
+  "mid": [
+   "magic_wand",
+   "glimmer_cape"
+  ],
+  "other": [
+   "necronomicon_3",
+   "black_king_bar",
+   "sphere",
+   "sheepstick",
+   "shivas_guard",
+   "ghost",
+   "guardian_greaves",
+   "blink",
+   "lotus_orb",
+   "cyclone",
+   "ultimate_scepter",
+   "invis_sword",
+   "pipe",
+   "invis_sword",
+   "octarine_core"
+  ],
+  "start": [
+   "tango",
+   "clarity",
+   "tango",
+   "ward_observer",
+   "ward_observer",
+   "branches",
+   "flask",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "batrider": {
+  "early": [
+   "boots",
+   "null_talisman",
+   "bottle",
+   "infused_raindrop"
+  ],
+  "late": [
+   "black_king_bar",
+   "octarine_core",
+   "ultimate_scepter",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "magic_wand",
+   "travel_boots",
+   "blink",
+   "force_staff"
+  ],
+  "other": [
+   "sheepstick",
+   "lotus_orb",
+   "sphere",
+   "ghost",
+   "aeon_disk",
+   "pipe",
+   "veil_of_discord",
+   "aether_lens",
+   "heavens_halberd",
+   "spirit_vessel",
+   "yasha_and_kaya",
+   "shivas_guard",
+   "cyclone"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "wind_lace",
+   "branches",
+   "branches"
+  ]
+ },
+ "beastmaster": {
+  "early": [
+   "necronomicon",
+   "magic_stick",
+   "boots"
+  ],
+  "late": [
+   "black_king_bar",
+   "travel_boots",
+   "solar_crest"
+  ],
+  "mid": [
+   "magic_wand",
+   "necronomicon_3"
+  ],
+  "other": [
+   "pipe",
+   "ultimate_scepter",
+   "force_staff",
+   "refresher",
+   "heart",
+   "assault",
+   "heavens_halberd",
+   "vladmir",
+   "power_treads",
+   "crimson_guard",
+   "blade_mail",
+   "guardian_greaves",
+   "abyssal_blade",
+   "lotus_orb",
+   "helm_of_the_dominator"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "quelling_blade"
+  ]
+ },
+ "bloodseeker": {
+  "early": [
+   "wraith_band",
+   "orb_of_venom",
+   "boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "satanic",
+   "sange_and_yasha",
+   "black_king_bar",
+   "abyssal_blade",
+   "maelstrom"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "ancient_janggo",
+   "blade_mail"
+  ],
+  "other": [
+   "power_treads",
+   "ultimate_scepter",
+   "silver_edge",
+   "skadi",
+   "monkey_king_bar",
+   "radiance",
+   "mjollnir",
+   "manta",
+   "butterfly",
+   "assault",
+   "desolator",
+   "nullifier",
+   "sphere",
+   "greater_crit",
+   "heavens_halberd"
+  ],
+  "start": [
+   "tango",
+   "slippers",
+   "circlet",
+   "quelling_blade",
+   "branches"
+  ]
+ },
+ "bounty_hunter": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "ring_of_basilius",
+   "infused_raindrop"
+  ],
+  "late": [
+   "guardian_greaves",
+   "solar_crest",
+   "vladmir",
+   "ultimate_scepter",
+   "sheepstick"
+  ],
+  "mid": [
+   "arcane_boots",
+   "magic_wand",
+   "mekansm",
+   "medallion_of_courage"
+  ],
+  "other": [
+   "urn_of_shadows",
+   "desolator",
+   "dagon_5",
+   "butterfly",
+   "lotus_orb",
+   "ghost",
+   "cyclone",
+   "force_staff",
+   "aether_lens",
+   "bloodthorn",
+   "abyssal_blade",
+   "bfury",
+   "skadi",
+   "sange_and_yasha"
+  ],
+  "start": [
+   "tango",
+   "ward_observer",
+   "clarity",
+   "branches",
+   "orb_of_venom",
+   "flask"
+  ]
+ },
+ "brewmaster": {
+  "early": [
+   "boots",
+   "bottle",
+   "magic_stick",
+   "urn_of_shadows"
+  ],
+  "late": [
+   "vladmir",
+   "ultimate_scepter",
+   "assault",
+   "blink"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "spirit_vessel"
+  ],
+  "other": [
+   "shivas_guard",
+   "heart",
+   "radiance",
+   "heavens_halberd",
+   "black_king_bar",
+   "refresher",
+   "power_treads",
+   "arcane_boots",
+   "blade_mail",
+   "abyssal_blade",
+   "sphere",
+   "hand_of_midas",
+   "octarine_core"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "branches",
+   "branches",
+   "quelling_blade"
+  ]
+ },
+ "bristleback": {
+  "early": [
+   "ring_of_health",
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "crimson_guard",
+   "eternal_shroud",
+   "shivas_guard",
+   "sange_and_yasha",
+   "abyssal_blade"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "vanguard",
+   "hood_of_defiance"
+  ],
+  "other": [
+   "blade_mail",
+   "vladmir",
+   "heavens_halberd",
+   "assault",
+   "heart",
+   "radiance",
+   "echo_sabre",
+   "octarine_core",
+   "lotus_orb",
+   "solar_crest",
+   "moon_shard",
+   "ultimate_scepter",
+   "guardian_greaves"
+  ],
+  "start": [
+   "tango",
+   "enchanted_mango",
+   "ring_of_protection",
+   "enchanted_mango"
+  ]
+ },
+ "broodmother": {
+  "early": [
+   "soul_ring",
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "black_king_bar",
+   "bloodthorn",
+   "assault",
+   "ultimate_scepter",
+   "sheepstick"
+  ],
+  "mid": [
+   "power_treads",
+   "orchid"
+  ],
+  "other": [
+   "manta",
+   "butterfly",
+   "monkey_king_bar",
+   "radiance",
+   "heart",
+   "abyssal_blade",
+   "hand_of_midas",
+   "diffusal_blade",
+   "echo_sabre",
+   "sange_and_yasha",
+   "desolator",
+   "mjollnir",
+   "sphere"
+  ],
+  "start": [
+   "tango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "centaur": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "ring_of_health",
+   "infused_raindrop"
+  ],
+  "late": [
+   "crimson_guard",
+   "ultimate_scepter",
+   "pipe",
+   "heart",
+   "overwhelming_blink"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "hood_of_defiance",
+   "blink",
+   "vanguard"
+  ],
+  "other": [
+   "blade_mail",
+   "assault",
+   "heavens_halberd",
+   "shivas_guard",
+   "radiance",
+   "mjollnir",
+   "sphere",
+   "lotus_orb",
+   "black_king_bar",
+   "abyssal_blade",
+   "refresher"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "quelling_blade",
+   "ring_of_protection"
+  ]
+ },
+ "chaos_knight": {
+  "early": [
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "black_king_bar",
+   "sange_and_yasha",
+   "heart",
+   "abyssal_blade",
+   "assault",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "armlet"
+  ],
+  "other": [
+   "satanic",
+   "heavens_halberd",
+   "echo_sabre",
+   "skadi",
+   "monkey_king_bar",
+   "swift_blink",
+   "moon_shard",
+   "mjollnir",
+   "hand_of_midas",
+   "blade_mail",
+   "butterfly",
+   "manta"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "flask",
+   "quelling_blade",
+   "enchanted_mango"
+  ]
+ },
+ "chen": {
+  "early": [
+   "boots",
+   "ring_of_basilius",
+   "buckler",
+   "infused_raindrop"
+  ],
+  "late": [
+   "lotus_orb",
+   "solar_crest",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "mekansm",
+   "guardian_greaves",
+   "magic_wand",
+   "arcane_boots",
+   "vladmir"
+  ],
+  "other": [
+   "glimmer_cape",
+   "pipe",
+   "holy_locket",
+   "ghost",
+   "force_staff",
+   "sheepstick",
+   "solar_crest",
+   "spirit_vessel",
+   "lotus_orb",
+   "heavens_halberd",
+   "aeon_disk",
+   "shivas_guard",
+   "refresher",
+   "helm_of_the_dominator",
+   "necronomicon_3"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "headdress"
+  ]
+ },
+ "clinkz": {
+  "early": [
+   "boots",
+   "soul_ring",
+   "magic_stick"
+  ],
+  "late": [
+   "black_king_bar",
+   "bloodthorn",
+   "sheepstick",
+   "aghanims_shard",
+   "greater_crit"
+  ],
+  "mid": [
+   "power_treads",
+   "falcon_blade",
+   "magic_wand",
+   "desolator"
+  ],
+  "other": [
+   "hurricane_pike",
+   "solar_crest",
+   "monkey_king_bar",
+   "assault",
+   "sphere",
+   "butterfly",
+   "skadi",
+   "mjollnir",
+   "heart",
+   "moon_shard",
+   "helm_of_the_dominator",
+   "helm_of_the_overlord",
+   "vladmir",
+   "satanic"
+  ],
+  "start": [
+   "flask",
+   "tango",
+   "branches",
+   "branches",
+   "faerie_fire",
+   "ring_of_protection"
+  ]
+ },
+ "crystal_maiden": {
+  "early": [
+   "magic_wand",
+   "tranquil_boots"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "aeon_disk"
+  ],
+  "mid": [
+   "glimmer_cape",
+   "force_staff"
+  ],
+  "other": [
+   "guardian_greaves",
+   "cyclone",
+   "ghost",
+   "sheepstick",
+   "shivas_guard",
+   "aether_lens",
+   "sphere",
+   "lotus_orb",
+   "invis_sword",
+   "octarine_core",
+   "rod_of_atos",
+   "blink"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "clarity",
+   "flask",
+   "branches",
+   "ward_observer",
+   "ward_observer",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "dark_seer": {
+  "early": [
+   "soul_ring",
+   "boots"
+  ],
+  "late": [
+   "guardian_greaves",
+   "shivas_guard",
+   "ultimate_scepter",
+   "black_king_bar"
+  ],
+  "mid": [
+   "arcane_boots",
+   "mekansm",
+   "blink"
+  ],
+  "other": [
+   "aghanims_shard",
+   "crimson_guard",
+   "sheepstick",
+   "heart",
+   "refresher",
+   "ghost",
+   "aether_lens",
+   "radiance",
+   "blade_mail",
+   "force_staff",
+   "octarine_core",
+   "bloodstone",
+   "sphere",
+   "cyclone"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "clarity",
+   "enchanted_mango",
+   "enchanted_mango",
+   "ring_of_protection"
+  ]
+ },
+ "dark_willow": {
+  "early": [
+   "tranquil_boots",
+   "magic_stick"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "blink",
+   "aeon_disk",
+   "glimmer_cape",
+   "sphere"
+  ],
+  "mid": [
+   "magic_wand",
+   "cyclone"
+  ],
+  "other": [
+   "aghanims_shard",
+   "spirit_vessel",
+   "assault",
+   "pipe",
+   "veil_of_discord",
+   "wind_waker",
+   "necronomicon_3",
+   "arcane_boots",
+   "octarine_core",
+   "mekansm",
+   "moon_shard"
+  ],
+  "start": [
+   "tango",
+   "clarity",
+   "ward_observer",
+   "branches",
+   "branches",
+   "wind_lace",
+   "flask"
+  ]
+ },
+ "dawnbreaker": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "ring_of_basilius"
+  ],
+  "late": [
+   "black_king_bar",
+   "assault",
+   "overwhelming_blink"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "blink",
+   "sange_and_yasha"
+  ],
+  "other": [
+   "phase_boots",
+   "silver_edge",
+   "abyssal_blade",
+   "desolator",
+   "satanic",
+   "black_king_bar",
+   "heavens_halberd",
+   "vladmir",
+   "ultimate_scepter",
+   "sphere",
+   "lotus_orb",
+   "armlet",
+   "monkey_king_bar",
+   "sange_and_yasha",
+   "echo_sabre",
+   "heart"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "branches",
+   "branches"
+  ]
+ },
+ "dazzle": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "urn_of_shadows",
+   "ring_of_basilius"
+  ],
+  "late": [
+   "mekansm",
+   "aeon_disk",
+   "guardian_greaves"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "glimmer_cape",
+   "force_staff"
+  ],
+  "other": [
+   "solar_crest",
+   "aether_lens",
+   "sheepstick",
+   "ultimate_scepter",
+   "shivas_guard",
+   "aghanims_shard",
+   "pipe",
+   "cyclone",
+   "spirit_vessel",
+   "ghost",
+   "sphere",
+   "lotus_orb",
+   "bloodthorn"
+  ],
+  "start": [
+   "branches",
+   "clarity",
+   "clarity",
+   "tango",
+   "flask",
+   "ward_observer",
+   "faerie_fire",
+   "tango"
+  ]
+ },
+ "death_prophet": {
+  "early": [
+   "bottle",
+   "boots"
+  ],
+  "late": [
+   "black_king_bar",
+   "ultimate_scepter",
+   "shivas_guard",
+   "octarine_core"
+  ],
+  "mid": [
+   "power_treads",
+   "cyclone"
+  ],
+  "other": [
+   "bloodstone",
+   "kaya_and_sange",
+   "veil_of_discord",
+   "aether_lens",
+   "sphere",
+   "ghost",
+   "guardian_greaves",
+   "arcane_blink",
+   "sheepstick",
+   "heart",
+   "black_king_bar",
+   "refresher",
+   "force_staff",
+   "assault"
+  ],
+  "start": [
+   "tango",
+   "circlet",
+   "branches",
+   "branches",
+   "mantle"
+  ]
+ },
+ "disruptor": {
+  "early": [
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "aeon_disk",
+   "ultimate_scepter",
+   "blink"
+  ],
+  "mid": [
+   "arcane_boots",
+   "magic_wand",
+   "force_staff"
+  ],
+  "other": [
+   "urn_of_shadows",
+   "guardian_greaves",
+   "shivas_guard",
+   "veil_of_discord",
+   "ghost",
+   "rod_of_atos",
+   "refresher",
+   "sheepstick",
+   "cyclone",
+   "sphere",
+   "lotus_orb",
+   "octarine_core",
+   "aether_lens"
+  ],
+  "start": [
+   "tango",
+   "clarity",
+   "branches",
+   "branches",
+   "flask",
+   "ward_observer",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "doom_bringer": {
+  "early": [
+   "magic_stick",
+   "ring_of_basilius",
+   "phase_boots"
+  ],
+  "late": [
+   "black_king_bar",
+   "shivas_guard",
+   "assault",
+   "overwhelming_blink"
+  ],
+  "mid": [
+   "blink",
+   "magic_wand",
+   "ancient_janggo"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "blade_mail",
+   "guardian_greaves",
+   "silver_edge",
+   "heart",
+   "abyssal_blade",
+   "refresher",
+   "heavens_halberd",
+   "radiance",
+   "echo_sabre",
+   "lotus_orb",
+   "pipe",
+   "sange_and_yasha"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "ring_of_protection",
+   "quelling_blade"
+  ]
+ },
+ "dragon_knight": {
+  "early": [
+   "soul_ring",
+   "magic_stick",
+   "boots",
+   "bracer"
+  ],
+  "late": [
+   "black_king_bar",
+   "assault",
+   "greater_crit",
+   "ultimate_scepter",
+   "satanic"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "blink"
+  ],
+  "other": [
+   "armlet",
+   "abyssal_blade",
+   "heavens_halberd",
+   "heart",
+   "mjollnir",
+   "silver_edge",
+   "sange_and_yasha",
+   "moon_shard",
+   "blade_mail",
+   "monkey_king_bar",
+   "echo_sabre",
+   "hurricane_pike"
+  ],
+  "start": [
+   "tango",
+   "quelling_blade",
+   "gauntlets",
+   "circlet"
+  ]
+ },
+ "drow_ranger": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "wraith_band"
+  ],
+  "late": [
+   "sange_and_yasha",
+   "hurricane_pike",
+   "black_king_bar",
+   "butterfly",
+   "greater_crit"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "dragon_lance"
+  ],
+  "other": [
+   "invis_sword",
+   "manta",
+   "blink",
+   "ultimate_scepter",
+   "mjollnir",
+   "greater_crit",
+   "satanic",
+   "skadi",
+   "mask_of_madness",
+   "silver_edge",
+   "monkey_king_bar",
+   "desolator",
+   "sphere",
+   "bloodthorn",
+   "ethereal_blade",
+   "moon_shard",
+   "rapier"
+  ],
+  "start": [
+   "flask",
+   "tango",
+   "slippers",
+   "circlet",
+   "branches"
+  ]
+ },
+ "earth_spirit": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "urn_of_shadows"
+  ],
+  "late": [
+   "black_king_bar",
+   "cyclone",
+   "ultimate_scepter",
+   "lotus_orb"
+  ],
+  "mid": [
+   "tranquil_boots",
+   "magic_wand",
+   "spirit_vessel"
+  ],
+  "other": [
+   "guardian_greaves",
+   "blink",
+   "heavens_halberd",
+   "pipe",
+   "heart",
+   "sheepstick",
+   "blade_mail",
+   "shivas_guard",
+   "aether_lens",
+   "aghanims_shard",
+   "aeon_disk",
+   "ghost",
+   "crimson_guard",
+   "glimmer_cape",
+   "veil_of_discord"
+  ],
+  "start": [
+   "tango",
+   "clarity",
+   "branches",
+   "orb_of_venom",
+   "ward_observer",
+   "flask"
+  ]
+ },
+ "earthshaker": {
+  "early": [
+   "magic_stick",
+   "arcane_boots"
+  ],
+  "late": [
+   "force_staff",
+   "ultimate_scepter",
+   "cyclone",
+   "black_king_bar"
+  ],
+  "mid": [
+   "aghanims_shard",
+   "magic_wand",
+   "blink"
+  ],
+  "other": [
+   "soul_ring",
+   "aeon_disk",
+   "invis_sword",
+   "refresher",
+   "shivas_guard",
+   "sheepstick",
+   "heart",
+   "octarine_core",
+   "ghost",
+   "lotus_orb",
+   "glimmer_cape"
+  ],
+  "start": [
+   "clarity",
+   "clarity",
+   "boots"
+  ]
+ },
+ "elder_titan": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "wind_lace",
+   "infused_raindrop"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "solar_crest",
+   "lotus_orb"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "cyclone"
+  ],
+  "other": [
+   "soul_ring",
+   "guardian_greaves",
+   "crimson_guard",
+   "pipe",
+   "vladmir",
+   "heavens_halberd",
+   "assault",
+   "blade_mail",
+   "sheepstick",
+   "refresher",
+   "ultimate_scepter",
+   "glimmer_cape",
+   "force_staff",
+   "silver_edge"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "orb_of_venom"
+  ]
+ },
+ "ember_spirit": {
+  "early": [
+   "wraith_band",
+   "bottle",
+   "boots",
+   "orb_of_corrosion"
+  ],
+  "late": [
+   "desolator",
+   "black_king_bar",
+   "ultimate_scepter",
+   "mjollnir",
+   "sphere"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "maelstrom"
+  ],
+  "other": [
+   "travel_boots",
+   "shivas_guard",
+   "greater_crit",
+   "cyclone",
+   "blade_mail",
+   "radiance",
+   "octarine_core",
+   "refresher",
+   "blink",
+   "aeon_disk",
+   "lotus_orb",
+   "bloodthorn",
+   "monkey_king_bar",
+   "skadi",
+   "abyssal_blade",
+   "nullifier",
+   "bfury",
+   "rapier"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "slippers",
+   "circlet",
+   "quelling_blade",
+   "branches"
+  ]
+ },
+ "enchantress": {
+  "early": [
+   "boots",
+   "ring_of_basilius",
+   "wind_lace",
+   "infused_raindrop"
+  ],
+  "late": [
+   "hurricane_pike",
+   "ultimate_scepter",
+   "black_king_bar"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "glimmer_cape",
+   "force_staff"
+  ],
+  "other": [
+   "sheepstick",
+   "monkey_king_bar",
+   "bloodthorn",
+   "shivas_guard",
+   "sphere",
+   "lotus_orb",
+   "aeon_disk",
+   "silver_edge",
+   "spirit_vessel",
+   "cyclone",
+   "heavens_halberd",
+   "assault"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "flask",
+   "faerie_fire",
+   "blight_stone"
+  ]
+ },
+ "enigma": {
+  "early": [
+   "soul_ring",
+   "magic_stick",
+   "arcane_boots"
+  ],
+  "late": [
+   "octarine_core",
+   "black_king_bar",
+   "refresher",
+   "sphere"
+  ],
+  "mid": [
+   "magic_wand",
+   "blink"
+  ],
+  "other": [
+   "aeon_disk",
+   "arcane_blink",
+   "ultimate_scepter",
+   "sheepstick",
+   "shivas_guard",
+   "radiance",
+   "invis_sword",
+   "glimmer_cape",
+   "octarine_core",
+   "cyclone",
+   "pipe",
+   "hand_of_midas",
+   "ghost"
+  ],
+  "start": [
+   "clarity",
+   "clarity",
+   "enchanted_mango",
+   "tango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "ward_observer"
+  ]
+ },
+ "faceless_void": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "ring_of_health"
+  ],
+  "late": [
+   "sange_and_yasha",
+   "butterfly",
+   "black_king_bar",
+   "greater_crit"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "bfury"
+  ],
+  "other": [
+   "monkey_king_bar",
+   "swift_blink",
+   "ultimate_scepter",
+   "blink",
+   "heart",
+   "moon_shard",
+   "mjollnir",
+   "sphere",
+   "assault",
+   "desolator",
+   "radiance",
+   "bloodthorn",
+   "hand_of_midas"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "quelling_blade",
+   "slippers",
+   "branches"
+  ]
+ },
+ "furion": {
+  "early": [
+   "power_treads",
+   "infused_raindrop",
+   "magic_wand"
+  ],
+  "late": [
+   "sheepstick",
+   "bloodthorn",
+   "satanic",
+   "assault",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "orchid",
+   "black_king_bar"
+  ],
+  "other": [
+   "ancient_janggo",
+   "blade_mail",
+   "monkey_king_bar",
+   "solar_crest",
+   "spirit_vessel",
+   "desolator",
+   "mjollnir",
+   "nullifier",
+   "shivas_guard",
+   "necronomicon_3",
+   "sphere",
+   "aeon_disk",
+   "ultimate_scepter",
+   "refresher",
+   "ethereal_blade"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "faerie_fire",
+   "blight_stone"
+  ]
+ },
+ "grimstroke": {
+  "early": [
+   "arcane_boots",
+   "magic_stick"
+  ],
+  "late": [
+   "glimmer_cape",
+   "sheepstick",
+   "orchid",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "magic_wand",
+   "aether_lens",
+   "glimmer_cape"
+  ],
+  "other": [
+   "heavens_halberd",
+   "veil_of_discord",
+   "blink",
+   "urn_of_shadows",
+   "spirit_vessel",
+   "kaya",
+   "nullifier",
+   "rod_of_atos",
+   "cyclone",
+   "force_staff",
+   "ethereal_blade",
+   "dagon_5",
+   "shivas_guard",
+   "octarine_core",
+   "aghanims_shard"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "clarity",
+   "tango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "ward_observer"
+  ]
+ },
+ "gyrocopter": {
+  "early": [
+   "wraith_band",
+   "magic_wand",
+   "power_treads"
+  ],
+  "late": [
+   "black_king_bar",
+   "sange_and_yasha",
+   "monkey_king_bar",
+   "satanic"
+  ],
+  "mid": [
+   "maelstrom",
+   "ultimate_scepter"
+  ],
+  "other": [
+   "phase_boots",
+   "mjollnir",
+   "butterfly",
+   "skadi",
+   "hurricane_pike",
+   "sphere",
+   "manta",
+   "aghanims_shard",
+   "travel_boots",
+   "greater_crit",
+   "rapier",
+   "ethereal_blade",
+   "desolator",
+   "silver_edge",
+   "nullifier",
+   "abyssal_blade"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "slippers",
+   "circlet",
+   "branches",
+   "branches"
+  ]
+ },
+ "hoodwink": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "wraith_band",
+   "falcon_blade"
+  ],
+  "late": [
+   "hurricane_pike",
+   "black_king_bar",
+   "sphere",
+   "skadi",
+   "mjollnir"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "dragon_lance",
+   "maelstrom"
+  ],
+  "other": [
+   "manta",
+   "satanic",
+   "sange_and_yasha",
+   "silver_edge",
+   "monkey_king_bar",
+   "desolator",
+   "yasha_and_kaya",
+   "rapier"
+  ],
+  "start": [
+   "flask",
+   "tango",
+   "slippers",
+   "circlet",
+   "branches"
+  ]
+ },
+ "huskar": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "bracer"
+  ],
+  "late": [
+   "heavens_halberd",
+   "black_king_bar",
+   "satanic",
+   "assault",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "armlet"
+  ],
+  "other": [
+   "phase_boots",
+   "overwhelming_blink",
+   "blade_mail",
+   "heart",
+   "aghanims_shard",
+   "shivas_guard",
+   "sange_and_yasha",
+   "monkey_king_bar",
+   "ghost",
+   "solar_crest",
+   "greater_crit",
+   "blink",
+   "moon_shard",
+   "desolator",
+   "sphere",
+   "lotus_orb"
+  ],
+  "start": [
+   "tango",
+   "gauntlets",
+   "gauntlets",
+   "circlet"
+  ]
+ },
+ "invoker": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "hand_of_midas",
+   "urn_of_shadows"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "blink",
+   "sheepstick",
+   "aghanims_shard",
+   "sphere"
+  ],
+  "mid": [
+   "travel_boots",
+   "magic_wand",
+   "black_king_bar"
+  ],
+  "other": [
+   "blink",
+   "black_king_bar",
+   "skadi",
+   "shivas_guard",
+   "necronomicon_3",
+   "octarine_core",
+   "refresher",
+   "sphere",
+   "force_staff",
+   "bloodthorn",
+   "monkey_king_bar",
+   "hurricane_pike",
+   "mjollnir"
+  ],
+  "start": [
+   "tango",
+   "null_talisman"
+  ]
+ },
+ "jakiro": {
+  "early": [
+   "wind_lace",
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "mekansm",
+   "force_staff",
+   "blink",
+   "guardian_greaves",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "cyclone",
+   "glimmer_cape"
+  ],
+  "other": [
+   "aether_lens",
+   "aghanims_shard",
+   "urn_of_shadows",
+   "ancient_janggo",
+   "pipe",
+   "rod_of_atos",
+   "ultimate_scepter",
+   "shivas_guard",
+   "sheepstick",
+   "ghost",
+   "octarine_core",
+   "sphere",
+   "lotus_orb",
+   "refresher"
+  ],
+  "start": [
+   "tango",
+   "ward_observer",
+   "tango",
+   "clarity",
+   "branches",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "flask"
+  ]
+ },
+ "juggernaut": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "wraith_band"
+  ],
+  "late": [
+   "sange_and_yasha",
+   "abyssal_blade",
+   "butterfly",
+   "ultimate_scepter",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "bfury"
+  ],
+  "other": [
+   "swift_blink",
+   "bfury",
+   "manta",
+   "black_king_bar",
+   "monkey_king_bar",
+   "skadi",
+   "sphere",
+   "blink",
+   "silver_edge",
+   "satanic",
+   "mask_of_madness",
+   "mjollnir",
+   "assault",
+   "desolator",
+   "moon_shard"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "slippers",
+   "circlet",
+   "branches"
+  ]
+ },
+ "keeper_of_the_light": {
+  "early": [
+   "magic_stick",
+   "tranquil_boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "force_staff",
+   "refresher",
+   "ghost",
+   "ultimate_scepter",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "magic_wand",
+   "wind_lace",
+   "glimmer_cape",
+   "force_staff"
+  ],
+  "other": [
+   "cyclone",
+   "aeon_disk",
+   "aether_lens",
+   "sheepstick",
+   "guardian_greaves",
+   "shivas_guard",
+   "rod_of_atos",
+   "lotus_orb",
+   "sphere",
+   "travel_boots",
+   "blink",
+   "octarine_core",
+   "heavens_halberd"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "flask",
+   "clarity",
+   "branches",
+   "branches",
+   "wind_lace"
+  ]
+ },
+ "kez": {
+  "early": [
+   "boots",
+   "wraith_band",
+   "magic_wand",
+   "blight_stone",
+   "falcon_blade"
+  ],
+  "late": [
+   "echo_sabre",
+   "abyssal_blade",
+   "butterfly",
+   "harpoon",
+   "monkey_king_bar",
+   "skadi",
+   "sphere",
+   "diffusal_blade_2",
+   "silver_edge",
+   "satanic",
+   "mjollnir",
+   "assault",
+   "moon_shard"
+  ],
+  "mid": [
+   "power_treads",
+   "black_king_bar",
+   "manta",
+   "desolator"
+  ],
+  "other": [],
+  "start": [
+   "tango",
+   "flask",
+   "slippers",
+   "branches",
+   "branches",
+   "branches"
+  ]
+ },
+ "kunkka": {
+  "early": [
+   "bottle",
+   "boots",
+   "magic_stick",
+   "bracer"
+  ],
+  "late": [
+   "assault",
+   "ultimate_scepter",
+   "shivas_guard",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "heavens_halberd",
+   "black_king_bar"
+  ],
+  "other": [
+   "greater_crit",
+   "echo_sabre",
+   "armlet",
+   "heavens_halberd",
+   "assault",
+   "heart",
+   "bfury",
+   "silver_edge",
+   "rapier",
+   "radiance",
+   "orchid",
+   "sheepstick",
+   "sphere"
+  ],
+  "start": [
+   "tango",
+   "quelling_blade",
+   "gauntlets",
+   "gauntlets"
+  ]
+ },
+ "largo": {
+  "early": [
+   "magic_wand",
+   "arcane_boots"
+  ],
+  "late": [
+   "pavise",
+   "solar_crest",
+   "ultimate_scepter",
+   "guardian_greaves",
+   "lotus_orb"
+  ],
+  "mid": [
+   "holy_locket",
+   "glimmer_cape",
+   "aghanims_shard"
+  ],
+  "other": [],
+  "start": [
+   "tango",
+   "ward_sentry",
+   "clarity",
+   "branches",
+   "branches",
+   "magic_stick",
+   "enchanted_mango"
+  ]
+ },
+ "legion_commander": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "orb_of_venom"
+  ],
+  "late": [
+   "assault",
+   "mjollnir",
+   "black_king_bar",
+   "aghanims_shard",
+   "heart"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "blink",
+   "blade_mail"
+  ],
+  "other": [
+   "power_treads",
+   "silver_edge",
+   "abyssal_blade",
+   "desolator",
+   "satanic",
+   "orb_of_corrosion",
+   "heavens_halberd",
+   "invis_sword",
+   "ultimate_scepter",
+   "sphere",
+   "lotus_orb",
+   "armlet",
+   "monkey_king_bar",
+   "greater_crit",
+   "sange_and_yasha",
+   "echo_sabre"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "quelling_blade",
+   "branches",
+   "branches"
+  ]
+ },
+ "leshrac": {
+  "early": [
+   "null_talisman",
+   "bottle",
+   "boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "black_king_bar",
+   "shivas_guard",
+   "octarine_core",
+   "sheepstick"
+  ],
+  "mid": [
+   "magic_wand",
+   "cyclone",
+   "travel_boots",
+   "bloodstone"
+  ],
+  "other": [
+   "arcane_blink",
+   "ultimate_scepter",
+   "ethereal_blade",
+   "sphere",
+   "lotus_orb",
+   "force_staff",
+   "aeon_disk",
+   "yasha_and_kaya",
+   "glimmer_cape",
+   "veil_of_discord",
+   "aether_lens",
+   "kaya_and_sange",
+   "spirit_vessel",
+   "guardian_greaves",
+   "blink",
+   "aghanims_shard"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "faerie_fire",
+   "mantle",
+   "circlet",
+   "branches"
+  ]
+ },
+ "lich": {
+  "early": [
+   "tranquil_boots",
+   "magic_stick"
+  ],
+  "late": [
+   "aeon_disk",
+   "aghanims_shard",
+   "ghost"
+  ],
+  "mid": [
+   "glimmer_cape",
+   "force_staff"
+  ],
+  "other": [
+   "urn_of_shadows",
+   "ultimate_scepter",
+   "guardian_greaves",
+   "blink",
+   "aether_lens",
+   "cyclone",
+   "sheepstick",
+   "shivas_guard",
+   "veil_of_discord",
+   "rod_of_atos",
+   "lotus_orb",
+   "refresher",
+   "octarine_core"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "flask",
+   "ward_observer",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "life_stealer": {
+  "early": [
+   "phase_boots",
+   "magic_stick"
+  ],
+  "late": [
+   "desolator",
+   "abyssal_blade",
+   "basher",
+   "assault"
+  ],
+  "mid": [
+   "armlet",
+   "sange_and_yasha"
+  ],
+  "other": [
+   "power_treads",
+   "desolator",
+   "nullifier",
+   "blink",
+   "black_king_bar",
+   "mjollnir",
+   "heavens_halberd",
+   "ultimate_scepter",
+   "solar_crest",
+   "silver_edge",
+   "sphere",
+   "bloodthorn",
+   "heart",
+   "monkey_king_bar",
+   "aghanims_shard",
+   "greater_crit",
+   "hand_of_midas",
+   "moon_shard"
+  ],
+  "start": [
+   "tango",
+   "orb_of_venom",
+   "quelling_blade"
+  ]
+ },
+ "lina": {
+  "early": [
+   "null_talisman",
+   "bottle",
+   "boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "black_king_bar",
+   "ultimate_scepter",
+   "sphere",
+   "sheepstick",
+   "octarine_core"
+  ],
+  "mid": [
+   "magic_wand",
+   "cyclone",
+   "travel_boots"
+  ],
+  "other": [
+   "phase_boots",
+   "silver_edge",
+   "monkey_king_bar",
+   "greater_crit",
+   "aghanims_shard",
+   "ethereal_blade",
+   "shivas_guard",
+   "aeon_disk",
+   "yasha_and_kaya",
+   "bloodstone",
+   "bloodthorn",
+   "hurricane_pike"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "mantle",
+   "mantle",
+   "circlet",
+   "branches"
+  ]
+ },
+ "lion": {
+  "early": [
+   "magic_stick",
+   "boots"
+  ],
+  "late": [
+   "blink",
+   "aether_lens",
+   "ultimate_scepter",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "tranquil_boots"
+  ],
+  "other": [
+   "aghanims_shard",
+   "dagon_5",
+   "ghost",
+   "glimmer_cape",
+   "lotus_orb",
+   "shivas_guard",
+   "veil_of_discord",
+   "octarine_core",
+   "force_staff",
+   "ethereal_blade",
+   "urn_of_shadows",
+   "invis_sword",
+   "guardian_greaves",
+   "sphere"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "wind_lace"
+  ]
+ },
+ "lone_druid": {
+  "early": [
+   "boots"
+  ],
+  "late": [
+   "butterfly",
+   "travel_boots",
+   "mjollnir",
+   "black_king_bar",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "tranquil_boots",
+   "magic_wand"
+  ],
+  "other": [
+   "pipe",
+   "solar_crest",
+   "monkey_king_bar",
+   "vladmir",
+   "ultimate_scepter",
+   "ghost",
+   "greater_crit"
+  ],
+  "start": [
+   "tango",
+   "branches"
+  ]
+ },
+ "luna": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "wraith_band"
+  ],
+  "late": [
+   "butterfly",
+   "satanic",
+   "black_king_bar"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "mask_of_madness",
+   "manta"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "rapier",
+   "falcon_blade",
+   "aghanims_shard",
+   "monkey_king_bar",
+   "skadi",
+   "sange_and_yasha",
+   "dragon_lance",
+   "sphere",
+   "assault",
+   "hurricane_pike",
+   "desolator",
+   "bloodthorn"
+  ],
+  "start": [
+   "circlet",
+   "tango",
+   "flask",
+   "branches"
+  ]
+ },
+ "lycan": {
+  "early": [
+   "necronomicon"
+  ],
+  "late": [
+   "black_king_bar",
+   "abyssal_blade",
+   "desolator",
+   "ultimate_scepter",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "assault",
+   "necronomicon_3"
+  ],
+  "other": [
+   "solar_crest",
+   "ancient_janggo",
+   "heavens_halberd",
+   "power_treads",
+   "monkey_king_bar",
+   "bloodthorn",
+   "nullifier",
+   "sange_and_yasha",
+   "satanic",
+   "mjollnir",
+   "sphere",
+   "sheepstick",
+   "moon_shard",
+   "travel_boots"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "ring_of_protection",
+   "quelling_blade"
+  ]
+ },
+ "magnataur": {
+  "early": [
+   "bottle",
+   "boots",
+   "magic_stick",
+   "bracer"
+  ],
+  "late": [
+   "force_staff",
+   "refresher",
+   "shivas_guard"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "blink",
+   "invis_sword",
+   "aghanims_shard"
+  ],
+  "other": [
+   "octarine_core",
+   "bfury",
+   "greater_crit",
+   "heart",
+   "assault",
+   "ultimate_scepter",
+   "echo_sabre",
+   "guardian_greaves",
+   "heavens_halberd",
+   "black_king_bar",
+   "bloodthorn",
+   "sphere",
+   "ghost",
+   "cyclone",
+   "moon_shard"
+  ],
+  "start": [
+   "tango",
+   "quelling_blade",
+   "gauntlets",
+   "circlet"
+  ]
+ },
+ "marci": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "orb_of_venom"
+  ],
+  "late": [
+   "black_king_bar",
+   "satanic",
+   "abyssal_blade"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "basher",
+   "hood_of_defiance"
+  ],
+  "other": [
+   "pipe",
+   "orb_of_corrosion",
+   "heart",
+   "lotus_orb",
+   "sange_and_yasha",
+   "blade_mail",
+   "maelstrom",
+   "assault",
+   "bloodthorn",
+   "skadi",
+   "sphere",
+   "desolator",
+   "greater_crit"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "enchanted_mango",
+   "quelling_blade"
+  ]
+ },
+ "mars": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "bracer",
+   "soul_ring"
+  ],
+  "late": [
+   "black_king_bar",
+   "desolator",
+   "assault",
+   "satanic",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "blink",
+   "black_king_bar"
+  ],
+  "other": [
+   "pipe",
+   "blade_mail",
+   "heart",
+   "abyssal_blade",
+   "lotus_orb",
+   "aghanims_shard",
+   "vladmir",
+   "solar_crest",
+   "hood_of_defiance",
+   "overwhelming_blink",
+   "basher",
+   "cyclone"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "quelling_blade",
+   "branches",
+   "branches"
+  ]
+ },
+ "medusa": {
+  "early": [
+   "wraith_band",
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "greater_crit",
+   "butterfly",
+   "aghanims_shard",
+   "black_king_bar"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "manta",
+   "skadi"
+  ],
+  "other": [
+   "mjollnir",
+   "sheepstick",
+   "monkey_king_bar",
+   "sange_and_yasha",
+   "mask_of_madness",
+   "rapier",
+   "moon_shard",
+   "bloodthorn",
+   "heart",
+   "assault",
+   "hurricane_pike",
+   "hand_of_midas",
+   "swift_blink"
+  ],
+  "start": [
+   "circlet",
+   "branches",
+   "tango",
+   "flask"
+  ]
+ },
+ "meepo": {
+  "early": [
+   "wraith_band",
+   "boots"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "skadi",
+   "heart"
+  ],
+  "mid": [
+   "power_treads",
+   "ethereal_blade",
+   "blink"
+  ],
+  "other": [
+   "aghanims_shard",
+   "pipe",
+   "sheepstick",
+   "assault",
+   "necronomicon_3",
+   "ghost",
+   "dragon_lance",
+   "bloodthorn",
+   "manta",
+   "sange_and_yasha",
+   "abyssal_blade"
+  ],
+  "start": [
+   "tango",
+   "slippers",
+   "circlet",
+   "slippers"
+  ]
+ },
+ "mirana": {
+  "early": [
+   "bottle",
+   "magic_stick",
+   "boots"
+  ],
+  "late": [
+   "blink",
+   "cyclone",
+   "ghost",
+   "ethereal_blade"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "ultimate_scepter"
+  ],
+  "other": [
+   "sphere",
+   "solar_crest",
+   "falcon_blade",
+   "dagon_5",
+   "spirit_vessel",
+   "cyclone",
+   "lotus_orb",
+   "guardian_greaves",
+   "sange_and_yasha",
+   "hurricane_pike",
+   "bloodthorn",
+   "veil_of_discord"
+  ],
+  "start": [
+   "wraith_band",
+   "tango"
+  ]
+ },
+ "monkey_king": {
+  "early": [
+   "wraith_band",
+   "orb_of_venom",
+   "boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "sange_and_yasha",
+   "abyssal_blade",
+   "skadi"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "maelstrom",
+   "black_king_bar"
+  ],
+  "other": [
+   "power_treads",
+   "aghanims_shard",
+   "desolator",
+   "silver_edge",
+   "manta",
+   "butterfly",
+   "satanic",
+   "monkey_king_bar",
+   "mjollnir",
+   "assault",
+   "heavens_halberd",
+   "bfury",
+   "bloodthorn",
+   "nullifier",
+   "greater_crit",
+   "rapier",
+   "witch_blade",
+   "gungir"
+  ],
+  "start": [
+   "tango",
+   "slippers",
+   "circlet",
+   "quelling_blade"
+  ]
+ },
+ "morphling": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "wraith_band",
+   "lifesteal"
+  ],
+  "late": [
+   "ethereal_blade",
+   "skadi",
+   "black_king_bar",
+   "butterfly",
+   "satanic"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "manta"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "swift_blink",
+   "dragon_lance",
+   "hurricane_pike",
+   "falcon_blade",
+   "sange_and_yasha",
+   "monkey_king_bar",
+   "rapier",
+   "mjollnir",
+   "aether_lens",
+   "sheepstick"
+  ],
+  "start": [
+   "slippers",
+   "circlet",
+   "tango",
+   "flask",
+   "branches",
+   "branches"
+  ]
+ },
+ "muerta": {
+  "early": [
+   "null_talisman",
+   "boots",
+   "magic_wand",
+   "falcon_blade"
+  ],
+  "late": [
+   "hurricane_pike",
+   "gungir",
+   "black_king_bar",
+   "greater_crit"
+  ],
+  "mid": [
+   "power_treads",
+   "dragon_lance",
+   "maelstrom"
+  ],
+  "other": [],
+  "start": [
+   "tango",
+   "circlet",
+   "mantle",
+   "branches",
+   "branches",
+   "faerie_fire"
+  ]
+ },
+ "naga_siren": {
+  "early": [
+   "boots",
+   "wraith_band",
+   "magic_stick"
+  ],
+  "late": [
+   "heart",
+   "butterfly",
+   "abyssal_blade",
+   "swift_blink"
+  ],
+  "mid": [
+   "power_treads",
+   "manta"
+  ],
+  "other": [
+   "sphere",
+   "ultimate_scepter",
+   "skadi",
+   "hand_of_midas",
+   "sange_and_yasha",
+   "moon_shard",
+   "aghanims_shard",
+   "travel_boots",
+   "black_king_bar"
+  ],
+  "start": [
+   "circlet",
+   "slippers",
+   "tango",
+   "flask",
+   "branches",
+   "branches"
+  ]
+ },
+ "necrolyte": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "hood_of_defiance"
+  ],
+  "late": [
+   "ghost",
+   "aghanims_shard",
+   "lotus_orb",
+   "eternal_shroud"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "mekansm",
+   "guardian_greaves"
+  ],
+  "other": [
+   "power_treads",
+   "bloodstone",
+   "sheepstick",
+   "shivas_guard",
+   "pipe",
+   "heart",
+   "radiance",
+   "octarine_core",
+   "blink",
+   "dagon_5",
+   "falcon_blade",
+   "blade_mail",
+   "cyclone",
+   "veil_of_discord",
+   "force_staff",
+   "urn_of_shadows",
+   "ultimate_scepter",
+   "glimmer_cape"
+  ],
+  "start": [
+   "null_talisman",
+   "tango"
+  ]
+ },
+ "nevermore": {
+  "early": [
+   "bottle",
+   "magic_stick",
+   "boots"
+  ],
+  "late": [
+   "black_king_bar",
+   "arcane_blink",
+   "abyssal_blade",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "magic_wand",
+   "cyclone",
+   "travel_boots",
+   "blink"
+  ],
+  "other": [
+   "assault",
+   "greater_crit",
+   "butterfly",
+   "monkey_king_bar",
+   "skadi",
+   "sange_and_yasha",
+   "satanic",
+   "manta",
+   "ultimate_scepter",
+   "sphere",
+   "bloodthorn",
+   "refresher",
+   "octarine_core",
+   "sheepstick"
+  ],
+  "start": [
+   "slippers",
+   "tango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango",
+   "circlet"
+  ]
+ },
+ "night_stalker": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "urn_of_shadows"
+  ],
+  "late": [
+   "assault",
+   "abyssal_blade",
+   "aghanims_shard",
+   "heavens_halberd"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "black_king_bar",
+   "blink"
+  ],
+  "other": [
+   "heart",
+   "ultimate_scepter",
+   "armlet",
+   "solar_crest",
+   "satanic",
+   "moon_shard",
+   "lotus_orb",
+   "silver_edge",
+   "pipe",
+   "ancient_janggo",
+   "sange_and_yasha",
+   "blade_mail",
+   "desolator",
+   "mjollnir",
+   "crimson_guard",
+   "mask_of_madness"
+  ],
+  "start": [
+   "enchanted_mango",
+   "flask",
+   "tango",
+   "enchanted_mango",
+   "quelling_blade",
+   "branches",
+   "branches"
+  ]
+ },
+ "nyx_assassin": {
+  "early": [
+   "tranquil_boots",
+   "urn_of_shadows",
+   "magic_stick"
+  ],
+  "late": [
+   "blink",
+   "ultimate_scepter",
+   "aeon_disk"
+  ],
+  "mid": [
+   "cyclone",
+   "magic_wand",
+   "aghanims_shard"
+  ],
+  "other": [
+   "force_staff",
+   "dagon_5",
+   "sheepstick",
+   "meteor_hammer",
+   "sphere",
+   "lotus_orb",
+   "octarine_core",
+   "ethereal_blade",
+   "ghost",
+   "spirit_vessel",
+   "aether_lens",
+   "solar_crest",
+   "guardian_greaves"
+  ],
+  "start": [
+   "tango",
+   "boots"
+  ]
+ },
+ "obsidian_destroyer": {
+  "early": [
+   "boots",
+   "infused_raindrop",
+   "meteor_hammer"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "moon_shard",
+   "sheepstick"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "blink",
+   "black_king_bar"
+  ],
+  "other": [
+   "hand_of_midas",
+   "aether_lens",
+   "aghanims_shard",
+   "shivas_guard",
+   "bloodthorn",
+   "sphere",
+   "hurricane_pike",
+   "refresher",
+   "octarine_core",
+   "yasha_and_kaya",
+   "witch_blade",
+   "bloodstone",
+   "ethereal_blade",
+   "assault"
+  ],
+  "start": [
+   "crown",
+   "tango",
+   "branches"
+  ]
+ },
+ "ogre_magi": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "infused_raindrop"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "aether_lens",
+   "ghost",
+   "aghanims_shard",
+   "lotus_orb"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "glimmer_cape"
+  ],
+  "other": [
+   "soul_ring",
+   "urn_of_shadows",
+   "solar_crest",
+   "blink",
+   "guardian_greaves",
+   "sheepstick",
+   "shivas_guard",
+   "bloodstone",
+   "veil_of_discord",
+   "cyclone",
+   "force_staff",
+   "octarine_core",
+   "ethereal_blade"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "ward_observer",
+   "clarity",
+   "orb_of_venom",
+   "enchanted_mango"
+  ]
+ },
+ "omniknight": {
+  "early": [
+   "soul_ring",
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "aether_lens",
+   "force_staff",
+   "ghost",
+   "mekansm",
+   "guardian_greaves",
+   "aeon_disk"
+  ],
+  "mid": [
+   "arcane_boots",
+   "magic_wand"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "glimmer_cape",
+   "sheepstick",
+   "shivas_guard",
+   "solar_crest",
+   "sange_and_yasha",
+   "refresher",
+   "radiance",
+   "cyclone",
+   "pipe",
+   "lotus_orb",
+   "octarine_core"
+  ],
+  "start": [
+   "clarity",
+   "clarity",
+   "branches",
+   "enchanted_mango",
+   "enchanted_mango",
+   "tango",
+   "tango",
+   "ward_observer",
+   "flask"
+  ]
+ },
+ "oracle": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "wind_lace"
+  ],
+  "late": [
+   "aether_lens",
+   "force_staff",
+   "guardian_greaves",
+   "cyclone",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "glimmer_cape"
+  ],
+  "other": [
+   "soul_ring",
+   "aghanims_shard",
+   "blink",
+   "solar_crest",
+   "veil_of_discord",
+   "ghost",
+   "ultimate_scepter",
+   "urn_of_shadows",
+   "sheepstick",
+   "shivas_guard",
+   "ethereal_blade",
+   "lotus_orb"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "clarity",
+   "clarity",
+   "branches",
+   "flask",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "pangolier": {
+  "early": [
+   "boots",
+   "magic_wand",
+   "orb_of_corrosion"
+  ],
+  "late": [
+   "basher",
+   "abyssal_blade",
+   "lotus_orb",
+   "sphere"
+  ],
+  "mid": [
+   "power_treads",
+   "blink",
+   "cyclone",
+   "aghanims_shard"
+  ],
+  "other": [
+   "heart",
+   "assault",
+   "pipe",
+   "vladmir",
+   "heavens_halberd",
+   "diffusal_blade",
+   "ultimate_scepter",
+   "octarine_core",
+   "greater_crit",
+   "maelstrom",
+   "spirit_vessel",
+   "tranquil_boots",
+   "moon_shard",
+   "gungir"
+  ],
+  "start": [
+   "quelling_blade",
+   "tango",
+   "tango",
+   "flask",
+   "branches",
+   "branches"
+  ]
+ },
+ "phantom_assassin": {
+  "early": [
+   "boots",
+   "magic_wand",
+   "orb_of_corrosion"
+  ],
+  "late": [
+   "black_king_bar",
+   "abyssal_blade",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "power_treads",
+   "bfury",
+   "desolator"
+  ],
+  "other": [
+   "aghanims_shard",
+   "phase_boots",
+   "satanic",
+   "butterfly",
+   "monkey_king_bar",
+   "assault",
+   "sange_and_yasha",
+   "manta",
+   "nullifier",
+   "heart",
+   "moon_shard",
+   "rapier",
+   "sphere",
+   "skadi"
+  ],
+  "start": [
+   "quelling_blade",
+   "tango",
+   "tango",
+   "orb_of_venom"
+  ]
+ },
+ "phantom_lancer": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "wraith_band"
+  ],
+  "late": [
+   "manta",
+   "heart",
+   "abyssal_blade",
+   "skadi"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "diffusal_blade"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "rapier",
+   "aghanims_shard",
+   "nullifier",
+   "sange_and_yasha",
+   "greater_crit",
+   "satanic",
+   "monkey_king_bar",
+   "black_king_bar",
+   "sphere",
+   "silver_edge",
+   "bloodthorn",
+   "hand_of_midas"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "quelling_blade",
+   "branches",
+   "circlet"
+  ]
+ },
+ "phoenix": {
+  "early": [
+   "magic_stick",
+   "tranquil_boots",
+   "urn_of_shadows"
+  ],
+  "late": [
+   "shivas_guard",
+   "ultimate_scepter",
+   "aeon_disk",
+   "refresher"
+  ],
+  "mid": [
+   "magic_wand",
+   "cyclone",
+   "spirit_vessel"
+  ],
+  "other": [
+   "ghost",
+   "aghanims_shard",
+   "solar_crest",
+   "pipe",
+   "heavens_halberd",
+   "heart",
+   "radiance",
+   "aether_lens",
+   "force_staff",
+   "octarine_core",
+   "sheepstick",
+   "sphere",
+   "glimmer_cape",
+   "lotus_orb",
+   "meteor_hammer"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "wind_lace",
+   "branches",
+   "branches"
+  ]
+ },
+ "primal_beast": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "orb_of_venom"
+  ],
+  "late": [
+   "assault",
+   "black_king_bar"
+  ],
+  "mid": [
+   "phase_boots",
+   "armlet",
+   "blink"
+  ],
+  "other": [
+   "power_treads",
+   "sange_and_yasha",
+   "echo_sabre",
+   "heavens_halberd",
+   "abyssal_blade",
+   "solar_crest",
+   "silver_edge",
+   "sphere",
+   "bloodthorn",
+   "heart",
+   "monkey_king_bar",
+   "radiance",
+   "greater_crit",
+   "hand_of_midas",
+   "moon_shard",
+   "overwhelming_blink"
+  ],
+  "start": [
+   "tango",
+   "enchanted_mango",
+   "quelling_blade",
+   "branches"
+  ]
+ },
+ "puck": {
+  "early": [
+   "null_talisman",
+   "bottle",
+   "boots"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "blink",
+   "sphere",
+   "aether_lens",
+   "octarine_core"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "witch_blade"
+  ],
+  "other": [
+   "aghanims_shard",
+   "dagon_5",
+   "aeon_disk",
+   "sheepstick",
+   "shivas_guard",
+   "ethereal_blade",
+   "desolator",
+   "greater_crit",
+   "bloodthorn",
+   "black_king_bar",
+   "travel_boots",
+   "spirit_vessel",
+   "lotus_orb",
+   "heavens_halberd"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "mantle",
+   "mantle",
+   "circlet",
+   "branches"
+  ]
+ },
+ "pudge": {
+  "early": [
+   "magic_stick",
+   "tranquil_boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "blink",
+   "heart",
+   "pipe",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "magic_wand",
+   "aether_lens",
+   "hood_of_defiance"
+  ],
+  "other": [
+   "urn_of_shadows",
+   "soul_ring",
+   "glimmer_cape",
+   "crimson_guard",
+   "rod_of_atos",
+   "ghost",
+   "shivas_guard",
+   "force_staff",
+   "lotus_orb",
+   "aghanims_shard",
+   "ultimate_scepter",
+   "octarine_core",
+   "cyclone",
+   "blade_mail",
+   "ethereal_blade",
+   "black_king_bar"
+  ],
+  "start": [
+   "wind_lace",
+   "flask",
+   "tango",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "pugna": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "null_talisman"
+  ],
+  "late": [
+   "aeon_disk",
+   "ultimate_scepter",
+   "black_king_bar",
+   "dagon_5"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "aether_lens",
+   "glimmer_cape"
+  ],
+  "other": [
+   "guardian_greaves",
+   "aghanims_shard",
+   "sheepstick",
+   "shivas_guard",
+   "dagon_5",
+   "veil_of_discord",
+   "force_staff",
+   "cyclone",
+   "octarine_core",
+   "sphere",
+   "ghost",
+   "lotus_orb",
+   "heart",
+   "urn_of_shadows"
+  ],
+  "start": [
+   "branches",
+   "circlet",
+   "enchanted_mango",
+   "faerie_fire",
+   "mantle"
+  ]
+ },
+ "queenofpain": {
+  "early": [
+   "bottle",
+   "boots",
+   "magic_stick",
+   "infused_raindrop"
+  ],
+  "late": [
+   "black_king_bar",
+   "shivas_guard",
+   "bloodthorn",
+   "sheepstick"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "orchid"
+  ],
+  "other": [
+   "skadi",
+   "mjollnir",
+   "ultimate_scepter",
+   "aghanims_shard",
+   "sphere",
+   "monkey_king_bar",
+   "desolator",
+   "assault",
+   "kaya_and_sange",
+   "aeon_disk",
+   "witch_blade",
+   "lotus_orb",
+   "greater_crit",
+   "bloodstone"
+  ],
+  "start": [
+   "tango",
+   "null_talisman"
+  ]
+ },
+ "rattletrap": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "urn_of_shadows",
+   "infused_raindrop"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "shivas_guard",
+   "force_staff",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "tranquil_boots",
+   "magic_wand",
+   "blade_mail",
+   "spirit_vessel"
+  ],
+  "other": [
+   "power_treads",
+   "black_king_bar",
+   "lotus_orb",
+   "solar_crest",
+   "ancient_janggo",
+   "pipe",
+   "orchid",
+   "crimson_guard",
+   "heavens_halberd",
+   "octarine_core",
+   "cyclone",
+   "sphere"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "clarity",
+   "branches",
+   "ring_of_protection"
+  ]
+ },
+ "razor": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "wraith_band",
+   "infused_raindrop"
+  ],
+  "late": [
+   "sange_and_yasha",
+   "blink",
+   "assault",
+   "shivas_guard",
+   "swift_blink"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "cyclone",
+   "black_king_bar"
+  ],
+  "other": [
+   "aghanims_shard",
+   "ultimate_scepter",
+   "falcon_blade",
+   "heart",
+   "butterfly",
+   "shivas_guard",
+   "monkey_king_bar",
+   "heavens_halberd",
+   "skadi",
+   "sphere",
+   "lotus_orb",
+   "hurricane_pike",
+   "manta",
+   "mjollnir",
+   "refresher"
+  ],
+  "start": [
+   "circlet",
+   "tango",
+   "slippers",
+   "branches",
+   "branches",
+   "faerie_fire"
+  ]
+ },
+ "riki": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "orb_of_corrosion"
+  ],
+  "late": [
+   "greater_crit",
+   "basher",
+   "abyssal_blade",
+   "black_king_bar"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "bfury",
+   "ultimate_scepter"
+  ],
+  "other": [
+   "aghanims_shard",
+   "ultimate_scepter",
+   "butterfly",
+   "sphere",
+   "manta",
+   "skadi",
+   "desolator",
+   "rapier",
+   "monkey_king_bar",
+   "moon_shard",
+   "heart",
+   "sange_and_yasha"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "orb_of_venom",
+   "quelling_blade"
+  ]
+ },
+ "ringmaster": {
+  "early": [
+   "magic_stick",
+   "boots"
+  ],
+  "late": [
+   "rod_of_atos",
+   "aether_lens",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "force_staff"
+  ],
+  "other": [
+   "aghanims_shard",
+   "urn_of_shadows",
+   "glimmer_cape",
+   "guardian_greaves",
+   "cyclone",
+   "sheepstick",
+   "veil_of_discord",
+   "aeon_disk",
+   "ghost",
+   "refresher",
+   "pipe",
+   "kaya",
+   "octarine_core",
+   "ethereal_blade",
+   "dagon_5",
+   "sphere",
+   "blink"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "flask",
+   "ward_observer",
+   "ward_sentry",
+   "branches",
+   "branches",
+   "clarity",
+   "clarity",
+   "enchanted_mango"
+  ]
+ },
+ "rubick": {
+  "early": [
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "cyclone",
+   "glimmer_cape",
+   "ultimate_scepter",
+   "aeon_disk"
+  ],
+  "mid": [
+   "arcane_boots",
+   "magic_wand",
+   "blink",
+   "aether_lens"
+  ],
+  "other": [
+   "aghanims_shard",
+   "ghost",
+   "guardian_greaves",
+   "sheepstick",
+   "shivas_guard",
+   "force_staff",
+   "bloodstone",
+   "octarine_core",
+   "lotus_orb",
+   "sphere",
+   "ethereal_blade"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "clarity",
+   "branches",
+   "branches",
+   "ward_observer",
+   "flask"
+  ]
+ },
+ "sand_king": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "black_king_bar",
+   "shivas_guard",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "magic_wand",
+   "travel_boots",
+   "blink",
+   "cyclone"
+  ],
+  "other": [
+   "aether_lens",
+   "aghanims_shard",
+   "aeon_disk",
+   "heart",
+   "glimmer_cape",
+   "octarine_core",
+   "refresher",
+   "guardian_greaves",
+   "sheepstick",
+   "ghost",
+   "urn_of_shadows",
+   "sphere",
+   "lotus_orb"
+  ],
+  "start": [
+   "enchanted_mango",
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "quelling_blade",
+   "branches",
+   "branches"
+  ]
+ },
+ "shadow_demon": {
+  "early": [
+   "boots",
+   "ring_of_basilius",
+   "wind_lace",
+   "infused_raindrop"
+  ],
+  "late": [
+   "blink",
+   "glimmer_cape",
+   "force_staff",
+   "ultimate_scepter",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "tranquil_boots",
+   "aether_lens",
+   "smoke_of_deceit"
+  ],
+  "other": [
+   "guardian_greaves",
+   "ghost",
+   "spirit_vessel",
+   "aghanims_shard",
+   "orchid",
+   "meteor_hammer",
+   "sheepstick",
+   "lotus_orb",
+   "octarine_core"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "flask",
+   "clarity",
+   "branches",
+   "sobi_mask",
+   "enchanted_mango"
+  ]
+ },
+ "shadow_shaman": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "infused_raindrop"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "refresher",
+   "blink",
+   "black_king_bar"
+  ],
+  "mid": [
+   "magic_wand",
+   "aether_lens",
+   "tranquil_boots",
+   "ultimate_scepter"
+  ],
+  "other": [
+   "cyclone",
+   "glimmer_cape",
+   "octarine_core",
+   "bloodstone",
+   "shivas_guard",
+   "ghost",
+   "sphere",
+   "lotus_orb"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "clarity",
+   "branches",
+   "branches",
+   "ward_observer"
+  ]
+ },
+ "shredder": {
+  "early": [
+   "boots",
+   "soul_ring",
+   "infused_raindrop"
+  ],
+  "late": [
+   "aghanims_shard",
+   "lotus_orb",
+   "bloodstone",
+   "shivas_guard",
+   "kaya_and_sange"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "cyclone",
+   "pipe"
+  ],
+  "other": [
+   "travel_boots",
+   "black_king_bar",
+   "sphere",
+   "sheepstick",
+   "ultimate_scepter",
+   "crimson_guard",
+   "heavens_halberd",
+   "blink",
+   "eternal_shroud",
+   "bracer",
+   "octarine_core",
+   "heart",
+   "ethereal_blade"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "ring_of_protection",
+   "quelling_blade",
+   "branches"
+  ]
+ },
+ "silencer": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "null_talisman"
+  ],
+  "late": [
+   "hurricane_pike",
+   "sheepstick",
+   "aeon_disk",
+   "refresher"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "force_staff"
+  ],
+  "other": [
+   "aghanims_shard",
+   "shivas_guard",
+   "cyclone",
+   "guardian_greaves",
+   "black_king_bar",
+   "invis_sword",
+   "assault",
+   "ultimate_scepter",
+   "moon_shard",
+   "glimmer_cape"
+  ],
+  "start": [
+   "tango",
+   "clarity",
+   "flask",
+   "circlet",
+   "mantle"
+  ]
+ },
+ "skeleton_king": {
+  "early": [
+   "magic_stick",
+   "phase_boots",
+   "armlet"
+  ],
+  "late": [
+   "blink",
+   "black_king_bar",
+   "assault",
+   "abyssal_blade",
+   "swift_blink"
+  ],
+  "mid": [
+   "magic_wand",
+   "radiance"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "aghanims_shard",
+   "rapier",
+   "heart",
+   "heavens_halberd",
+   "overwhelming_blink",
+   "blade_mail",
+   "mjollnir",
+   "monkey_king_bar",
+   "bfury",
+   "bloodthorn",
+   "moon_shard",
+   "hand_of_midas",
+   "sange_and_yasha"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "branches",
+   "quelling_blade"
+  ]
+ },
+ "skywrath_mage": {
+  "early": [
+   "magic_stick",
+   "null_talisman",
+   "arcane_boots"
+  ],
+  "late": [
+   "cyclone",
+   "glimmer_cape",
+   "ultimate_scepter",
+   "aeon_disk",
+   "blink"
+  ],
+  "mid": [
+   "magic_wand",
+   "rod_of_atos",
+   "aether_lens"
+  ],
+  "other": [
+   "ethereal_blade",
+   "force_staff",
+   "ultimate_scepter",
+   "bloodstone",
+   "travel_boots",
+   "veil_of_discord",
+   "sheepstick",
+   "aghanims_shard",
+   "octarine_core",
+   "guardian_greaves",
+   "lotus_orb",
+   "invis_sword",
+   "black_king_bar"
+  ],
+  "start": [
+   "tango",
+   "clarity",
+   "clarity",
+   "branches",
+   "branches",
+   "ward_observer",
+   "mantle",
+   "mantle"
+  ]
+ },
+ "slardar": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "bracer"
+  ],
+  "late": [
+   "black_king_bar",
+   "solar_crest",
+   "assault",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "blink"
+  ],
+  "other": [
+   "echo_sabre",
+   "vladmir",
+   "force_staff",
+   "invis_sword",
+   "heart",
+   "crimson_guard",
+   "moon_shard",
+   "lotus_orb",
+   "aghanims_shard",
+   "orb_of_corrosion",
+   "hand_of_midas",
+   "monkey_king_bar",
+   "heavens_halberd",
+   "pipe"
+  ],
+  "start": [
+   "enchanted_mango",
+   "flask",
+   "tango",
+   "quelling_blade",
+   "circlet"
+  ]
+ },
+ "slark": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "orb_of_corrosion"
+  ],
+  "late": [
+   "basher",
+   "abyssal_blade",
+   "skadi"
+  ],
+  "mid": [
+   "power_treads",
+   "magic_wand",
+   "echo_sabre",
+   "sange_and_yasha",
+   "black_king_bar"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "blink",
+   "butterfly",
+   "aghanims_shard",
+   "hand_of_midas",
+   "bloodthorn",
+   "swift_blink",
+   "diffusal_blade",
+   "heart",
+   "moon_shard",
+   "assault",
+   "monkey_king_bar",
+   "sphere",
+   "invis_sword"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "quelling_blade"
+  ]
+ },
+ "snapfire": {
+  "early": [
+   "arcane_boots",
+   "magic_wand"
+  ],
+  "late": [
+   "blink",
+   "ultimate_scepter",
+   "aghanims_shard",
+   "guardian_greaves"
+  ],
+  "mid": [
+   "glimmer_cape",
+   "force_staff"
+  ],
+  "other": [
+   "heavens_halberd",
+   "black_king_bar",
+   "spirit_vessel",
+   "veil_of_discord",
+   "lotus_orb",
+   "pipe",
+   "aether_lens",
+   "sheepstick"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "sniper": {
+  "early": [
+   "boots",
+   "wraith_band"
+  ],
+  "late": [
+   "hurricane_pike",
+   "mjollnir",
+   "greater_crit",
+   "swift_blink",
+   "black_king_bar"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "dragon_lance",
+   "maelstrom"
+  ],
+  "other": [
+   "phase_boots",
+   "ultimate_scepter",
+   "manta",
+   "desolator",
+   "butterfly",
+   "sange_and_yasha",
+   "skadi",
+   "satanic",
+   "mask_of_madness",
+   "aghanims_shard",
+   "monkey_king_bar",
+   "silver_edge",
+   "sphere",
+   "moon_shard",
+   "rapier"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "circlet",
+   "branches",
+   "slippers"
+  ]
+ },
+ "spectre": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "blade_mail"
+  ],
+  "late": [
+   "abyssal_blade",
+   "butterfly",
+   "heart"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "manta",
+   "basher"
+  ],
+  "other": [
+   "phase_boots",
+   "urn_of_shadows",
+   "ultimate_scepter",
+   "radiance",
+   "aghanims_shard",
+   "sange_and_yasha",
+   "monkey_king_bar",
+   "refresher",
+   "skadi",
+   "rapier",
+   "moon_shard",
+   "bfury"
+  ],
+  "start": [
+   "enchanted_mango",
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "quelling_blade"
+  ]
+ },
+ "spirit_breaker": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "urn_of_shadows",
+   "orb_of_corrosion"
+  ],
+  "late": [
+   "assault",
+   "black_king_bar"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "ultimate_scepter"
+  ],
+  "other": [
+   "heavens_halberd",
+   "silver_edge",
+   "monkey_king_bar",
+   "ancient_janggo",
+   "glimmer_cape",
+   "lotus_orb",
+   "moon_shard",
+   "crimson_guard",
+   "pipe",
+   "bloodthorn",
+   "echo_sabre",
+   "blade_mail",
+   "aghanims_shard",
+   "heart",
+   "sange_and_yasha"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "orb_of_venom"
+  ]
+ },
+ "storm_spirit": {
+  "early": [
+   "magic_wand",
+   "boots",
+   "bottle"
+  ],
+  "late": [
+   "bloodstone",
+   "shivas_guard",
+   "sphere",
+   "black_king_bar"
+  ],
+  "mid": [
+   "orchid",
+   "power_treads",
+   "kaya"
+  ],
+  "other": [
+   "ultimate_scepter",
+   "aghanims_shard",
+   "cyclone",
+   "sheepstick",
+   "kaya_and_sange",
+   "yasha_and_kaya",
+   "bloodthorn",
+   "octarine_core"
+  ],
+  "start": [
+   "tango",
+   "null_talisman"
+  ]
+ },
+ "sven": {
+  "early": [
+   "magic_stick",
+   "boots"
+  ],
+  "late": [
+   "black_king_bar",
+   "swift_blink",
+   "abyssal_blade",
+   "aghanims_shard",
+   "greater_crit",
+   "satanic"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "sange_and_yasha",
+   "mask_of_madness"
+  ],
+  "other": [
+   "echo_sabre",
+   "armlet",
+   "hand_of_midas",
+   "heart",
+   "assault",
+   "ultimate_scepter",
+   "moon_shard",
+   "monkey_king_bar",
+   "satanic",
+   "heavens_halberd",
+   "bloodthorn",
+   "bfury",
+   "rapier"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "flask",
+   "enchanted_mango",
+   "quelling_blade"
+  ]
+ },
+ "techies": {
+  "early": [
+   "soul_ring",
+   "arcane_boots"
+  ],
+  "late": [
+   "bloodstone",
+   "octarine_core",
+   "sheepstick"
+  ],
+  "mid": [
+   "ultimate_scepter",
+   "force_staff",
+   "cyclone"
+  ],
+  "other": [
+   "blink",
+   "aether_lens",
+   "ethereal_blade",
+   "hurricane_pike",
+   "lotus_orb",
+   "rod_of_atos",
+   "helm_of_the_dominator",
+   "greater_crit",
+   "butterfly",
+   "swift_blink"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "ring_of_protection",
+   "gauntlets",
+   "faerie_fire"
+  ]
+ },
+ "templar_assassin": {
+  "early": [
+   "wraith_band",
+   "boots",
+   "blight_stone"
+  ],
+  "late": [
+   "black_king_bar",
+   "bloodthorn",
+   "nullifier",
+   "sheepstick"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "desolator",
+   "blink"
+  ],
+  "other": [
+   "greater_crit",
+   "monkey_king_bar",
+   "hurricane_pike",
+   "butterfly",
+   "manta",
+   "sange_and_yasha",
+   "satanic",
+   "skadi",
+   "assault",
+   "mjollnir",
+   "sphere",
+   "aghanims_shard",
+   "rapier",
+   "travel_boots",
+   "moon_shard",
+   "ultimate_scepter"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "slippers",
+   "circlet",
+   "circlet",
+   "branches"
+  ]
+ },
+ "terrorblade": {
+  "early": [
+   "boots",
+   "wraith_band"
+  ],
+  "late": [
+   "skadi",
+   "butterfly",
+   "greater_crit",
+   "black_king_bar"
+  ],
+  "mid": [
+   "power_treads",
+   "ultimate_scepter",
+   "manta"
+  ],
+  "other": [
+   "swift_blink",
+   "dragon_lance",
+   "satanic",
+   "sphere",
+   "sange_and_yasha",
+   "silver_edge",
+   "assault",
+   "black_king_bar",
+   "heart",
+   "hurricane_pike",
+   "rapier"
+  ],
+  "start": [
+   "branches",
+   "branches",
+   "quelling_blade",
+   "tango",
+   "flask",
+   "circlet"
+  ]
+ },
+ "tidehunter": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "soul_ring"
+  ],
+  "late": [
+   "solar_crest",
+   "aghanims_shard",
+   "ultimate_scepter",
+   "refresher"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "blink",
+   "hood_of_defiance"
+  ],
+  "other": [
+   "heart",
+   "shivas_guard",
+   "assault",
+   "force_staff",
+   "pipe",
+   "ancient_janggo",
+   "guardian_greaves",
+   "glimmer_cape",
+   "octarine_core",
+   "lotus_orb",
+   "crimson_guard",
+   "vladmir"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "quelling_blade",
+   "ring_of_protection"
+  ]
+ },
+ "tinker": {
+  "early": [
+   "null_talisman",
+   "bottle",
+   "boots",
+   "soul_ring"
+  ],
+  "late": [
+   "sheepstick",
+   "bloodstone",
+   "ethereal_blade",
+   "dagon_5"
+  ],
+  "mid": [
+   "travel_boots",
+   "blink",
+   "aether_lens"
+  ],
+  "other": [
+   "cyclone",
+   "shivas_guard",
+   "sphere",
+   "bloodstone",
+   "travel_boots_2",
+   "aeon_disk",
+   "ultimate_scepter",
+   "force_staff",
+   "aghanims_shard",
+   "kaya_and_sange",
+   "bloodthorn",
+   "glimmer_cape",
+   "necronomicon_3"
+  ],
+  "start": [
+   "tango",
+   "faerie_fire",
+   "mantle",
+   "circlet",
+   "branches",
+   "branches"
+  ]
+ },
+ "tiny": {
+  "early": [
+   "bracer",
+   "bottle",
+   "boots",
+   "wind_lace"
+  ],
+  "late": [
+   "silver_edge",
+   "black_king_bar",
+   "greater_crit",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "blink",
+   "echo_sabre"
+  ],
+  "other": [
+   "power_treads",
+   "travel_boots",
+   "aghanims_shard",
+   "assault",
+   "sange_and_yasha",
+   "heavens_halberd",
+   "monkey_king_bar",
+   "heart",
+   "satanic",
+   "butterfly",
+   "moon_shard",
+   "ethereal_blade",
+   "dagon",
+   "cyclone",
+   "lotus_orb",
+   "sheepstick"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "gauntlets",
+   "circlet",
+   "quelling_blade",
+   "branches"
+  ]
+ },
+ "treant": {
+  "early": [
+   "boots",
+   "magic_stick"
+  ],
+  "late": [
+   "blink",
+   "ultimate_scepter",
+   "refresher",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "meteor_hammer"
+  ],
+  "other": [
+   "cyclone",
+   "heart",
+   "shivas_guard",
+   "assault",
+   "aghanims_shard",
+   "vladmir",
+   "heavens_halberd",
+   "radiance",
+   "necronomicon_3",
+   "octarine_core",
+   "guardian_greaves",
+   "blade_mail",
+   "tranquil_boots"
+  ],
+  "start": [
+   "tango",
+   "enchanted_mango",
+   "clarity",
+   "flask",
+   "orb_of_venom"
+  ]
+ },
+ "troll_warlord": {
+  "early": [
+   "ring_of_health",
+   "magic_stick",
+   "boots"
+  ],
+  "late": [
+   "abyssal_blade",
+   "black_king_bar",
+   "swift_blink",
+   "satanic"
+  ],
+  "mid": [
+   "magic_wand",
+   "phase_boots",
+   "bfury",
+   "sange_and_yasha"
+  ],
+  "other": [
+   "power_treads",
+   "butterfly",
+   "monkey_king_bar",
+   "aghanims_shard",
+   "hurricane_pike",
+   "ultimate_scepter",
+   "skadi",
+   "falcon_blade",
+   "bloodthorn",
+   "helm_of_the_dominator",
+   "armlet",
+   "bfury",
+   "moon_shard"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "enchanted_mango",
+   "quelling_blade"
+  ]
+ },
+ "tusk": {
+  "early": [
+   "boots",
+   "magic_wand",
+   "wind_lace",
+   "infused_raindrop"
+  ],
+  "late": [
+   "aeon_disk",
+   "solar_crest",
+   "force_staff",
+   "aghanims_shard",
+   "ghost"
+  ],
+  "mid": [
+   "tranquil_boots",
+   "blink"
+  ],
+  "other": [
+   "phase_boots",
+   "desolator",
+   "heart",
+   "black_king_bar",
+   "heavens_halberd",
+   "orb_of_corrosion",
+   "assault",
+   "ultimate_scepter",
+   "lotus_orb",
+   "glimmer_cape",
+   "pipe",
+   "guardian_greaves"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "clarity",
+   "orb_of_venom",
+   "enchanted_mango"
+  ]
+ },
+ "undying": {
+  "early": [
+   "boots",
+   "infused_raindrop",
+   "magic_stick",
+   "fluffy_hat"
+  ],
+  "late": [
+   "ghost",
+   "lotus_orb",
+   "solar_crest",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "arcane_boots",
+   "magic_wand",
+   "glimmer_cape"
+  ],
+  "other": [
+   "pipe",
+   "cyclone",
+   "shivas_guard",
+   "heart",
+   "guardian_greaves",
+   "blade_mail",
+   "ultimate_scepter",
+   "crimson_guard",
+   "holy_locket",
+   "urn_of_shadows",
+   "refresher",
+   "vladmir",
+   "radiance"
+  ],
+  "start": [
+   "enchanted_mango",
+   "flask",
+   "clarity",
+   "orb_of_venom",
+   "tango"
+  ]
+ },
+ "ursa": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "orb_of_venom"
+  ],
+  "late": [
+   "abyssal_blade",
+   "black_king_bar",
+   "swift_blink",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "phase_boots",
+   "magic_wand",
+   "bfury",
+   "blink"
+  ],
+  "other": [
+   "orb_of_corrosion",
+   "heart",
+   "sphere",
+   "ultimate_scepter",
+   "sange_and_yasha",
+   "mask_of_madness",
+   "sheepstick",
+   "desolator",
+   "monkey_king_bar",
+   "assault",
+   "bloodthorn",
+   "skadi",
+   "satanic"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "branches",
+   "branches",
+   "enchanted_mango",
+   "quelling_blade"
+  ]
+ },
+ "vengefulspirit": {
+  "early": [
+   "magic_stick",
+   "tranquil_boots"
+  ],
+  "late": [
+   "vladmir",
+   "ultimate_scepter",
+   "solar_crest"
+  ],
+  "mid": [
+   "magic_wand",
+   "glimmer_cape",
+   "medallion_of_courage",
+   "ancient_janggo"
+  ],
+  "other": [
+   "blink",
+   "desolator",
+   "hurricane_pike",
+   "butterfly",
+   "manta",
+   "heart",
+   "sange_and_yasha",
+   "lotus_orb",
+   "ghost",
+   "guardian_greaves",
+   "greater_crit",
+   "monkey_king_bar",
+   "aghanims_shard",
+   "aether_lens",
+   "force_staff",
+   "power_treads"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "clarity",
+   "branches",
+   "branches",
+   "ward_observer",
+   "flask",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "venomancer": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "urn_of_shadows"
+  ],
+  "late": [
+   "solar_crest",
+   "lotus_orb",
+   "aghanims_shard",
+   "guardian_greaves"
+  ],
+  "mid": [
+   "magic_wand",
+   "power_treads",
+   "spirit_vessel",
+   "hood_of_defiance",
+   "pipe"
+  ],
+  "other": [
+   "blink",
+   "glimmer_cape",
+   "force_staff",
+   "ultimate_scepter",
+   "butterfly",
+   "orchid",
+   "shivas_guard",
+   "ancient_janggo",
+   "octarine_core",
+   "hurricane_pike",
+   "aether_lens",
+   "sange_and_yasha",
+   "sphere",
+   "pipe",
+   "bloodthorn"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "circlet",
+   "branches",
+   "branches",
+   "faerie_fire"
+  ]
+ },
+ "viper": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "wraith_band",
+   "bottle"
+  ],
+  "late": [
+   "black_king_bar",
+   "heavens_halberd",
+   "lotus_orb",
+   "ultimate_scepter",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "magic_wand",
+   "travel_boots",
+   "rod_of_atos"
+  ],
+  "other": [
+   "hurricane_pike",
+   "monkey_king_bar",
+   "butterfly",
+   "bloodthorn",
+   "heart",
+   "crimson_guard",
+   "mjollnir",
+   "greater_crit",
+   "blade_mail",
+   "moon_shard",
+   "heavens_halberd",
+   "skadi",
+   "sphere",
+   "assault",
+   "satanic"
+  ],
+  "start": [
+   "tango",
+   "enchanted_mango",
+   "branches",
+   "slippers",
+   "circlet"
+  ]
+ },
+ "visage": {
+  "early": [
+   "null_talisman",
+   "boots",
+   "medallion_of_courage"
+  ],
+  "late": [
+   "sheepstick",
+   "solar_crest",
+   "assault"
+  ],
+  "mid": [
+   "magic_wand",
+   "ultimate_scepter",
+   "aghanims_shard",
+   "travel_boots"
+  ],
+  "other": [
+   "rod_of_atos",
+   "guardian_greaves",
+   "pipe",
+   "hurricane_pike",
+   "heavens_halberd",
+   "crimson_guard",
+   "lotus_orb",
+   "shivas_guard",
+   "black_king_bar",
+   "cyclone",
+   "bloodthorn",
+   "desolator",
+   "necronomicon_3"
+  ],
+  "start": [
+   "tango",
+   "faerie_fire",
+   "mantle",
+   "circlet",
+   "branches",
+   "branches"
+  ]
+ },
+ "void_spirit": {
+  "early": [
+   "boots",
+   "magic_stick",
+   "bottle",
+   "null_talisman"
+  ],
+  "late": [
+   "black_king_bar",
+   "octarine_core",
+   "shivas_guard"
+  ],
+  "mid": [
+   "phase_boots",
+   "ultimate_scepter",
+   "cyclone"
+  ],
+  "other": [
+   "bloodthorn",
+   "mjollnir",
+   "sphere",
+   "lotus_orb",
+   "aether_lens",
+   "greater_crit",
+   "orchid",
+   "desolator",
+   "aghanims_shard",
+   "maelstrom",
+   "aeon_disk",
+   "kaya_and_sange",
+   "witch_blade"
+  ],
+  "start": [
+   "tango",
+   "circlet",
+   "quelling_blade",
+   "mantle",
+   "branches"
+  ]
+ },
+ "warlock": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "ring_of_basilius"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "refresher",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "glimmer_cape"
+  ],
+  "other": [
+   "sheepstick",
+   "shivas_guard",
+   "necronomicon_3",
+   "octarine_core",
+   "guardian_greaves",
+   "ghost",
+   "force_staff",
+   "aether_lens",
+   "rod_of_atos",
+   "lotus_orb"
+  ],
+  "start": [
+   "clarity",
+   "flask",
+   "tango",
+   "tango",
+   "ward_observer",
+   "enchanted_mango",
+   "enchanted_mango",
+   "enchanted_mango"
+  ]
+ },
+ "weaver": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "falcon_blade",
+   "power_treads"
+  ],
+  "late": [
+   "black_king_bar",
+   "greater_crit",
+   "aghanims_shard"
+  ],
+  "mid": [
+   "magic_wand",
+   "maelstrom",
+   "sange_and_yasha"
+  ],
+  "other": [
+   "gungir",
+   "monkey_king_bar",
+   "butterfly",
+   "heart",
+   "nullifier",
+   "sphere",
+   "ultimate_scepter",
+   "dragon_lance",
+   "bloodthorn",
+   "desolator",
+   "bottle",
+   "skadi",
+   "mjollnir",
+   "manta",
+   "satanic"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "circlet",
+   "branches",
+   "branches",
+   "branches"
+  ]
+ },
+ "windrunner": {
+  "early": [
+   "magic_wand",
+   "boots"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "travel_boots",
+   "greater_crit"
+  ],
+  "mid": [
+   "black_king_bar",
+   "blink",
+   "maelstrom"
+  ],
+  "other": [
+   "gungir",
+   "sheepstick",
+   "aghanims_shard",
+   "shivas_guard",
+   "sphere",
+   "tranquil_boots",
+   "greater_crit",
+   "cyclone",
+   "monkey_king_bar",
+   "glimmer_cape",
+   "hurricane_pike",
+   "desolator",
+   "swift_blink",
+   "skadi"
+  ],
+  "start": [
+   "tango",
+   "flask",
+   "clarity",
+   "circlet",
+   "branches",
+   "branches"
+  ]
+ },
+ "winter_wyvern": {
+  "early": [
+   "magic_stick",
+   "boots",
+   "urn_of_shadows"
+  ],
+  "late": [
+   "blink",
+   "aghanims_shard",
+   "aether_lens",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "arcane_boots",
+   "glimmer_cape"
+  ],
+  "other": [
+   "orchid",
+   "sheepstick",
+   "cyclone",
+   "travel_boots",
+   "meteor_hammer",
+   "force_staff",
+   "ultimate_scepter",
+   "hurricane_pike",
+   "mjollnir",
+   "monkey_king_bar",
+   "ghost",
+   "refresher",
+   "bloodthorn",
+   "lotus_orb"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "clarity",
+   "clarity",
+   "branches",
+   "ward_observer",
+   "flask"
+  ]
+ },
+ "wisp": {
+  "early": [
+   "magic_stick",
+   "headdress",
+   "bottle",
+   "infused_raindrop"
+  ],
+  "late": [
+   "ghost",
+   "aeon_disk",
+   "holy_locket",
+   "ultimate_scepter"
+  ],
+  "mid": [
+   "magic_wand",
+   "guardian_greaves",
+   "glimmer_cape"
+  ],
+  "other": [
+   "aghanims_shard",
+   "sheepstick",
+   "heart",
+   "pipe",
+   "solar_crest",
+   "lotus_orb",
+   "heavens_halberd",
+   "cyclone",
+   "helm_of_the_dominator",
+   "desolator",
+   "black_king_bar"
+  ],
+  "start": [
+   "ward_observer",
+   "tango",
+   "flask",
+   "faerie_fire",
+   "ring_of_regen",
+   "branches",
+   "branches"
+  ]
+ },
+ "witch_doctor": {
+  "early": [
+   "magic_stick",
+   "arcane_boots"
+  ],
+  "late": [
+   "ultimate_scepter",
+   "black_king_bar",
+   "aeon_disk"
+  ],
+  "mid": [
+   "magic_wand",
+   "aghanims_shard",
+   "glimmer_cape"
+  ],
+  "other": [
+   "tranquil_boots",
+   "medallion_of_courage",
+   "sheepstick",
+   "holy_locket",
+   "dagon_5",
+   "guardian_greaves",
+   "aether_lens",
+   "ghost",
+   "cyclone",
+   "veil_of_discord",
+   "lotus_orb"
+  ],
+  "start": [
+   "tango",
+   "tango",
+   "ward_observer",
+   "clarity",
+   "enchanted_mango",
+   "enchanted_mango",
+   "flask"
+  ]
+ },
+ "zuus": {
+  "early": [
+   "bottle",
+   "boots",
+   "null_talisman"
+  ],
+  "late": [
+   "blink",
+   "refresher",
+   "octarine_core"
+  ],
+  "mid": [
+   "travel_boots",
+   "aether_lens",
+   "ultimate_scepter"
+  ],
+  "other": [
+   "cyclone",
+   "sheepstick",
+   "bloodstone",
+   "aghanims_shard",
+   "aeon_disk",
+   "ethereal_blade",
+   "arcane_blink",
+   "yasha_and_kaya",
+   "sphere",
+   "black_king_bar",
+   "ghost"
+  ],
+  "start": [
+   "circlet",
+   "circlet",
+   "mantle",
+   "tango"
+  ]
+ }
+}

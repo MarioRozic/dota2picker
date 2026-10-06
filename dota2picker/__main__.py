@@ -11,7 +11,7 @@ from pathlib import Path
 
 import uvicorn
 
-from . import gsi, stats
+from . import builds, gsi, stats
 from .demo import demo_stats
 from .server import create_app
 
@@ -93,7 +93,8 @@ def main() -> None:
         matcher = vision.PortraitMatcher(vision.load_portraits(vision.default_portrait_dir()))
         watcher = capture.ScreenWatcher(matcher, should_run=lambda: True, monitor=args.monitor)
 
-    app = create_app(data, gsi_token=token, watcher=watcher)
+    timings = None if args.demo else builds.TimingsCache()
+    app = create_app(data, gsi_token=token, watcher=watcher, item_timings=timings)
     if watcher is not None:
         watcher.should_run = app.state.screen_should_run
         watcher.start()
