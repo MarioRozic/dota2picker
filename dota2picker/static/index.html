@@ -19,6 +19,9 @@
   .cols { display:grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap:10px; }
   .col { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:8px 10px; min-width:0; }
   .col.mine { border-color:var(--accent); }
+  .sugg.previewing { outline:1px dashed var(--accent); outline-offset:2px; border-radius:4px; }
+  #items.preview .phases { opacity:.75; }
+  #items.preview .phase { border-style:dashed; }
   .col h3 { margin:0 0 4px; font-size:13px; display:flex; align-items:baseline; gap:6px; }
   .col h3 b { font-size:18px; color:var(--accent); }
   .col h3 span { color:var(--muted); font-weight:400; }
@@ -150,6 +153,12 @@ let me = null;  // the hero you picked, for counter items
 // It only ever fills your own slot: picking another hero replaces it, and it never
 // pushes out a teammate read from the screen or typed in.
 let myPick = null;
+// A hero you clicked in Best picks but haven't locked in yet. It only drives the item
+// build: it isn't on the board and doesn't count in any score until it's really picked.
+let preview = false;
+// Game State Integration says you're in the draft and haven't picked: your own top-bar
+// slot is empty, so its backdrop must not be read as a hero.
+let ownSlotEmpty = false;
 let drawn = "";  // the draft render() last drew, so polls that change nothing don't redraw
 
 function taken() { return new Set([...draft.enemies, ...draft.allies, ...draft.bans]); }
@@ -166,20 +175,22 @@ function rebuild() {
   for (const list of ["allies", "enemies"]) {
     const reads = (screen?.[sides[list]] || []).filter(r => r && !placed.has(r.hero_id));
     reads.forEach(r => placed.add(r.hero_id));
-    const room = Math.max(0, 5 - manual[list].length);
+    const room = Math.max(0, 5 - manual[list].length - (list === "allies" && ownSlotEmpty ? 1 : 0));
     const keep = new Set([...reads].sort((a, b) => b.score - a.score).slice(0, room));
     const shown = reads.filter(r => keep.has(r));  // still in top-bar order
     shown.filter(r => r.score < SURE_SCORE).forEach(r => unsure.add(r.hero_id));
     draft[list] = [...shown.map(r => r.hero_id), ...manual[list]];
   }
   if (myPick && draft.allies.length < 5) draft.allies.push(myPick);
+  if (preview && draft.allies.includes(me)) preview = false;  // it's on the board now: a real pick
+  if (preview && (draft.enemies.includes(me) || draft.bans.includes(me))) { me = null; preview = false; position = null; }
   // A full team without your pick still keeps it as your hero for the item build.
-  if (me && me !== myPick && !draft.allies.includes(me)) { me = null; position = null; }
+  if (me && !preview && me !== myPick && !draft.allies.includes(me)) { me = null; position = null; }
 }
 
 function refresh() {
   rebuild();
-  const now = JSON.stringify([draft, [...unsure], me, position]);
+  const now = JSON.stringify([draft, [...unsure], me, position, preview]);
   if (now !== drawn) { drawn = now; render(); }
 }
 
@@ -209,7 +220,7 @@ function remove(list, id) {
     screenRequest("/api/screen/reject", { hero_id: id });
   }
   if (id === myPick) myPick = null;
-  if (id === me) { me = null; position = null; }
+  if (id === me) { me = null; preview = false; position = null; }
   refresh();
   $("q").focus();  // keep typing heroes without clicking back into the box
 }
@@ -217,12 +228,18 @@ function remove(list, id) {
 function setMe(id, pos = null) {
   if (draft.enemies.includes(id) || draft.bans.includes(id)) return;
   if (id !== me || pos) position = pos;
-  me = id;
+  me = id; preview = false;
   // Your own hero is certain, so keep it even if the screen read of its slot changes.
   myPick = manual.allies.includes(id) ? null : id;
   refresh();
 }
-function clearMe() { me = null; myPick = null; position = null; refresh(); }
+// Look at a hero's item build before you lock it in. Click it again to stop.
+function previewHero(id, pos) {
+  if (preview && me === id && position === pos) return clearMe();
+  me = id; position = pos; preview = true;
+  refresh();
+}
+function clearMe() { me = null; myPick = null; preview = false; position = null; refresh(); }
 
 function chip(list, id) {
   const h = BY_ID[id];
@@ -325,8 +342,9 @@ async function suggest() {
     el.append(...col.best.map(s => {
       const row = suggRow(s);
       row.classList.add("pickable");
-      row.title = `Click when you pick this hero to play ${col.name}`;
-      row.onclick = () => setMe(s.hero.id, col.position);
+      if (preview && s.hero.id === me && position === col.position) row.classList.add("previewing");
+      row.title = `Click to see this hero's item build as ${col.name}. It counts in the scores once you lock it in.`;
+      row.onclick = () => previewHero(s.hero.id, col.position);
       return row;
     }));
     if (!col.best.length) el.insertAdjacentHTML("beforeend", '<div class="empty">No heroes left for this position.</div>');
@@ -343,10 +361,13 @@ async function suggestItems() {
   const box = $("items");
   if (!me) {
     $("itemsTitle").textContent = "Item build";
-    box.innerHTML = '<div class="empty">Click a hero under Best picks once you pick it (its column sets your position), or click ★ on your hero under Allies.</div>';
+    box.classList.remove("preview");
+    box.innerHTML = '<div class="empty">Click a hero under Best picks to see its item build (its column sets your position), or click ★ on your hero under Allies.</div>';
     return;
   }
-  $("itemsTitle").textContent = `Item build for ${BY_ID[me].localized_name}` + (position ? ` (${POSITIONS[position]})` : "");
+  $("itemsTitle").textContent = `Item build for ${BY_ID[me].localized_name}` + (position ? ` (${POSITIONS[position]})` : "") +
+    (preview ? " · preview, not picked yet" : "");
+  box.classList.toggle("preview", preview);
   const res = await fetch("/api/build", { method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ hero_id: me, enemies: draft.enemies, position }) });
   if (ticket !== pendingItems || !res.ok) return;
@@ -386,7 +407,8 @@ async function pollGame() {
     screenOn = !!g.screen;
     if (draftId !== null && g.draft_id !== draftId) reset(true);  // a new game's draft has started
     draftId = g.draft_id;
-    if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); setMe(g.hero_id); }
+    ownSlotEmpty = !!g.in_draft && !g.hero_id;
+    if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); setMe(g.hero_id, preview && me === g.hero_id ? position : null); }
     $("seen").hidden = !g.screen;
     if (g.screen?.error) st.textContent = "Screen read failed: " + g.screen.error;
     if (g.screen && epoch === screenEpoch) screen = g.screen;
@@ -397,7 +419,7 @@ async function pollGame() {
 
 // Clear everything for the next game; rank, side and Top N stay.
 function reset(newGame = false) {
-  manual.enemies = []; manual.allies = []; manual.bans = []; me = null; myPick = null; position = null;
+  manual.enemies = []; manual.allies = []; manual.bans = []; me = null; myPick = null; preview = false; position = null;
   screen = null;
   // In a new game your pick from GSI is new, and the server has already started
   // the screen reader over. A reset by hand keeps ignoring the hero GSI already
