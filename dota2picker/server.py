@@ -9,7 +9,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, Field
 
-from . import gsi, heroes
+from . import gsi, heroes, items
 from .scoring import Draft, Scorer
 from .stats import BRACKETS, Stats
 
@@ -20,6 +20,12 @@ class DraftIn(BaseModel):
     bans: list[int] = []
     position: int | None = Field(None, ge=1, le=5)
     bracket: str | None = None
+
+
+class ItemsIn(BaseModel):
+    hero_id: int
+    enemies: list[int] = []
+    position: int | None = Field(None, ge=1, le=5)
 
 
 def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> FastAPI:
@@ -55,6 +61,17 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
             Draft(body.allies, body.enemies, body.bans), position=body.position
         )
         return {k: [s.to_dict() for s in v] for k, v in result.items()}
+
+    @app.post("/api/items")
+    def suggest_items(body: ItemsIn) -> dict:
+        known = heroes.by_id()
+        for hid in [body.hero_id, *body.enemies]:
+            if hid not in known:
+                raise HTTPException(400, f"unknown hero id {hid}")
+        return {
+            "role": items.role_for(known[body.hero_id], body.position),
+            "items": [s.to_dict() for s in items.suggest_items(body.hero_id, body.enemies, body.position)],
+        }
 
     @app.get("/api/game")
     def game() -> dict:

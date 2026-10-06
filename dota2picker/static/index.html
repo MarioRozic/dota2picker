@@ -40,6 +40,13 @@
           border-radius:5px; padding:2px 6px 2px 2px; cursor:pointer; font-size:13px; }
   .chip:hover { border-color:var(--bad); }
   .chip.unsure { border-style:dashed; border-color:var(--accent); }
+  .chip.me { border-color:var(--accent); background:#2e2a1e; }
+  .chip .star { color:var(--muted); padding:0 2px; }
+  .chip .star:hover, .chip.me .star { color:var(--accent); }
+  .sugg.pickable { cursor:pointer; }
+  .sugg.pickable:hover .name { color:var(--accent); }
+  img.item { width:44px; height:32px; border-radius:3px; object-fit:cover; background:#000; }
+  .cost { margin-left:auto; color:var(--accent); font-variant-numeric:tabular-nums; font-size:13px; }
   .chip.unsure::after { content:"?"; color:var(--accent); font-weight:700; }
   img.icon { width:26px; height:26px; border-radius:3px; object-fit:cover; background:#000; }
   img.portrait { width:64px; height:36px; border-radius:3px; object-fit:cover; background:#000; }
@@ -82,6 +89,7 @@
 
   <div class="team"><h2>Best picks</h2><div id="best"></div></div>
   <div class="team"><h2>Avoid</h2><div id="avoid"></div></div>
+  <div class="team"><h2 id="itemsTitle">Counter items</h2><div id="items"></div></div>
 </main>
 <script>
 const $ = id => document.getElementById(id);
@@ -98,6 +106,7 @@ const unsure = new Set();  // screen reads with low confidence, shown with a "?"
 const SURE_SCORE = 0.7;
 let wasInDraft = false;
 let position = null;  // 1-5, or null for any position
+let me = null;  // the hero you picked, for counter items
 
 function taken() { return new Set([...draft.enemies, ...draft.allies, ...draft.bans]); }
 
@@ -107,14 +116,30 @@ function add(list, id) {
   draft[list].push(id);
   $("q").value = ""; closeResults(); render();
 }
-function remove(list, id) { draft[list] = draft[list].filter(x => x !== id); unsure.delete(id); render(); }
+function remove(list, id) {
+  draft[list] = draft[list].filter(x => x !== id); unsure.delete(id);
+  if (id === me) me = null;
+  render();
+}
+function setMe(id) {
+  if (!draft.allies.includes(id)) add("allies", id);
+  me = draft.allies.includes(id) ? id : me;
+  render();
+}
 
 function chip(list, id) {
   const h = BY_ID[id];
   const el = document.createElement("div");
-  el.className = "chip" + (unsure.has(id) ? " unsure" : "");
+  el.className = "chip" + (unsure.has(id) ? " unsure" : "") + (id === me ? " me" : "");
   el.title = unsure.has(id) ? "Read from screen, not sure. Click to remove" : "Click to remove";
   el.innerHTML = `<img class="icon" src="${h.img_url}" alt=""><span>${h.localized_name}</span>`;
+  if (list === "allies") {
+    const star = document.createElement("span");
+    star.className = "star"; star.textContent = "★";
+    star.title = id === me ? "Your hero" : "This is my hero";
+    star.onclick = e => { e.stopPropagation(); me = id === me ? null : id; render(); };
+    el.append(star);
+  }
   el.onclick = () => remove(list, id);
   return el;
 }
@@ -124,6 +149,7 @@ function render() {
     $(list).replaceChildren(...draft[list].map(id => chip(list, id)));
   }
   suggest();
+  suggestItems();
 }
 
 function search(q) {
@@ -189,9 +215,44 @@ async function suggest() {
   const res = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   if (ticket !== pending || !res.ok) return;
   const data = await res.json();
-  $("best").replaceChildren(...data.best.map(s => suggRow(s, true)));
+  $("best").replaceChildren(...data.best.map(s => {
+    const row = suggRow(s, true);
+    row.classList.add("pickable");
+    row.title = "Click when you pick this hero";
+    row.onclick = () => setMe(s.hero.id);
+    return row;
+  }));
   if (!draft.enemies.length) $("best").insertAdjacentHTML("afterbegin", '<div class="empty">Add enemy heroes to see counters. Showing meta picks for now.</div>');
   $("avoid").replaceChildren(...data.avoid.map(s => suggRow(s, false)));
+}
+
+let pendingItems = 0;
+async function suggestItems() {
+  const ticket = ++pendingItems;
+  const box = $("items");
+  if (!me) {
+    $("itemsTitle").textContent = "Counter items";
+    box.innerHTML = '<div class="empty">Click ★ on your hero under Allies, or click a hero in Best picks once you pick it.</div>';
+    return;
+  }
+  $("itemsTitle").textContent = `Counter items for ${BY_ID[me].localized_name}`;
+  if (!draft.enemies.length) {
+    box.innerHTML = '<div class="empty">Add enemy heroes to see which items counter them.</div>';
+    return;
+  }
+  const res = await fetch("/api/items", { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ hero_id: me, enemies: draft.enemies, position }) });
+  if (ticket !== pendingItems || !res.ok) return;
+  const data = await res.json();
+  box.replaceChildren(...data.items.map(it => {
+    const el = document.createElement("div");
+    el.className = "sugg";
+    const why = it.answers.map(a => `${a.enemy} (${a.threats.join(", ")})`).join("; ");
+    el.innerHTML = `<img class="item" src="${it.img_url}" alt="">
+      <div><div class="name">${it.name}</div><div class="why">vs ${why}</div></div>
+      <div class="cost">${it.cost}</div>`;
+    return el;
+  }));
 }
 
 function mergeScreen(screen, mySide) {
@@ -214,7 +275,7 @@ async function pollGame() {
     st.classList.toggle("live", !!g.in_draft);
     if (g.in_draft && !wasInDraft) newDraft();  // a new game's draft has started
     wasInDraft = !!g.in_draft;
-    if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); add("allies", g.hero_id); }
+    if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); setMe(g.hero_id); }
     $("seen").hidden = !g.screen;
     if (g.screen?.error) st.textContent = "Screen read failed: " + g.screen.error;
     if (g.screen) mergeScreen(g.screen, $("side").value || g.team || "radiant");
@@ -223,7 +284,7 @@ async function pollGame() {
 }
 
 function newDraft() {
-  draft.enemies = []; draft.allies = []; draft.bans = [];
+  draft.enemies = []; draft.allies = []; draft.bans = []; me = null;
   gsiSeen.clear(); screenSeen.clear(); unsure.clear(); render();
 }
 $("clear").onclick = newDraft;
@@ -238,7 +299,7 @@ function renderPositions(names) {
     b.onclick = () => {
       position = position === +n ? null : +n;
       store.set("position", position ?? "");
-      renderPositions(names); suggest();
+      renderPositions(names); suggest(); suggestItems();
     };
     return b;
   }));

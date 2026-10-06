@@ -23,6 +23,7 @@ class Hero:
     img: str
     icon: str
     positions: tuple[int, ...] = ()  # most played first
+    attack_type: str = "Melee"  # "Melee" or "Ranged"
 
     @property
     def short_name(self) -> str:
@@ -42,6 +43,7 @@ class Hero:
             "img_url": self.img_url,
             "icon_url": STEAM_CDN + self.icon,
             "positions": list(self.positions),
+            "attack_type": self.attack_type,
         }
 
 
@@ -61,6 +63,7 @@ def all_heroes() -> tuple[Hero, ...]:
             img=h["img"],
             icon=h["icon"],
             positions=tuple(positions.get(h["name"].removeprefix("npc_dota_hero_"), ())),
+            attack_type=h["attack_type"],
         )
         for h in raw
     )
