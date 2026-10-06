@@ -28,8 +28,10 @@ hero chip to remove it. The page fills the browser window and shows the best
 picks for every position side by side (1 Carry ... 5 Hard support), each
 column only listing heroes commonly played there, so you don't have to pick a
 position first. Choose Top 3, 5 or 10 per position and the rank bracket at
-the top. Click a hero in a column once you pick it: that makes it your hero
-and that column your position, for the item build.
+the top. Click a hero in a column to preview its item build for that
+position (dashed border). A preview doesn't count in any score until you lock
+the hero in: Game State Integration or the screen reading your slot confirms
+it, or click ★ on it under Allies.
 **↺ Reset** (top right) clears all heroes, your hero and the item build for
 the next game, and keeps your rank, side and Top N. With Game State
 Integration this happens on its own when a new draft starts.
@@ -54,7 +56,7 @@ costing 1400 or more belongs in. They're downloaded the first time you pick
 a hero and kept for a day. Run `python scripts/update_item_data.py` after a
 patch to refresh the item list and Valve's builds. Your hero is set
 automatically by Game State Integration; otherwise click ★ next to your hero
-under Allies, or click a hero in Best picks when you pick it.
+under Allies. Clicking a hero in Best picks shows its build as a preview.
 
 Cores (positions 1-3) and supports (4-5) get different items. The column
 you clicked your hero in sets your position; if you set your hero another way,
