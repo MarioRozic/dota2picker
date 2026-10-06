@@ -100,3 +100,39 @@ def test_load_falls_back_to_stale_cache(tmp_path, monkeypatch):
 
     monkeypatch.setattr(stats, "fetch", boom)
     assert stats.load(path).fetched_at == 0
+
+
+def test_slow_windows_are_retried_or_skipped():
+    """A query that times out once is retried; a window that keeps timing out
+    is skipped and an older one used, instead of dropping to pro data."""
+    calls: dict[str, int] = {}
+    newest = 9_000_000_000
+    stuck = f"match_id > {newest - 2 * stats.PUBLIC_MATCH_WINDOW_IDS}"  # 2nd window
+    flaky = f"match_id > {newest - 3 * stats.PUBLIC_MATCH_WINDOW_IDS}"  # 3rd window
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        sql = request.url.params.get("sql", "")
+        calls[sql] = calls.get(sql, 0) + 1
+        if stuck in sql and "dire_team" in sql:
+            raise httpx.ReadTimeout("slow", request=request)
+        if flaky in sql and "dire_team" in sql and calls[sql] == 1:
+            raise httpx.ReadTimeout("slow", request=request)
+        return fake_opendota(request)
+
+    c = httpx.Client(base_url=stats.OPENDOTA, transport=httpx.MockTransport(handler))
+    data = stats.fetch(c, sleep=lambda s: None)
+    n = stats.PUBLIC_MATCH_WINDOWS
+    assert data.source == "public"
+    # Still a full set of windows, and matchups and synergy cover the same ones.
+    assert data.matchups[1][2] == stats.Record(100 * n, 55 * n)
+    assert data.synergy[1][2] == stats.Record(100 * n, 55 * n)
+
+
+def test_too_few_windows_falls_back_to_pro():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "dire_team" in request.url.params.get("sql", ""):
+            raise httpx.ReadTimeout("slow", request=request)
+        return fake_opendota(request)
+
+    c = httpx.Client(base_url=stats.OPENDOTA, transport=httpx.MockTransport(handler))
+    assert stats.fetch(c, sleep=lambda s: None).source == "pro"

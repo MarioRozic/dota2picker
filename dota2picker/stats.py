@@ -33,6 +33,12 @@ REQUEST_INTERVAL_SECONDS = 1.1
 # of matches (~85k games) and its queries return in a couple of seconds.
 PUBLIC_MATCH_WINDOW_IDS = 200_000
 PUBLIC_MATCH_WINDOWS = 12  # ~1 day, ~1M matches
+# Most window queries take 4-8 s, but some take over two minutes. Failed
+# windows are skipped (up to MAX_TRIES windows are tried), and below
+# MIN_WINDOWS the app falls back to the pro endpoint.
+PUBLIC_MATCH_MAX_TRIES = 16
+PUBLIC_MATCH_MIN_WINDOWS = 4
+EXPLORER_TIMEOUT_SECONDS = 150
 
 LATEST_MATCH_SQL = "SELECT max(match_id) AS max_id FROM public_matches"
 
@@ -187,18 +193,47 @@ def _explore(client: httpx.Client, sql: str) -> list[dict]:
     return body["rows"]
 
 
+def _explore_retry(client: httpx.Client, sql: str, sleep) -> list[dict]:
+    """One query, retried once: the explorer sometimes takes minutes on a window."""
+    try:
+        return _explore(client, sql)
+    except httpx.HTTPError as e:
+        log.info("Explorer query failed (%s); retrying once", e)
+        sleep(REQUEST_INTERVAL_SECONDS)
+        return _explore(client, sql)
+
+
 def fetch_public(client: httpx.Client, sleep=time.sleep) -> tuple[dict, dict]:
-    """Matchups and synergy from the newest public matches, one id window at a time."""
-    hi = int(_explore(client, LATEST_MATCH_SQL)[0]["max_id"])
+    """Matchups and synergy from the newest public matches, one id window at a time.
+
+    A window whose queries still fail after a retry is skipped and an older one
+    tried instead, so one slow query doesn't throw the rest away. Raises if
+    fewer than PUBLIC_MATCH_MIN_WINDOWS windows come back.
+    """
+    hi = int(_explore_retry(client, LATEST_MATCH_SQL, sleep)[0]["max_id"])
     matchups: dict[int, dict[int, Record]] = {}
     synergy: dict[int, dict[int, Record]] = {}
-    for _ in range(PUBLIC_MATCH_WINDOWS):
+    done = 0
+    for _ in range(PUBLIC_MATCH_MAX_TRIES):
+        if done == PUBLIC_MATCH_WINDOWS:
+            break
         lo = hi - PUBLIC_MATCH_WINDOW_IDS
-        sleep(REQUEST_INTERVAL_SECONDS)
-        parse_public_matchups(_explore(client, MATCHUPS_SQL.format(lo=lo, hi=hi)), matchups)
-        sleep(REQUEST_INTERVAL_SECONDS)
-        parse_public_synergy(_explore(client, SYNERGY_SQL.format(lo=lo, hi=hi)), synergy)
+        try:
+            sleep(REQUEST_INTERVAL_SECONDS)
+            vs = _explore_retry(client, MATCHUPS_SQL.format(lo=lo, hi=hi), sleep)
+            sleep(REQUEST_INTERVAL_SECONDS)
+            with_ = _explore_retry(client, SYNERGY_SQL.format(lo=lo, hi=hi), sleep)
+        except httpx.HTTPError as e:
+            log.warning("Skipping public matches %d-%d (%s)", lo, hi, e)
+        else:
+            # Add a window only when both queries worked, so both tables cover the same games.
+            parse_public_matchups(vs, matchups)
+            parse_public_synergy(with_, synergy)
+            done += 1
         hi = lo
+    if done < PUBLIC_MATCH_MIN_WINDOWS:
+        raise httpx.HTTPError(f"only {done} of {PUBLIC_MATCH_WINDOWS} public-match windows loaded")
+    log.info("Loaded %d public-match windows", done)
     return matchups, synergy
 
 
@@ -206,7 +241,7 @@ def fetch(client: httpx.Client | None = None, sleep=time.sleep) -> Stats:
     own_client = client is None
     client = client or httpx.Client(
         base_url=OPENDOTA,
-        timeout=60,
+        timeout=httpx.Timeout(30, read=EXPLORER_TIMEOUT_SECONDS),
         # OpenDota's Cloudflare blocks some default library user agents.
         headers={"User-Agent": "dota2picker (+https://github.com/MarioRozic/dota2picker)"},
     )
