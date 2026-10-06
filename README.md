@@ -19,7 +19,7 @@ source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 
 dota2picker --demo               # made-up stats, no network: try the UI
-dota2picker                      # real stats (first run downloads ~130 OpenDota calls, about 3 min)
+dota2picker                      # real stats (first run downloads from OpenDota, about a minute)
 ```
 
 The browser opens at http://127.0.0.1:53000/. Type a hero name and press
@@ -107,8 +107,15 @@ corner changes to "Draft in progress" during hero selection.
 
 For each candidate hero, the app sums its matchup advantage against every
 enemy (how much better it does than the two heroes' overall win rates
-predict, with small samples shrunk toward zero), plus a small bonus for its
-win rate in your bracket. See `dota2picker/scoring.py`.
+predict, with small samples shrunk toward zero), the same kind of edge with
+every ally (how much more often the pair wins together), plus a small bonus
+for its win rate in your bracket. These are the numbers Dota Plus shows in
+"Friends and Foes". See `dota2picker/scoring.py`.
+
+Matchups and synergy come from about the last day of public matches in
+OpenDota's database (~1M games, all ranks). If that query fails, the app falls back to
+OpenDota's per-hero matchup endpoint, which only counts pro games and is much
+less reliable.
 
 ## Tests
 

@@ -29,6 +29,19 @@ def test_small_samples_are_shrunk():
     assert 0 < small < big / 5
 
 
+def test_synergy_rewards_heroes_that_win_together():
+    s = two_hero_stats(100, 50)
+    s.synergy = {AM: {AXE: Record(10_000, 6_000)}, AXE: {AM: Record(10_000, 6_000)}}
+    sc = Scorer(s)
+    assert sc.synergy(AM, AXE) > 0.08
+    assert sc.synergy(AM, BANE) == 0.0
+    # With Axe as an ally, AM gains the synergy on top of its matchups.
+    with_ally = sc.score(AM, Draft(allies=[AXE], enemies=[BANE]))
+    alone = sc.score(AM, Draft(enemies=[BANE]))
+    assert with_ally.score > alone.score + 0.08
+    assert with_ally.to_dict()["synergy"][0]["ally"] == "Axe"
+
+
 def test_unknown_matchup_is_neutral():
     assert Scorer(two_hero_stats(100, 50)).advantage(AM, LION) == 0.0
 
