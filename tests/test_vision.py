@@ -117,3 +117,35 @@ def test_annotate_draws_on_top_strip():
     reads = vision.PortraitMatcher(synthetic_portraits(image)).read(image)
     out = vision.annotate(image, reads)
     assert abs(out.shape[1] - image.shape[1]) <= 3 and out.shape[0] < image.shape[0] // 5
+
+
+def test_empty_slots_are_told_apart_from_unknown_ones():
+    matcher = vision.PortraitMatcher(synthetic_portraits(load("strategy_full.jpg")))
+    assert all(r.empty for r in matcher.read(load("draft_empty.jpg")))
+    assert not any(r.empty for r in matcher.read(load("strategy_full.jpg")))
+
+
+def test_excluded_hero_is_not_read_in_that_slot():
+    image = load("strategy_full.jpg")
+    matcher = vision.PortraitMatcher(synthetic_portraits(image))
+    picks = ids(STRATEGY_PICKS)
+    reads = matcher.read(image, exclude=[{picks[0]}] + [set()] * 9)
+    assert reads[0].hero_id != picks[0]
+    assert [r.hero_id for r in reads[1:]] == picks[1:]
+
+
+def test_duplicate_read_goes_to_the_closer_match():
+    image = load("strategy_full.jpg")
+    matcher = vision.PortraitMatcher(synthetic_portraits(image))
+    picks = ids(STRATEGY_PICKS)
+    # Radiant slot 1 shows its hero faded into slot 2's (like a portrait mid
+    # animation), so it reads as slot 2's hero. Slot 2 is the closer match and
+    # must keep its hero.
+    h, w = image.shape[:2]
+    (a0, b0, a1, b1), (c0, d0, c1, d1) = vision.slot_boxes(w, h)[:2]
+    image[b0:b1, a0:a1] = cv2.addWeighted(image[d0:d1, c0:c1], 0.6, image[b0:b1, a0:a1], 0.4, 0)
+    assert matcher.match(vision.crop_slots(image)[0]).hero_id == picks[1]
+    reads = matcher.read(image)
+    assert reads[1].hero_id == picks[1]
+    assert reads[0].hero_id != picks[1]
+    assert [r.hero_id for r in reads[2:]] == picks[2:]

@@ -1,8 +1,7 @@
 # Testing Dota2Picker on Windows in a real game
 
-Use the **main** branch. Screen-detection fixes (#2), the position picker (#3)
-and the tighter position list (#4) are all merged. Counter items are still on
-the unmerged `counter-items` branch, so they won't show up yet.
+Use the **main** branch. Screen-detection fixes (#2), the position picker (#3),
+the tighter position list (#4) and counter items (#5) are all merged.
 
 ## 1. One-time setup
 
@@ -87,13 +86,15 @@ the unmerged `counter-items` branch, so they won't show up yet.
    "Game not detected" to **"Draft in progress"** during hero selection.
 5. During the draft, stay in Dota. The app only reads the screen while it
    looks like a draft, so alt-tabbing to the browser pauses reading.
-   Allies and enemies fill in on their own; a hero is added after it reads the
-   same on two captures in a row.
+   Allies and enemies fill in on their own and follow the top bar as it
+   changes; a slot changes after it reads the same on two captures in a row.
 6. Check suggestions on a phone or second monitor. For a phone:
    `dota2picker --host 0.0.0.0`, then open `http://<your-PC-IP>:53000/`
    (find the IP with `ipconfig`; allow the Windows Firewall prompt).
-7. Fixing mistakes: a dashed hero with "?" is a guess. Click any hero to remove
-   it and type the right one (Enter = enemy, Shift+Enter = ally).
+7. Fixing mistakes: a dashed hero with "?" is a guess. Click a wrong hero: the
+   app reads that slot again without it and shows its next guess, if it has
+   one. Or type the right one (Enter = enemy, Shift+Enter = ally); heroes you
+   type stay put.
 
 ## 5. When something goes wrong, send me this
 

@@ -98,47 +98,102 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, v); } catch {} },
 };
 let HEROES = [], BY_ID = {};
+// What's shown: heroes you added by hand plus what the screen reads right now.
 const draft = { enemies: [], allies: [], bans: [] };
+const manual = { enemies: [], allies: [], bans: [] };  // added by hand, kept until removed or a new draft
+let screen = null;  // latest screen reads: {radiant: [5], dire: [5]}, each {hero_id, score} or null
+let screenOn = false;  // the app is reading the screen
+let screenEpoch = 0;  // changes around each request that changes the screen reader, so older reads are dropped
+let team = null;  // your side, from GSI
 let active = 0, matches = [];
 const gsiSeen = new Set();  // own picks already auto-added, so removing one sticks
-const screenSeen = new Set();  // heroes already read from the screen, so removing one sticks
 const unsure = new Set();  // screen reads with low confidence, shown with a "?"
 const SURE_SCORE = 0.7;
 let wasInDraft = false;
 let position = null;  // 1-5, or null for any position
 let me = null;  // the hero you picked, for counter items
+let drawn = "";  // the draft render() last drew, so polls that change nothing don't redraw
 
 function taken() { return new Set([...draft.enemies, ...draft.allies, ...draft.bans]); }
 
+// Work out the shown draft. Heroes you placed by hand stay where you put them,
+// and each team shows at most five, so the screen reads the app is least sure
+// of make way for heroes you added.
+function rebuild() {
+  const mine = $("side").value || team || "radiant";
+  const sides = { allies: mine, enemies: mine === "radiant" ? "dire" : "radiant" };
+  const placed = new Set([...manual.enemies, ...manual.allies, ...manual.bans]);
+  unsure.clear();
+  draft.bans = [...manual.bans];
+  for (const list of ["allies", "enemies"]) {
+    const reads = (screen?.[sides[list]] || []).filter(r => r && !placed.has(r.hero_id));
+    reads.forEach(r => placed.add(r.hero_id));
+    const room = Math.max(0, 5 - manual[list].length);
+    const keep = new Set([...reads].sort((a, b) => b.score - a.score).slice(0, room));
+    const shown = reads.filter(r => keep.has(r));  // still in top-bar order
+    shown.filter(r => r.score < SURE_SCORE).forEach(r => unsure.add(r.hero_id));
+    draft[list] = [...shown.map(r => r.hero_id), ...manual[list]];
+  }
+  if (me && !draft.allies.includes(me)) me = null;
+}
+
+function refresh() {
+  rebuild();
+  const now = JSON.stringify([draft, [...unsure], me]);
+  if (now !== drawn) { drawn = now; render(); }
+}
+
+function onScreen(id) {
+  return !!screen && [...screen.radiant, ...screen.dire].some(r => r?.hero_id === id);
+}
+
+async function screenRequest(path, body = {}) {
+  screenEpoch++;  // reads already on their way don't know about this yet
+  try {
+    await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  } catch {}
+  screenEpoch++;
+}
+
 function add(list, id) {
   if (taken().has(id)) return;
-  if (list !== "bans" && draft[list].length >= 5) return;
-  draft[list].push(id);
-  $("q").value = ""; closeResults(); render();
+  if (list !== "bans" && manual[list].length >= 5) return;
+  manual[list].push(id);
+  $("q").value = ""; closeResults(); refresh();
 }
 function remove(list, id) {
-  draft[list] = draft[list].filter(x => x !== id); unsure.delete(id);
+  manual[list] = manual[list].filter(x => x !== id);
+  if (list !== "bans" && onScreen(id)) {
+    // A wrong read: drop it now and have the app look at that slot again without it.
+    for (const side of ["radiant", "dire"]) screen[side] = screen[side].map(r => r?.hero_id === id ? null : r);
+    screenRequest("/api/screen/reject", { hero_id: id });
+  }
   if (id === me) me = null;
-  render();
+  refresh();
   $("q").focus();  // keep typing heroes without clicking back into the box
 }
 function setMe(id) {
-  if (!draft.allies.includes(id)) add("allies", id);
-  me = draft.allies.includes(id) ? id : me;
-  render();
+  // Your own hero is certain, so keep it even if the screen read of its slot changes.
+  const elsewhere = draft.enemies.includes(id) || draft.bans.includes(id);
+  if (!elsewhere && !manual.allies.includes(id) && manual.allies.length < 5) manual.allies.push(id);
+  rebuild();
+  if (draft.allies.includes(id)) me = id;
+  refresh();
 }
 
 function chip(list, id) {
   const h = BY_ID[id];
   const el = document.createElement("div");
   el.className = "chip" + (unsure.has(id) ? " unsure" : "") + (id === me ? " me" : "");
-  el.title = unsure.has(id) ? "Read from screen, not sure. Click to remove" : "Click to remove";
+  el.title = manual[list].includes(id) ? "Click to remove"
+    : (unsure.has(id) ? "Read from the screen, not sure." : "Read from the screen.") +
+      " If it's wrong, click it: the app looks at that slot again without it";
   el.innerHTML = `<img class="icon" src="${h.img_url}" alt=""><span>${h.localized_name}</span>`;
   if (list === "allies") {
     const star = document.createElement("span");
     star.className = "star"; star.textContent = "★";
     star.title = id === me ? "Your hero" : "This is my hero";
-    star.onclick = e => { e.stopPropagation(); me = id === me ? null : id; render(); };
+    star.onclick = e => { e.stopPropagation(); if (id === me) { me = null; refresh(); } else setMe(id); };
     el.append(star);
   }
   el.onclick = () => remove(list, id);
@@ -256,41 +311,35 @@ async function suggestItems() {
   }));
 }
 
-function mergeScreen(screen, mySide) {
-  const enemySide = mySide === "radiant" ? "dire" : "radiant";
-  for (const [list, side] of [["allies", mySide], ["enemies", enemySide]]) {
-    for (const read of screen[side] || []) {
-      if (!read || screenSeen.has(read.hero_id)) continue;
-      screenSeen.add(read.hero_id);
-      if (read.score < SURE_SCORE) unsure.add(read.hero_id);
-      add(list, read.hero_id);
-    }
-  }
-}
-
 async function pollGame() {
   try {
+    const epoch = screenEpoch;
     const g = await (await fetch("/api/game")).json();
     const st = $("status");
     st.textContent = g.game_state ? (g.in_draft ? "Draft in progress" : "In game") : "Game not detected";
     st.classList.toggle("live", !!g.in_draft);
+    team = g.team;
+    screenOn = !!g.screen;
     if (g.in_draft && !wasInDraft) newDraft();  // a new game's draft has started
     wasInDraft = !!g.in_draft;
     if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); setMe(g.hero_id); }
     $("seen").hidden = !g.screen;
     if (g.screen?.error) st.textContent = "Screen read failed: " + g.screen.error;
-    if (g.screen) mergeScreen(g.screen, $("side").value || g.team || "radiant");
+    if (g.screen && epoch === screenEpoch) screen = g.screen;
+    refresh();
   } catch {}
   setTimeout(pollGame, 1000);
 }
 
 function newDraft() {
-  draft.enemies = []; draft.allies = []; draft.bans = []; me = null;
-  gsiSeen.clear(); screenSeen.clear(); unsure.clear(); render();
+  manual.enemies = []; manual.allies = []; manual.bans = []; me = null;
+  screen = null; gsiSeen.clear();
+  if (screenOn) screenRequest("/api/screen/reset");  // the screen reader starts over too
+  refresh();
   $("q").focus();
 }
 $("clear").onclick = newDraft;
-$("side").addEventListener("change", () => store.set("side", $("side").value));
+$("side").addEventListener("change", () => { store.set("side", $("side").value); refresh(); });
 $("bracket").addEventListener("change", () => { store.set("bracket", $("bracket").value); suggest(); });
 
 function renderPositions(names) {
@@ -316,7 +365,7 @@ function renderPositions(names) {
   renderPositions(meta.positions);
   $("bracket").value = store.get("bracket", "");
   $("side").value = store.get("side", "");
-  render();
+  refresh();
   pollGame();
 })();
 </script>

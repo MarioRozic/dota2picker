@@ -28,8 +28,12 @@ class ItemsIn(BaseModel):
     position: int | None = Field(None, ge=1, le=5)
 
 
+class RejectIn(BaseModel):
+    hero_id: int
+
+
 def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> FastAPI:
-    """watcher: an optional capture.ScreenWatcher whose latest reads are exposed in /api/game."""
+    """watcher: an optional capture.ScreenWatcher whose slots are exposed in /api/game."""
     app = FastAPI(title="Dota2Picker")
     app.state.game = gsi.GameState()
     app.state.gsi_seen = False
@@ -85,6 +89,21 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
             out["screen"] = {"radiant": reads[:5], "dire": reads[5:], "error": watcher.error}
         return out
 
+    def need_watcher():
+        if watcher is None:
+            raise HTTPException(404, "screen reading is off")
+        return watcher
+
+    @app.post("/api/screen/reject")
+    def screen_reject(body: RejectIn) -> dict:
+        """You removed a hero read from the screen: read its slot again without it."""
+        return {"rejected": need_watcher().reject(body.hero_id)}
+
+    @app.post("/api/screen/reset")
+    def screen_reset() -> dict:
+        need_watcher().reset()
+        return {}
+
     @app.get("/api/screen.png")
     def screen_debug() -> Response:
         """The top of the last captured screen with slot boxes and reads drawn on."""
@@ -110,8 +129,11 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
             token = (payload.get("auth") or {}).get("token", "")
             if not hmac.compare_digest(token, gsi_token):
                 raise HTTPException(403, "bad GSI token")
+        was_in_draft = app.state.game.in_draft
         app.state.game = gsi.parse(payload)
         app.state.gsi_seen = True
+        if watcher is not None and app.state.game.in_draft and not was_in_draft:
+            watcher.reset()  # a new draft: forget the last game's picks
         return {}
 
     return app
