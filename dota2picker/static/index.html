@@ -14,7 +14,8 @@
   h1 { font-size:16px; margin:0; }
   .status { font-size:12px; color:var(--muted); }
   .status.live { color:var(--good); }
-  a.status { margin-right:10px; }
+  header > span { display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:center; gap:4px 10px; }
+  #reset { padding:5px 10px; }
   .row { display:flex; gap:8px; margin:10px 0; }
   select, input { background:var(--panel); color:var(--text); border:1px solid var(--line);
                   border-radius:6px; padding:7px 8px; font:inherit; }
@@ -74,6 +75,7 @@
     <span>
       <a id="seen" class="status" href="/api/screen.png" target="_blank" hidden>What it sees</a>
       <span id="status" class="status">Game not detected</span>
+      <button id="reset" title="Clear all heroes, your hero and the item build for a new game. Keeps your position and rank.">↺ Reset</button>
     </span>
   </header>
 
@@ -84,7 +86,6 @@
     <select id="side" title="Which side of the top bar is your team">
       <option value="">Side: auto</option><option value="radiant">Radiant (left)</option><option value="dire">Dire (right)</option>
     </select>
-    <button id="clear">New draft</button>
   </div>
 
   <div class="search">
@@ -109,7 +110,7 @@ const store = {
 let HEROES = [], BY_ID = {};
 // What's shown: heroes you added by hand plus what the screen reads right now.
 const draft = { enemies: [], allies: [], bans: [] };
-const manual = { enemies: [], allies: [], bans: [] };  // added by hand, kept until removed or a new draft
+const manual = { enemies: [], allies: [], bans: [] };  // added by hand, kept until removed or a reset
 let screen = null;  // latest screen reads: {radiant: [5], dire: [5]}, each {hero_id, score} or null
 let screenOn = false;  // the app is reading the screen
 let screenEpoch = 0;  // changes around each request that changes the screen reader, so older reads are dropped
@@ -118,7 +119,7 @@ let active = 0, matches = [];
 const gsiSeen = new Set();  // own picks already auto-added, so removing one sticks
 const unsure = new Set();  // screen reads with low confidence, shown with a "?"
 const SURE_SCORE = 0.7;
-let wasInDraft = false;
+let draftId = null;  // counts the drafts GSI has seen, so a new one resets the page
 let position = null;  // 1-5, or null for any position
 let me = null;  // the hero you picked, for counter items
 let drawn = "";  // the draft render() last drew, so polls that change nothing don't redraw
@@ -338,8 +339,8 @@ async function pollGame() {
     st.classList.toggle("live", !!g.in_draft);
     team = g.team;
     screenOn = !!g.screen;
-    if (g.in_draft && !wasInDraft) newDraft();  // a new game's draft has started
-    wasInDraft = !!g.in_draft;
+    if (draftId !== null && g.draft_id !== draftId) reset(true);  // a new game's draft has started
+    draftId = g.draft_id;
     if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); setMe(g.hero_id); }
     $("seen").hidden = !g.screen;
     if (g.screen?.error) st.textContent = "Screen read failed: " + g.screen.error;
@@ -349,14 +350,20 @@ async function pollGame() {
   setTimeout(pollGame, 1000);
 }
 
-function newDraft() {
+// Clear everything for the next game; position, rank and side stay.
+function reset(newGame = false) {
   manual.enemies = []; manual.allies = []; manual.bans = []; me = null;
-  screen = null; gsiSeen.clear();
-  if (screenOn) screenRequest("/api/screen/reset");  // the screen reader starts over too
+  screen = null;
+  // In a new game your pick from GSI is new, and the server has already started
+  // the screen reader over. A reset by hand keeps ignoring the hero GSI already
+  // reported (e.g. on the end screen), so it doesn't pop back, and restarts the reader.
+  if (newGame) gsiSeen.clear();
+  else if (screenOn) screenRequest("/api/screen/reset");
+  $("q").value = ""; closeResults();
   refresh();
   $("q").focus();
 }
-$("clear").onclick = newDraft;
+$("reset").onclick = () => reset();
 $("side").addEventListener("change", () => { store.set("side", $("side").value); refresh(); });
 $("bracket").addEventListener("change", () => { store.set("bracket", $("bracket").value); suggest(); });
 
