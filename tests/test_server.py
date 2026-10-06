@@ -50,7 +50,7 @@ def test_gsi_rejects_bad_token():
 
 def test_gsi_cfg_render(tmp_path):
     path = gsi.install_cfg(tmp_path, "http://127.0.0.1:53000/gsi", "tok")
-    text = path.read_text()
+    text = path.read_text(encoding="utf-8")
     assert path.name == "gamestate_integration_dota2picker.cfg"
     assert '"uri"           "http://127.0.0.1:53000/gsi"' in text and '"token"     "tok"' in text
 

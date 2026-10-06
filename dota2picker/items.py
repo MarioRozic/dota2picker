@@ -58,7 +58,7 @@ class ItemSuggestion:
 
 
 def _data(name: str) -> dict:
-    return json.loads(resources.files("dota2picker.data").joinpath(name).read_text())
+    return json.loads(resources.files("dota2picker.data").joinpath(name).read_text(encoding="utf-8"))
 
 
 @lru_cache(maxsize=1)

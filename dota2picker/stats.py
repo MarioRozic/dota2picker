@@ -124,7 +124,7 @@ def load(path: Path | None = None, refresh: bool = False, max_age: float = CACHE
     path = path or default_cache_path()
     cached = None
     if path.exists():
-        cached = Stats.from_json(json.loads(path.read_text()))
+        cached = Stats.from_json(json.loads(path.read_text(encoding="utf-8")))
         if not refresh and time.time() - cached.fetched_at < max_age:
             return cached
     try:
@@ -135,5 +135,5 @@ def load(path: Path | None = None, refresh: bool = False, max_age: float = CACHE
         log.warning("OpenDota refresh failed, using cache from %s", time.ctime(cached.fetched_at))
         return cached
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(fresh.to_json()))
+    path.write_text(json.dumps(fresh.to_json()), encoding="utf-8")
     return fresh

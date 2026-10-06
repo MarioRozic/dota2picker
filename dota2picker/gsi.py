@@ -72,7 +72,7 @@ def new_token() -> str:
 def install_cfg(dota_dir: Path, uri: str, token: str) -> Path:
     path = cfg_path(dota_dir)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(render_cfg(uri, token))
+    path.write_text(render_cfg(uri, token), encoding="utf-8")
     return path
 
 

@@ -19,11 +19,11 @@ CONFIG = Path.home() / ".dota2picker" / "config.json"
 
 
 def gsi_token() -> str:
-    config = json.loads(CONFIG.read_text()) if CONFIG.exists() else {}
+    config = json.loads(CONFIG.read_text(encoding="utf-8")) if CONFIG.exists() else {}
     if "gsi_token" not in config:
         config["gsi_token"] = gsi.new_token()
         CONFIG.parent.mkdir(parents=True, exist_ok=True)
-        CONFIG.write_text(json.dumps(config, indent=2))
+        CONFIG.write_text(json.dumps(config, indent=2), encoding="utf-8")
     return config["gsi_token"]
 
 
