@@ -52,13 +52,13 @@ def main() -> None:
     if args.demo:
         data = demo_stats()
     else:
-        print("Loading hero stats (first run downloads from OpenDota, about 2-3 minutes)...")
+        print("Loading hero stats (first run downloads from OpenDota, about 3 minutes)...", flush=True)
         data = stats.load(refresh=args.refresh)
 
     url = f"http://127.0.0.1:{args.port}/"
     if not args.no_browser:
         threading.Timer(1.0, webbrowser.open, [url]).start()
-    print(f"Dota2Picker running at {url}")
+    print(f"Dota2Picker running at {url}", flush=True)
     uvicorn.run(create_app(data, gsi_token=token), host=args.host, port=args.port, log_level="warning")
 
 

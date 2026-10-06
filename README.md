@@ -9,7 +9,7 @@ Design notes and the reasoning behind this approach: see `docs/design.md`.
 
 ## Run it
 
-Needs Python 3.10+. Works on Windows and macOS.
+Needs Python 3.10+. Works on Windows and macOS. macOS ships Python 3.9, so use a newer one (e.g. `brew install python`) to create the venv.
 
 ```bash
 python -m venv .venv
@@ -17,7 +17,7 @@ source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 
 dota2picker --demo               # made-up stats, no network: try the UI
-dota2picker                      # real stats (first run downloads ~130 OpenDota calls, 2-3 min)
+dota2picker                      # real stats (first run downloads ~130 OpenDota calls, about 3 min)
 ```
 
 The browser opens at http://127.0.0.1:53000/. Type a hero name and press
