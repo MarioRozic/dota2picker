@@ -49,3 +49,27 @@ def test_gsi_cfg_render(tmp_path):
     text = path.read_text()
     assert path.name == "gamestate_integration_dota2picker.cfg"
     assert '"uri"           "http://127.0.0.1:53000/gsi"' in text and '"token"     "tok"' in text
+
+
+def test_game_includes_screen_reads():
+    from types import SimpleNamespace
+
+    from dota2picker.vision import Detection
+
+    watcher = SimpleNamespace(
+        latest=[Detection(14, 0.93)] + [Detection(None, 0.0)] * 8 + [Detection(26, 0.61)],
+        error=None,
+    )
+    app = create_app(demo_stats(), watcher=watcher)
+    c = TestClient(app)
+    screen = c.get("/api/game").json()["screen"]
+    assert screen["radiant"][0] == {"hero_id": 14, "score": 0.93}
+    assert screen["radiant"][1] is None
+    assert screen["dire"][4] == {"hero_id": 26, "score": 0.61}
+
+    # Without GSI the screen is always read; once GSI reports, only during the draft.
+    assert app.state.screen_should_run()
+    c.post("/gsi", json={"map": {"game_state": "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS"}})
+    assert not app.state.screen_should_run()
+    c.post("/gsi", json={"map": {"game_state": "DOTA_GAMERULES_STATE_HERO_SELECTION"}})
+    assert app.state.screen_should_run()

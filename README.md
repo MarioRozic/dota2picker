@@ -30,6 +30,25 @@ To use it from a phone or second PC on the same network, run with
 Stats are cached in `~/.dota2picker/stats.json` and refreshed once a day;
 `--refresh` forces a download.
 
+## Reading picks from the screen
+
+By default the app reads the hero portraits in the top bar of your screen
+and fills in allies and enemies on its own. A hero it isn't sure about gets a
+dashed border and a "?"; click it to remove it and type the right one. Heroes
+you remove stay removed for that draft.
+
+- The first run downloads the 127 hero portraits from Valve's CDN into
+  `~/.dota2picker/portraits/`.
+- Your team is taken from Game State Integration (below). Without it, set
+  "Side" at the top to Radiant (left) or Dire (right).
+- With Game State Integration on, the screen is only read during the draft,
+  and a new draft clears the old picks automatically.
+- Dota on a second monitor: `--monitor 2`. Turn screen reading off with
+  `--no-screen`.
+- macOS asks for Screen Recording permission the first time (System Settings
+  → Privacy & Security → Screen Recording).
+- Positions are tuned for 16:9 screens; ultrawide and 16:10 may need adjusting.
+
 ## Game State Integration (optional)
 
 Lets the app know when a draft starts and add your own pick automatically.

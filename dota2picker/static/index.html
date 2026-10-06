@@ -34,6 +34,8 @@
   .chip { display:flex; align-items:center; gap:4px; background:var(--panel); border:1px solid var(--line);
           border-radius:5px; padding:2px 6px 2px 2px; cursor:pointer; font-size:13px; }
   .chip:hover { border-color:var(--bad); }
+  .chip.unsure { border-style:dashed; border-color:var(--accent); }
+  .chip.unsure::after { content:"?"; color:var(--accent); font-weight:700; }
   img.icon { width:26px; height:26px; border-radius:3px; object-fit:cover; background:#000; }
   img.portrait { width:64px; height:36px; border-radius:3px; object-fit:cover; background:#000; }
   .sugg { display:flex; gap:10px; align-items:center; padding:6px 0; border-top:1px solid var(--line); }
@@ -58,6 +60,9 @@
       <option>Initiator</option><option>Durable</option><option>Escape</option><option>Pusher</option>
     </select>
     <select id="bracket" title="Rank bracket for meta win rates"></select>
+    <select id="side" title="Which side of the top bar is your team">
+      <option value="">Side: auto</option><option value="radiant">Radiant (left)</option><option value="dire">Dire (right)</option>
+    </select>
     <button id="clear">New draft</button>
   </div>
 
@@ -83,6 +88,10 @@ let HEROES = [], BY_ID = {};
 const draft = { enemies: [], allies: [], bans: [] };
 let active = 0, matches = [];
 const gsiSeen = new Set();  // own picks already auto-added, so removing one sticks
+const screenSeen = new Set();  // heroes already read from the screen, so removing one sticks
+const unsure = new Set();  // screen reads with low confidence, shown with a "?"
+const SURE_SCORE = 0.7;
+let wasInDraft = false;
 
 function taken() { return new Set([...draft.enemies, ...draft.allies, ...draft.bans]); }
 
@@ -92,12 +101,13 @@ function add(list, id) {
   draft[list].push(id);
   $("q").value = ""; closeResults(); render();
 }
-function remove(list, id) { draft[list] = draft[list].filter(x => x !== id); render(); }
+function remove(list, id) { draft[list] = draft[list].filter(x => x !== id); unsure.delete(id); render(); }
 
 function chip(list, id) {
   const h = BY_ID[id];
   const el = document.createElement("div");
-  el.className = "chip"; el.title = "Click to remove";
+  el.className = "chip" + (unsure.has(id) ? " unsure" : "");
+  el.title = unsure.has(id) ? "Read from screen, not sure. Click to remove" : "Click to remove";
   el.innerHTML = `<img class="icon" src="${h.img_url}" alt=""><span>${h.localized_name}</span>`;
   el.onclick = () => remove(list, id);
   return el;
@@ -178,18 +188,38 @@ async function suggest() {
   $("avoid").replaceChildren(...data.avoid.map(s => suggRow(s, false)));
 }
 
+function mergeScreen(screen, mySide) {
+  const enemySide = mySide === "radiant" ? "dire" : "radiant";
+  for (const [list, side] of [["allies", mySide], ["enemies", enemySide]]) {
+    for (const read of screen[side] || []) {
+      if (!read || screenSeen.has(read.hero_id)) continue;
+      screenSeen.add(read.hero_id);
+      if (read.score < SURE_SCORE) unsure.add(read.hero_id);
+      add(list, read.hero_id);
+    }
+  }
+}
+
 async function pollGame() {
   try {
     const g = await (await fetch("/api/game")).json();
     const st = $("status");
     st.textContent = g.game_state ? (g.in_draft ? "Draft in progress" : "In game") : "Game not detected";
     st.classList.toggle("live", !!g.in_draft);
+    if (g.in_draft && !wasInDraft) newDraft();  // a new game's draft has started
+    wasInDraft = !!g.in_draft;
     if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); add("allies", g.hero_id); }
+    if (g.screen) mergeScreen(g.screen, $("side").value || g.team || "radiant");
   } catch {}
   setTimeout(pollGame, 1000);
 }
 
-$("clear").onclick = () => { draft.enemies = []; draft.allies = []; draft.bans = []; render(); };
+function newDraft() {
+  draft.enemies = []; draft.allies = []; draft.bans = [];
+  gsiSeen.clear(); screenSeen.clear(); unsure.clear(); render();
+}
+$("clear").onclick = newDraft;
+$("side").addEventListener("change", () => store.set("side", $("side").value));
 for (const id of ["role", "bracket"]) {
   $(id).addEventListener("change", () => { store.set(id, $(id).value); suggest(); });
 }
@@ -201,6 +231,7 @@ for (const id of ["role", "bracket"]) {
     meta.brackets.map(b => `<option value="${b}">${b[0].toUpperCase() + b.slice(1)}</option>`).join("");
   $("role").value = store.get("role", "");
   $("bracket").value = store.get("bracket", "");
+  $("side").value = store.get("side", "");
   render();
   pollGame();
 })();
