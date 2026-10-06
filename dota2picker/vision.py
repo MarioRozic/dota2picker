@@ -42,10 +42,11 @@ CONFIDENT_SCORE = 0.8
 EMPTY_STD = 12.0
 
 
-@dataclass
+@dataclass(frozen=True)
 class Detection:
     hero_id: int | None
     score: float
+    empty: bool = False  # the slot shows no hero yet (as opposed to one we can't identify)
 
 
 def slot_boxes(width: int, height: int) -> list[tuple[int, int, int, int]]:
@@ -142,48 +143,82 @@ class PortraitMatcher:
                 variants.append(cv2.resize(img, (w, h), interpolation=cv2.INTER_AREA))
             self.templates[hero_id] = variants
         # Slots rarely change between reads, so remember recent results by a coarse signature.
-        self._cache: dict[tuple[bytes, frozenset[int]], Detection] = {}
+        self._cache: dict[bytes, list[tuple[float, int]]] = {}
 
-    def match(self, slot_inner: np.ndarray, exclude: set[int] = frozenset()) -> Detection:
+    def ranking(self, slot_inner: np.ndarray) -> list[tuple[float, int]] | None:
+        """Every hero as (score, hero id), closest match first; None for an empty slot."""
         if is_empty(slot_inner):
-            return Detection(None, 0.0)
-        key = ((cv2.resize(slot_inner, (12, 6), interpolation=cv2.INTER_AREA) // 16).tobytes(), frozenset(exclude))
+            return None
+        key = (cv2.resize(slot_inner, (12, 6), interpolation=cv2.INTER_AREA) // 16).tobytes()
         if key not in self._cache:
             if len(self._cache) > 256:
                 self._cache.clear()
-            self._cache[key] = self._match(slot_inner, exclude)
+            self._cache[key] = self._rank(slot_inner)
         return self._cache[key]
 
-    def _match(self, slot_inner: np.ndarray, exclude: set[int]) -> Detection:
+    def _rank(self, slot_inner: np.ndarray) -> list[tuple[float, int]]:
         patch = _work_scale(slot_inner)
         ph, pw = patch.shape[:2]
-        best_id, best = None, -1.0
+        scores = []
         for hero_id, variants in self.templates.items():
-            if hero_id in exclude:
-                continue
+            best = -1.0
             for t in variants:
                 if t.shape[0] < ph or t.shape[1] < pw:
                     continue
-                score = float(cv2.matchTemplate(t, patch, cv2.TM_CCOEFF_NORMED).max())
-                if score > best:
-                    best_id, best = hero_id, score
-        if best < MIN_SCORE:
-            return Detection(None, best)
-        return Detection(best_id, best)
+                best = max(best, float(cv2.matchTemplate(t, patch, cv2.TM_CCOEFF_NORMED).max()))
+            scores.append((best, hero_id))
+        return sorted(scores, reverse=True)
 
-    def read(self, image: np.ndarray, screen_height: int | None = None) -> list[Detection]:
+    def match(self, slot_inner: np.ndarray, exclude: set[int] = frozenset()) -> Detection:
+        """The closest hero for one slot, leaving out the excluded ones."""
+        ranking = self.ranking(slot_inner)
+        if ranking is None:
+            return Detection(None, 0.0, empty=True)
+        return _best(ranking, exclude)
+
+    def read(
+        self,
+        image: np.ndarray,
+        screen_height: int | None = None,
+        exclude: list[set[int]] | None = None,
+    ) -> list[Detection]:
         """Detect all ten slots (Radiant 1-5, then Dire 1-5).
 
         Without screen_height, image is a full screen and black bars are trimmed first.
+        exclude: for each slot, heroes it must not be read as (ones you said were wrong).
         """
         if screen_height is None:
             image, screen_height = top_strip(image)
-        found: list[Detection] = []
-        for slot in crop_slots(image, screen_height):
-            # A hero can only be picked once, so don't offer earlier slots' heroes again.
-            taken = {d.hero_id for d in found if d.hero_id is not None}
-            found.append(self.match(slot, exclude=taken))
+        rankings = [self.ranking(slot) for slot in crop_slots(image, screen_height)]
+        excluded = [set(e) for e in exclude] if exclude else [set() for _ in rankings]
+        # A hero can only be picked once. Hand heroes out closest match first, so
+        # when two slots look like the same hero the closer one keeps it and the
+        # other gets its next guess: one misread can't push the right hero out of
+        # its own slot.
+        candidates = sorted(
+            (-score, i, hero_id)
+            for i, ranking in enumerate(rankings)
+            for score, hero_id in ranking or []
+            if score >= MIN_SCORE and hero_id not in excluded[i]
+        )
+        found: list[Detection | None] = [None] * len(rankings)
+        given: set[int] = set()
+        for neg_score, i, hero_id in candidates:
+            if found[i] is None and hero_id not in given:
+                found[i] = Detection(hero_id, -neg_score)
+                given.add(hero_id)
+        for i, ranking in enumerate(rankings):
+            if found[i] is None:
+                found[i] = (
+                    Detection(None, 0.0, empty=True) if ranking is None
+                    else _best(ranking, excluded[i] | given)
+                )
         return found
+
+
+def _best(ranking: list[tuple[float, int]], exclude: set[int]) -> Detection:
+    score, hero_id = next(((s, h) for s, h in ranking if h not in exclude), (-1.0, None))
+    return Detection(hero_id, score) if score >= MIN_SCORE else Detection(None, score)
 
 
 def load_portraits(cache_dir: Path, client=None) -> dict[int, np.ndarray]:

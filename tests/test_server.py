@@ -63,6 +63,7 @@ def test_game_includes_screen_reads():
     watcher = SimpleNamespace(
         latest=[Detection(14, 0.93)] + [Detection(None, 0.0)] * 8 + [Detection(26, 0.61)],
         error=None,
+        reset=lambda: None,
     )
     app = create_app(demo_stats(), watcher=watcher)
     c = TestClient(app)
@@ -87,3 +88,38 @@ def test_items_endpoint():
     assert body["items"] and {"name", "cost", "img_url", "answers"} <= set(body["items"][0])
     assert client.post("/api/items", json={"hero_id": 99999}).status_code == 400
     assert client.post("/api/items", json={"hero_id": 8, "position": 9}).status_code == 422
+
+
+def test_screen_reject_and_reset():
+    from dota2picker.capture import ScreenWatcher
+    from dota2picker.vision import Detection
+
+    watcher = ScreenWatcher(matcher=None, should_run=lambda: True)
+    reads = [Detection(14, 0.93), Detection(26, 0.61)] + [Detection(None, 0.0, empty=True)] * 8
+    watcher.accept(reads)
+    watcher.accept(reads)
+    c = TestClient(create_app(demo_stats(), watcher=watcher))
+
+    def radiant():
+        return [r and r["hero_id"] for r in c.get("/api/game").json()["screen"]["radiant"]]
+
+    assert radiant()[:2] == [14, 26]
+    assert c.post("/api/screen/reject", json={"hero_id": 26}).json() == {"rejected": True}
+    assert radiant()[:2] == [14, None]
+    assert c.post("/api/screen/reject", json={"hero_id": 26}).json() == {"rejected": False}
+
+    assert c.post("/api/screen/reset").status_code == 200
+    assert radiant()[:2] == [None, None]
+
+    # GSI entering a new draft starts the screen reader over too.
+    watcher.accept(reads)
+    watcher.accept(reads)
+    c.post("/gsi", json={"map": {"game_state": "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS"}})
+    assert radiant()[:2] == [14, 26]
+    c.post("/gsi", json={"map": {"game_state": "DOTA_GAMERULES_STATE_HERO_SELECTION"}})
+    assert radiant()[:2] == [None, None]
+
+
+def test_screen_endpoints_without_screen_reading():
+    assert client.post("/api/screen/reject", json={"hero_id": 1}).status_code == 404
+    assert client.post("/api/screen/reset").status_code == 404

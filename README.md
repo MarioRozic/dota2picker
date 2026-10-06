@@ -50,9 +50,15 @@ threat. Both files are hand-written; edit them as the meta changes.
 ## Reading picks from the screen
 
 By default the app reads the hero portraits in the top bar of your screen
-and fills in allies and enemies on its own. A hero it isn't sure about gets a
-dashed border and a "?"; click it to remove it and type the right one. Heroes
-you remove stay removed for that draft.
+and fills in allies and enemies on its own. It keeps reading during the
+draft, so when a slot shows a different hero, or goes empty again, the lists
+follow. A hero it isn't sure about gets a dashed border and a "?".
+
+If a hero is wrong, click it: the app reads that slot again without that hero
+and shows its next guess, if it has one. You can also type the right hero.
+Heroes you type stay until you remove them or click **New draft**, which also
+starts the screen reading afresh. Each team shows at most five, so the screen
+reads the app is least sure of make way for heroes you typed.
 
 - The first run downloads the 127 hero portraits from Valve's CDN into
   `~/.dota2picker/portraits/`.
@@ -70,9 +76,9 @@ you remove stay removed for that draft.
   Preview and press Ctrl+Cmd+F for real full screen.
 - Black bars around the game (e.g. a 16:9 game or screenshot on a 16:10
   screen) are trimmed automatically.
-- A hero is only added after it reads the same on two captures in a row, and
-  nothing is read while the screen doesn't look like a draft (for example
-  while you're looking at the browser).
+- A slot only changes after it reads the same on two captures in a row, and
+  nothing changes while the screen doesn't look like a draft (for example
+  while you're looking at the browser), so alt-tabbing doesn't lose picks.
 
 If heroes come out wrong, click **What it sees** at the top of the page: it
 shows the top of the last captured screen with each slot's box and what was
