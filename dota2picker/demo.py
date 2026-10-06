@@ -30,4 +30,12 @@ def demo_stats(seed: int = 7) -> Stats:
             wins = round(games * p)
             stats.matchups[h][o] = Record(games, wins)
             stats.matchups[o][h] = Record(games, games - wins)
+    for h in ids:
+        stats.synergy[h] = {}
+    for i, h in enumerate(ids):
+        for a in ids[i + 1 :]:
+            games = rng.randint(50, 3_000)
+            edge = strength[h] + strength[a] + rng.gauss(0, 0.2)
+            wins = round(games / (1 + 2.718281828 ** (-edge)))
+            stats.synergy[h][a] = stats.synergy[a][h] = Record(games, wins)
     return stats

@@ -2,12 +2,18 @@
 
 For each candidate hero h:
 
-    score(h) = sum over enemies e of adv(h, e) + META_WEIGHT * meta(h)
+    score(h) = sum over enemies e of adv(h, e)
+             + sum over allies a of syn(h, a)
+             + META_WEIGHT * meta(h)
 
 adv(h, e) is how much better h does against e than you would expect from the
 two heroes' overall strength. Expected win rate comes from their overall
 records in log-odds space, and the observed matchup win rate is shrunk toward
 that expectation so small samples can't dominate.
+
+syn(h, a) is the same idea for h and a on the same team: how much more often
+they win together than their overall strength predicts. Together these mirror
+Dota Plus's "Friends and Foes" numbers.
 """
 
 from __future__ import annotations
@@ -62,6 +68,8 @@ class Suggestion:
     score: float
     meta: float
     reasons: list[Reason]
+    # one per ally; Reason.enemy_id holds the ally's id here
+    synergy: list[Reason] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         h = heroes.by_id()[self.hero_id]
@@ -75,6 +83,13 @@ class Suggestion:
                     "advantage": round(r.advantage * 100, 2),
                 }
                 for r in self.reasons
+            ],
+            "synergy": [
+                {
+                    "ally": heroes.by_id()[r.enemy_id].localized_name,
+                    "advantage": round(r.advantage * 100, 2),
+                }
+                for r in self.synergy
             ],
         }
 
@@ -90,6 +105,17 @@ class Scorer:
         expected = _sigmoid(
             _logit(self._overall.get(hero, 0.5)) - _logit(self._overall.get(enemy, 0.5))
         )
+        return self._shrunk_edge(rec, expected)
+
+    def synergy(self, hero: int, ally: int) -> float:
+        rec = self.stats.synergy.get(hero, {}).get(ally)
+        expected = _sigmoid(
+            _logit(self._overall.get(hero, 0.5)) + _logit(self._overall.get(ally, 0.5))
+        )
+        return self._shrunk_edge(rec, expected)
+
+    @staticmethod
+    def _shrunk_edge(rec: Record | None, expected: float) -> float:
         if rec is None or rec.games == 0:
             return 0.0
         shrunk = (rec.wins + MATCHUP_PRIOR_GAMES * expected) / (rec.games + MATCHUP_PRIOR_GAMES)
@@ -105,10 +131,16 @@ class Scorer:
 
     def score(self, hero: int, draft: Draft) -> Suggestion:
         reasons = [Reason(e, self.advantage(hero, e)) for e in draft.enemies]
+        synergy = [Reason(a, self.synergy(hero, a)) for a in draft.allies]
         meta = self.meta(hero)
-        total = sum(r.advantage for r in reasons) + META_WEIGHT * meta
+        total = (
+            sum(r.advantage for r in reasons)
+            + sum(r.advantage for r in synergy)
+            + META_WEIGHT * meta
+        )
         reasons.sort(key=lambda r: r.advantage, reverse=True)
-        return Suggestion(hero, total, meta, reasons)
+        synergy.sort(key=lambda r: r.advantage, reverse=True)
+        return Suggestion(hero, total, meta, reasons, synergy)
 
     def suggest(self, draft: Draft, position: int | None = None, limit: int = 5) -> dict:
         """Return the best and worst picks for this draft.
@@ -122,4 +154,5 @@ class Scorer:
             if h.id not in taken and (position is None or position in h.positions)
         ]
         ranked = sorted((self.score(h, draft) for h in pool), key=lambda s: s.score, reverse=True)
-        return {"best": ranked[:limit], "avoid": ranked[::-1][:3] if draft.enemies else []}
+        has_draft = bool(draft.enemies or draft.allies)
+        return {"best": ranked[:limit], "avoid": ranked[::-1][:3] if has_draft else []}
