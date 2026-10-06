@@ -85,3 +85,35 @@ def test_matcher_reads_full_draft_with_real_portraits():
     reads = vision.PortraitMatcher(portraits).read(load("strategy_full.jpg"))
     names = [heroes.by_id()[r.hero_id].localized_name if r.hero_id else None for r in reads]
     assert names == STRATEGY_PICKS
+
+
+def test_black_bars_are_trimmed():
+    image = load("strategy_full.jpg")
+    h, w = image.shape[:2]
+    # A 16:9 screenshot shown full screen on a 16:10 screen gets bars top and bottom.
+    padded = cv2.copyMakeBorder(image, 60, 60, 0, 0, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+    def close(a, b):
+        return all(abs(x - y) <= 3 for x, y in zip(a, b))
+
+    assert close(vision.content_box(padded), (0, 60, w, 60 + h))
+    assert close(vision.content_box(image), (0, 0, w, h))
+    matcher = vision.PortraitMatcher(synthetic_portraits(image))
+    assert [r.hero_id for r in matcher.read(padded)] == ids(STRATEGY_PICKS)
+    # Pillarboxed on an ultrawide screen.
+    side = cv2.copyMakeBorder(image, 0, 0, 200, 200, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+    assert [r.hero_id for r in matcher.read(side)] == ids(STRATEGY_PICKS)
+
+
+def test_scaled_screenshot_still_reads():
+    image = load("strategy_full.jpg")
+    matcher = vision.PortraitMatcher(synthetic_portraits(image))
+    for size in [(1920, 1080), (2560, 1440), (3840, 2160), (1280, 720)]:
+        scaled = cv2.resize(image, size, interpolation=cv2.INTER_AREA)
+        assert [r.hero_id for r in matcher.read(scaled)] == ids(STRATEGY_PICKS), size
+
+
+def test_annotate_draws_on_top_strip():
+    image = load("strategy_full.jpg")
+    reads = vision.PortraitMatcher(synthetic_portraits(image)).read(image)
+    out = vision.annotate(image, reads)
+    assert abs(out.shape[1] - image.shape[1]) <= 3 and out.shape[0] < image.shape[0] // 5

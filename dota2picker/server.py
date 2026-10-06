@@ -6,7 +6,7 @@ import hmac
 from importlib import resources
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel
 
 from . import gsi, heroes
@@ -63,6 +63,18 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
             ]
             out["screen"] = {"radiant": reads[:5], "dire": reads[5:], "error": watcher.error}
         return out
+
+    @app.get("/api/screen.png")
+    def screen_debug() -> Response:
+        """The top of the last captured screen with slot boxes and reads drawn on."""
+        if watcher is None or watcher.last_frame is None:
+            raise HTTPException(404, "no screen captured yet")
+        import cv2
+
+        from .vision import annotate
+
+        ok, png = cv2.imencode(".png", annotate(watcher.last_frame, watcher.last_reads))
+        return Response(png.tobytes(), media_type="image/png", headers={"Cache-Control": "no-store"})
 
     def screen_should_run() -> bool:
         # With GSI we only read the screen during the draft; without it, always.

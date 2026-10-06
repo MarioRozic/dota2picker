@@ -47,7 +47,22 @@ you remove stay removed for that draft.
   `--no-screen`.
 - macOS asks for Screen Recording permission the first time (System Settings
   → Privacy & Security → Screen Recording).
-- Positions are tuned for 16:9 screens; ultrawide and 16:10 may need adjusting.
+- Black bars around the game (e.g. a 16:9 game or screenshot on a 16:10
+  screen) are trimmed automatically.
+- A hero is only added after it reads the same on two captures in a row, and
+  nothing is read while the screen doesn't look like a draft (for example
+  while you're looking at the browser).
+
+If heroes come out wrong, click **What it sees** at the top of the page: it
+shows the top of the last captured screen with each slot's box and what was
+read there. To test on a screenshot file without any full-screen trickery:
+
+```bash
+dota2picker --read-image tests/fixtures/strategy_full.jpg
+```
+
+It prints the hero and score for each slot and writes a `.slots.png` next to
+the image showing where it looked.
 
 ## Game State Integration (optional)
 
