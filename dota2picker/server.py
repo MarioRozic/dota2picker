@@ -20,6 +20,7 @@ class DraftIn(BaseModel):
     bans: list[int] = []
     position: int | None = Field(None, ge=1, le=5)
     bracket: str | None = None
+    limit: int = Field(5, ge=1, le=20)
 
 
 class ItemsIn(BaseModel):
@@ -76,6 +77,25 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None, item_ti
             Draft(body.allies, body.enemies, body.bans), position=body.position
         )
         return {k: [s.to_dict() for s in v] for k, v in result.items()}
+
+    @app.post("/api/suggest/positions")
+    def suggest_positions(body: DraftIn) -> dict:
+        """The best picks for every position at once, so you don't have to choose one first."""
+        known = heroes.by_id()
+        for hid in body.allies + body.enemies + body.bans:
+            if hid not in known:
+                raise HTTPException(400, f"unknown hero id {hid}")
+        bracket = BRACKETS.get(body.bracket) if body.bracket else None
+        result = Scorer(stats, bracket).suggest_by_position(
+            Draft(body.allies, body.enemies, body.bans), limit=body.limit
+        )
+        return {
+            "positions": [
+                {"position": p, "name": heroes.POSITIONS[p], "best": [s.to_dict() for s in rows]}
+                for p, rows in result["positions"].items()
+            ],
+            "avoid": [s.to_dict() for s in result["avoid"]],
+        }
 
     @app.post("/api/items")
     def suggest_items(body: ItemsIn) -> dict:

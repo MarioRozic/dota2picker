@@ -123,3 +123,21 @@ def test_screen_reject_and_reset():
 def test_screen_endpoints_without_screen_reading():
     assert client.post("/api/screen/reject", json={"hero_id": 1}).status_code == 404
     assert client.post("/api/screen/reset").status_code == 404
+
+
+def test_suggest_by_position():
+    res = client.post("/api/suggest/positions", json={"enemies": [1, 2], "allies": [26], "limit": 3})
+    assert res.status_code == 200
+    body = res.json()
+    assert [c["position"] for c in body["positions"]] == [1, 2, 3, 4, 5]
+    from dota2picker import heroes
+
+    for col in body["positions"]:
+        assert len(col["best"]) == 3
+        for s in col["best"]:
+            assert col["position"] in heroes.by_id()[s["hero"]["id"]].positions
+            assert s["hero"]["id"] not in {1, 2, 26}
+        scores = [s["score"] for s in col["best"]]
+        assert scores == sorted(scores, reverse=True)
+    assert len(body["avoid"]) == 3
+    assert client.post("/api/suggest/positions", json={"limit": 50}).status_code == 422

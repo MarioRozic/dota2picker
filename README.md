@@ -24,8 +24,12 @@ dota2picker                      # real stats (first run downloads from OpenDota
 
 The browser opens at http://127.0.0.1:53000/. Type a hero name and press
 Enter to add it to enemies, Shift+Enter for allies, or use the buttons. Click a
-hero chip to remove it. Pick your position (1 Carry ... 5 Hard support) and rank bracket at the top;
-suggestions then only include heroes commonly played in that position.
+hero chip to remove it. The page fills the browser window and shows the best
+picks for every position side by side (1 Carry ... 5 Hard support), each
+column only listing heroes commonly played there, so you don't have to pick a
+position first. Choose Top 3, 5 or 10 per position and the rank bracket at
+the top. Click a hero in a column once you pick it: that makes it your hero
+and that column your position, for the item build.
 
 To use it from a phone or second PC on the same network, run with
 `--host 0.0.0.0` and open `http://<this-pc-ip>:53000/`.
@@ -49,8 +53,9 @@ patch to refresh the item list and Valve's builds. Your hero is set
 automatically by Game State Integration; otherwise click ★ next to your hero
 under Allies, or click a hero in Best picks when you pick it.
 
-Cores (positions 1-3) and supports (4-5) get different items. Without a
-position selected, your hero's main position decides. Each enemy is tagged
+Cores (positions 1-3) and supports (4-5) get different items. The column
+you clicked your hero in sets your position; if you set your hero another way,
+its main position decides. Each enemy is tagged
 with the threats it poses in `dota2picker/data/threats.json` (evasion,
 illusions, invisibility, magic damage, stuns, silences, healing, ...) and
 `dota2picker/data/counter_items.json` lists the items that answer each

@@ -156,3 +156,16 @@ class Scorer:
         ranked = sorted((self.score(h, draft) for h in pool), key=lambda s: s.score, reverse=True)
         has_draft = bool(draft.enemies or draft.allies)
         return {"best": ranked[:limit], "avoid": ranked[::-1][:3] if has_draft else []}
+
+    def suggest_by_position(self, draft: Draft, limit: int = 3) -> dict:
+        """The best picks for each position 1-5, plus the overall picks to avoid.
+
+        A hero played in two positions can show up in both columns.
+        """
+        result = self.suggest(draft, limit=len(heroes.all_heroes()))
+        ranked = result["best"]
+        by_pos = {
+            p: [s for s in ranked if p in heroes.by_id()[s.hero_id].positions][:limit]
+            for p in heroes.POSITIONS
+        }
+        return {"positions": by_pos, "avoid": result["avoid"]}

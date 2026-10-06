@@ -80,8 +80,8 @@ the tighter position list (#4) and counter items (#5) are all merged.
    The first run downloads OpenDota stats (about 3 minutes, ~130 calls) and the
    127 hero portraits. Both are cached in `%USERPROFILE%\.dota2picker\` and
    stats refresh once a day.
-3. Your browser opens http://127.0.0.1:53000/. Pick your **position** and
-   **rank bracket** at the top.
+3. Your browser opens http://127.0.0.1:53000/. Pick your **rank bracket** at
+   the top. The best picks for all five positions show side by side.
 4. Launch Dota and queue. Top right of the page should change from
    "Game not detected" to **"Draft in progress"** during hero selection.
 5. During the draft, stay in Dota. The app only reads the screen while it

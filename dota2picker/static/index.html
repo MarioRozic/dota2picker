@@ -9,9 +9,32 @@
           --good:#5cc87a; --bad:#e2655a; --accent:#d9a441; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--text); font:14px/1.4 system-ui, sans-serif; }
-  main { max-width: 520px; margin: 0 auto; padding: 12px 16px 32px; }
-  header { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  header { display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid var(--line);
+           background:var(--panel); flex-wrap:wrap; }
+  header .controls { display:flex; gap:8px; align-items:center; margin-left:auto; flex-wrap:wrap; }
   h1 { font-size:16px; margin:0; }
+  .layout { display:grid; grid-template-columns: minmax(260px, 320px) minmax(0, 1fr); gap:16px; padding:12px 16px 32px; }
+  aside { min-width:0; }
+  section.main { min-width:0; }
+  .cols { display:grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap:10px; }
+  .col { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:8px 10px; min-width:0; }
+  .col.mine { border-color:var(--accent); }
+  .col h3 { margin:0 0 4px; font-size:13px; display:flex; align-items:baseline; gap:6px; }
+  .col h3 b { font-size:18px; color:var(--accent); }
+  .col h3 span { color:var(--muted); font-weight:400; }
+  .col .sugg:first-of-type { border-top:0; }
+  .phases { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:10px; }
+  .phases .phase { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:8px 10px; }
+  #avoid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); column-gap:16px; }
+  /* Narrower screens: the draft goes in a strip above the picks so the five columns keep their width. */
+  @media (max-width: 1500px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    aside { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); column-gap:16px; align-items:start; }
+    aside .search { margin:8px 0; }
+  }
+  @media (max-width: 1100px) { .cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .cols { grid-template-columns: minmax(0, 1fr); } }
   .status { font-size:12px; color:var(--muted); }
   .status.live { color:var(--good); }
   a.status { margin-right:10px; }
@@ -29,11 +52,8 @@
   button { background:#2a303a; color:var(--text); border:1px solid var(--line); border-radius:5px;
            padding:3px 8px; cursor:pointer; font:inherit; }
   button:hover { border-color:var(--accent); }
-  .positions { display:flex; gap:4px; margin:10px 0; }
-  .positions button { flex:1; padding:6px 4px; font-size:12px; line-height:1.2; }
-  .positions button b { display:block; font-size:15px; }
-  .positions button.on { background:var(--accent); border-color:var(--accent); color:#14171c; }
   .team { margin:8px 0; }
+  section.main > .team { margin:0 0 16px; }
   .team h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 4px; }
   .chips { display:flex; flex-wrap:wrap; gap:4px; min-height:30px; }
   .chip { display:flex; align-items:center; gap:4px; background:var(--panel); border:1px solid var(--line);
@@ -50,10 +70,12 @@
   .chip.unsure::after { content:"?"; color:var(--accent); font-weight:700; }
   img.icon { width:26px; height:26px; border-radius:3px; object-fit:cover; background:#000; }
   img.portrait { width:64px; height:36px; border-radius:3px; object-fit:cover; background:#000; }
-  .sugg { display:flex; gap:10px; align-items:center; padding:6px 0; border-top:1px solid var(--line); }
-  .sugg .name { font-weight:600; }
+  .sugg { display:grid; grid-template-columns:auto minmax(0, 1fr) auto; column-gap:10px; row-gap:2px; align-items:center;
+          padding:8px 0; border-top:1px solid var(--line); }
+  .sugg .edges { grid-column:1 / -1; }
+  .sugg .name { font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .sugg .why { font-size:12px; color:var(--muted); }
-  .score { margin-left:auto; font-variant-numeric:tabular-nums; font-weight:600; }
+  .score { font-variant-numeric:tabular-nums; font-weight:600; font-size:15px; }
   .pos { color:var(--good); } .neg { color:var(--bad); }
   .empty { color:var(--muted); font-size:13px; padding:6px 0; }
   .phase { padding:6px 0; border-top:1px solid var(--line); }
@@ -68,38 +90,39 @@
 </style>
 </head>
 <body>
-<main>
-  <header>
-    <h1>Dota2Picker</h1>
-    <span>
-      <a id="seen" class="status" href="/api/screen.png" target="_blank" hidden>What it sees</a>
-      <span id="status" class="status">Game not detected</span>
-    </span>
-  </header>
-
-  <div id="positions" class="positions" title="Your position: suggestions only include heroes played there. Click again for any position."></div>
-
-  <div class="row">
+<header>
+  <h1>Dota2Picker</h1>
+  <div class="controls">
     <select id="bracket" title="Rank bracket for meta win rates"></select>
     <select id="side" title="Which side of the top bar is your team">
       <option value="">Side: auto</option><option value="radiant">Radiant (left)</option><option value="dire">Dire (right)</option>
     </select>
+    <select id="limit" title="How many picks to show for each position">
+      <option value="3">Top 3</option><option value="5">Top 5</option><option value="10">Top 10</option>
+    </select>
     <button id="clear">New draft</button>
+    <a id="seen" class="status" href="/api/screen.png" target="_blank" hidden>What it sees</a>
+    <span id="status" class="status">Game not detected</span>
   </div>
+</header>
+<div class="layout">
+  <aside>
+    <div class="search">
+      <input id="q" placeholder="Type a hero, Enter adds to enemies (Shift+Enter: allies)" autocomplete="off">
+      <div id="results" class="results" hidden></div>
+    </div>
 
-  <div class="search">
-    <input id="q" placeholder="Type a hero, Enter adds to enemies (Shift+Enter: allies)" autocomplete="off">
-    <div id="results" class="results" hidden></div>
-  </div>
+    <div class="team"><h2>Enemies</h2><div id="enemies" class="chips"></div></div>
+    <div class="team"><h2>Allies</h2><div id="allies" class="chips"></div></div>
+    <div class="team"><h2>Bans</h2><div id="bans" class="chips"></div></div>
+  </aside>
 
-  <div class="team"><h2>Enemies</h2><div id="enemies" class="chips"></div></div>
-  <div class="team"><h2>Allies</h2><div id="allies" class="chips"></div></div>
-  <div class="team"><h2>Bans</h2><div id="bans" class="chips"></div></div>
-
-  <div class="team"><h2>Best picks</h2><div id="best"></div></div>
-  <div class="team"><h2>Avoid</h2><div id="avoid"></div></div>
-  <div class="team"><h2 id="itemsTitle">Item build</h2><div id="items"></div></div>
-</main>
+  <section class="main">
+    <div class="team"><h2>Best picks by position</h2><div id="hint"></div><div id="best" class="cols"></div></div>
+    <div class="team"><h2 id="itemsTitle">Item build</h2><div id="items"></div></div>
+    <div class="team"><h2>Avoid</h2><div id="avoid"></div></div>
+  </section>
+</div>
 <script>
 const $ = id => document.getElementById(id);
 const store = {
@@ -119,7 +142,8 @@ const gsiSeen = new Set();  // own picks already auto-added, so removing one sti
 const unsure = new Set();  // screen reads with low confidence, shown with a "?"
 const SURE_SCORE = 0.7;
 let wasInDraft = false;
-let position = null;  // 1-5, or null for any position
+let position = null;  // 1-5: the column you picked your hero from, or null to use the hero's main position
+let POSITIONS = {};  // 1 -> "Carry", ...
 let me = null;  // the hero you picked, for counter items
 let drawn = "";  // the draft render() last drew, so polls that change nothing don't redraw
 
@@ -143,12 +167,12 @@ function rebuild() {
     shown.filter(r => r.score < SURE_SCORE).forEach(r => unsure.add(r.hero_id));
     draft[list] = [...shown.map(r => r.hero_id), ...manual[list]];
   }
-  if (me && !draft.allies.includes(me)) me = null;
+  if (me && !draft.allies.includes(me)) { me = null; position = null; }
 }
 
 function refresh() {
   rebuild();
-  const now = JSON.stringify([draft, [...unsure], me]);
+  const now = JSON.stringify([draft, [...unsure], me, position]);
   if (now !== drawn) { drawn = now; render(); }
 }
 
@@ -177,11 +201,12 @@ function remove(list, id) {
     for (const side of ["radiant", "dire"]) screen[side] = screen[side].map(r => r?.hero_id === id ? null : r);
     screenRequest("/api/screen/reject", { hero_id: id });
   }
-  if (id === me) me = null;
+  if (id === me) { me = null; position = null; }
   refresh();
   $("q").focus();  // keep typing heroes without clicking back into the box
 }
-function setMe(id) {
+function setMe(id, pos = null) {
+  if (pos) position = pos;
   // Your own hero is certain, so keep it even if the screen read of its slot changes.
   const elsewhere = draft.enemies.includes(id) || draft.bans.includes(id);
   if (!elsewhere && !manual.allies.includes(id) && manual.allies.length < 5) manual.allies.push(id);
@@ -202,7 +227,7 @@ function chip(list, id) {
     const star = document.createElement("span");
     star.className = "star"; star.textContent = "★";
     star.title = id === me ? "Your hero" : "This is my hero";
-    star.onclick = e => { e.stopPropagation(); if (id === me) { me = null; refresh(); } else setMe(id); };
+    star.onclick = e => { e.stopPropagation(); if (id === me) { me = null; position = null; refresh(); } else setMe(id); };
     el.append(star);
   }
   el.onclick = () => remove(list, id);
@@ -271,26 +296,35 @@ function suggRow(s) {
     "</div>" : "";
   const why = edges("vs", s.reasons, "enemy") + edges("with", s.synergy, "ally");
   el.innerHTML = `<img class="portrait" src="${s.hero.img_url}" alt="">
-    <div><div class="name">${s.hero.localized_name}</div>${why || `<div class="why">meta ${pct(s.meta)}</div>`}</div>
-    <div class="score ${s.score >= 0 ? "pos" : "neg"}">${pct(s.score)}</div>`;
+    <div class="name" title="${s.hero.localized_name}">${s.hero.localized_name}</div>
+    <div class="score ${s.score >= 0 ? "pos" : "neg"}">${pct(s.score)}</div>
+    <div class="edges">${why || `<div class="why">meta ${pct(s.meta)}</div>`}</div>`;
   return el;
 }
 
 let pending = 0;
 async function suggest() {
   const ticket = ++pending;
-  const body = { ...draft, position, bracket: $("bracket").value || null };
-  const res = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const body = { ...draft, bracket: $("bracket").value || null, limit: +$("limit").value || 3 };
+  const res = await fetch("/api/suggest/positions", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   if (ticket !== pending || !res.ok) return;
   const data = await res.json();
-  $("best").replaceChildren(...data.best.map(s => {
-    const row = suggRow(s);
-    row.classList.add("pickable");
-    row.title = "Click when you pick this hero";
-    row.onclick = () => setMe(s.hero.id);
-    return row;
+  $("best").replaceChildren(...data.positions.map(col => {
+    const el = document.createElement("div");
+    el.className = "col" + (me && position === col.position ? " mine" : "");
+    el.innerHTML = `<h3><b>${col.position}</b>${col.name}</h3>`;
+    el.append(...col.best.map(s => {
+      const row = suggRow(s);
+      row.classList.add("pickable");
+      row.title = `Click when you pick this hero to play ${col.name}`;
+      row.onclick = () => setMe(s.hero.id, col.position);
+      return row;
+    }));
+    if (!col.best.length) el.insertAdjacentHTML("beforeend", '<div class="empty">No heroes left for this position.</div>');
+    return el;
   }));
-  if (!draft.enemies.length && !draft.allies.length) $("best").insertAdjacentHTML("afterbegin", '<div class="empty">Add enemy or allied heroes to see counters. Showing meta picks for now.</div>');
+  $("hint").innerHTML = !draft.enemies.length && !draft.allies.length
+    ? '<div class="empty">Add enemy or allied heroes to see counters. Showing meta picks for now.</div>' : "";
   $("avoid").replaceChildren(...data.avoid.map(s => suggRow(s)));
 }
 
@@ -300,15 +334,17 @@ async function suggestItems() {
   const box = $("items");
   if (!me) {
     $("itemsTitle").textContent = "Item build";
-    box.innerHTML = '<div class="empty">Click ★ on your hero under Allies, or click a hero in Best picks once you pick it.</div>';
+    box.innerHTML = '<div class="empty">Click a hero under Best picks once you pick it (its column sets your position), or click ★ on your hero under Allies.</div>';
     return;
   }
-  $("itemsTitle").textContent = `Item build for ${BY_ID[me].localized_name}`;
+  $("itemsTitle").textContent = `Item build for ${BY_ID[me].localized_name}` + (position ? ` (${POSITIONS[position]})` : "");
   const res = await fetch("/api/build", { method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ hero_id: me, enemies: draft.enemies, position }) });
   if (ticket !== pendingItems || !res.ok) return;
   const data = await res.json();
-  const rows = data.phases.map(ph => {
+  const phases = document.createElement("div");
+  phases.className = "phases";
+  phases.append(...data.phases.map(ph => {
     const el = document.createElement("div");
     el.className = "phase";
     const tiles = ph.items.map(it => {
@@ -321,7 +357,8 @@ async function suggestItems() {
       `<div class="vs"><b>${it.name}</b> vs ${it.answers.map(a => `${a.enemy} (${a.threats.join(", ")})`).join("; ")}</div>`).join("");
     el.innerHTML = `<h3>${ph.label}</h3><div class="tiles">${tiles}</div>${vs}`;
     return el;
-  });
+  }));
+  const rows = [phases];
   if (!draft.enemies.length) rows.push(Object.assign(document.createElement("div"),
     { className: "empty", textContent: "Add enemy heroes to add items that counter them (gold border)." }));
   if (!data.timings) rows.push(Object.assign(document.createElement("div"),
@@ -350,7 +387,7 @@ async function pollGame() {
 }
 
 function newDraft() {
-  manual.enemies = []; manual.allies = []; manual.bans = []; me = null;
+  manual.enemies = []; manual.allies = []; manual.bans = []; me = null; position = null;
   screen = null; gsiSeen.clear();
   if (screenOn) screenRequest("/api/screen/reset");  // the screen reader starts over too
   refresh();
@@ -359,28 +396,16 @@ function newDraft() {
 $("clear").onclick = newDraft;
 $("side").addEventListener("change", () => { store.set("side", $("side").value); refresh(); });
 $("bracket").addEventListener("change", () => { store.set("bracket", $("bracket").value); suggest(); });
-
-function renderPositions(names) {
-  $("positions").replaceChildren(...Object.entries(names).map(([n, name]) => {
-    const b = document.createElement("button");
-    b.className = position === +n ? "on" : "";
-    b.innerHTML = `<b>${n}</b>${name}`;
-    b.onclick = () => {
-      position = position === +n ? null : +n;
-      store.set("position", position ?? "");
-      renderPositions(names); suggest(); suggestItems();
-    };
-    return b;
-  }));
-}
+$("limit").addEventListener("change", () => { store.set("limit", $("limit").value); suggest(); });
 
 (async () => {
   const [heroes, meta] = await Promise.all([fetch("/api/heroes").then(r => r.json()), fetch("/api/meta").then(r => r.json())]);
   HEROES = heroes; BY_ID = Object.fromEntries(heroes.map(h => [h.id, h]));
   $("bracket").innerHTML = '<option value="">All ranks</option>' +
     meta.brackets.map(b => `<option value="${b}">${b[0].toUpperCase() + b.slice(1)}</option>`).join("");
-  position = +store.get("position", "") || null;
-  renderPositions(meta.positions);
+  POSITIONS = meta.positions;
+  $("limit").value = store.get("limit", "3");
+  if (!$("limit").value) $("limit").value = "3";
   $("bracket").value = store.get("bracket", "");
   $("side").value = store.get("side", "");
   refresh();
