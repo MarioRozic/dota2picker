@@ -1,5 +1,5 @@
 {
- "_comment": "Threat -> items that answer it, split by role. 'reason' finishes the sentence 'Good against ...'.",
+ "_comment": "Threat -> items that answer it, split by role, best first. 'reason' finishes 'Good against ...'. 'weight' (default 1) lowers threats that almost every hero has, so their generic items don't crowd out specific answers.",
  "evasion": {"reason": "evasion", "core": ["monkey_king_bar", "bloodthorn"], "support": []},
  "illusions": {"reason": "illusions", "core": ["mjollnir", "bfury", "shivas_guard"], "support": ["crimson_guard"]},
  "invisible": {"reason": "invisibility", "core": ["dust"], "support": ["dust", "ward_sentry", "gem"]},
@@ -8,7 +8,7 @@
  "silence": {"reason": "silences", "core": ["manta", "black_king_bar"], "support": ["lotus_orb", "cyclone"]},
  "healing": {"reason": "healing", "core": ["shivas_guard", "skadi"], "support": ["spirit_vessel"]},
  "passives": {"reason": "strong passives", "core": ["silver_edge"], "support": []},
- "right_click": {"reason": "right-click damage", "core": ["butterfly", "assault", "heavens_halberd"], "support": ["ghost", "force_staff", "solar_crest"]},
+ "right_click": {"reason": "right-click damage", "core": ["butterfly", "assault", "heavens_halberd"], "support": ["ghost", "force_staff", "solar_crest"], "weight": 0.5},
  "summons": {"reason": "summons", "core": ["bfury", "mjollnir", "crimson_guard"], "support": ["crimson_guard"]},
  "mobile": {"reason": "slippery, mobile heroes", "core": ["orchid", "abyssal_blade", "sheepstick"], "support": ["rod_of_atos", "sheepstick"]},
  "buffs": {"reason": "strong dispellable buffs", "core": ["nullifier", "diffusal_blade"], "support": ["cyclone"]}

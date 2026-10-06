@@ -120,6 +120,7 @@ function remove(list, id) {
   draft[list] = draft[list].filter(x => x !== id); unsure.delete(id);
   if (id === me) me = null;
   render();
+  $("q").focus();  // keep typing heroes without clicking back into the box
 }
 function setMe(id) {
   if (!draft.allies.includes(id)) add("allies", id);
@@ -286,6 +287,7 @@ async function pollGame() {
 function newDraft() {
   draft.enemies = []; draft.allies = []; draft.bans = []; me = null;
   gsiSeen.clear(); screenSeen.clear(); unsure.clear(); render();
+  $("q").focus();
 }
 $("clear").onclick = newDraft;
 $("side").addEventListener("change", () => store.set("side", $("side").value));

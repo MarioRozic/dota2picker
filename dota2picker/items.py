@@ -99,7 +99,11 @@ def suggest_items(
             for i_rank, key in enumerate(rule[role]):
                 if hero.attack_type == "Ranged" and key in MELEE_ONLY:
                     continue
-                weight = THREAT_WEIGHTS[min(t_rank, 2)] * ITEM_WEIGHTS[min(i_rank, 2)]
+                weight = (
+                    rule.get("weight", 1.0)
+                    * THREAT_WEIGHTS[min(t_rank, 2)]
+                    * ITEM_WEIGHTS[min(i_rank, 2)]
+                )
                 s = found.setdefault(key, ItemSuggestion(catalogue[key], 0.0))
                 s.score += weight
                 reasons = s.answers.setdefault(enemy_id, [])

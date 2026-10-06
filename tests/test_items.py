@@ -62,3 +62,19 @@ def test_items_that_answer_more_enemies_rank_higher():
 
 def test_no_enemies_no_items():
     assert items.suggest_items(by_name["Sven"], []) == []
+
+
+def test_specific_answers_beat_generic_right_click_items():
+    # Manta (dispels Riki's silence) should outrank generic damage items like Butterfly.
+    enemies = [by_name["Phantom Assassin"], by_name["Riki"], by_name["Lion"]]
+    top = names(items.suggest_items(by_name["Juggernaut"], enemies, position=1))
+    assert "Manta Style" in top
+    assert "Butterfly" not in top
+
+
+def test_break_against_passive_heroes():
+    enemies = [by_name["Slark"], by_name["Huskar"]]
+    out = names(items.suggest_items(by_name["Sven"], enemies, position=1))
+    assert out[0] == "Silver Edge"
+    # Dust doesn't reveal Shadow Dance, so it isn't suggested against Slark.
+    assert "Dust of Appearance" not in out
