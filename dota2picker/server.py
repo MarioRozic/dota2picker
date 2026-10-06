@@ -36,7 +36,7 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
 
     @app.get("/", response_class=HTMLResponse)
     def index() -> str:
-        return resources.files("dota2picker.static").joinpath("index.html").read_text()
+        return resources.files("dota2picker.static").joinpath("index.html").read_text(encoding="utf-8")
 
     @app.get("/api/heroes")
     def list_heroes() -> list[dict]:

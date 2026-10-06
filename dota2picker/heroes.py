@@ -50,9 +50,9 @@ class Hero:
 @lru_cache(maxsize=1)
 def all_heroes() -> tuple[Hero, ...]:
     data = resources.files("dota2picker.data")
-    raw = json.loads(data.joinpath("heroes.json").read_text())
+    raw = json.loads(data.joinpath("heroes.json").read_text(encoding="utf-8"))
     # Hand-curated from common play; edit positions.json when the meta shifts.
-    positions = json.loads(data.joinpath("positions.json").read_text())
+    positions = json.loads(data.joinpath("positions.json").read_text(encoding="utf-8"))
     return tuple(
         Hero(
             id=h["id"],
