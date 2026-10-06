@@ -49,6 +49,7 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None, item_ti
     app = FastAPI(title="Dota2Picker")
     app.state.game = gsi.GameState()
     app.state.gsi_seen = False
+    app.state.draft_id = 0  # counts drafts GSI reported, so the page can tell a new one started
 
     @app.get("/", response_class=HTMLResponse)
     def index() -> str:
@@ -129,7 +130,13 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None, item_ti
     @app.get("/api/game")
     def game() -> dict:
         g = app.state.game
-        out = {"game_state": g.game_state, "in_draft": g.in_draft, "team": g.team, "hero_id": g.hero_id}
+        out = {
+            "game_state": g.game_state,
+            "in_draft": g.in_draft,
+            "team": g.team,
+            "hero_id": g.hero_id,
+            "draft_id": app.state.draft_id,
+        }
         if watcher is not None:
             reads = [
                 {"hero_id": d.hero_id, "score": round(d.score, 3)} if d.hero_id else None
@@ -181,8 +188,11 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None, item_ti
         was_in_draft = app.state.game.in_draft
         app.state.game = gsi.parse(payload)
         app.state.gsi_seen = True
-        if watcher is not None and app.state.game.in_draft and not was_in_draft:
-            watcher.reset()  # a new draft: forget the last game's picks
+        if app.state.game.in_draft and not was_in_draft:
+            # A new draft: forget the last game's picks.
+            app.state.draft_id += 1
+            if watcher is not None:
+                watcher.reset()
         return {}
 
     return app

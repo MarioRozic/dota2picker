@@ -36,12 +36,29 @@ def test_gsi_updates_game_state():
         "hero": {"id": 26, "name": "npc_dota_hero_lion"},
     }
     assert client.post("/gsi", json=payload).status_code == 200
-    assert client.get("/api/game").json() == {
+    body = client.get("/api/game").json()
+    assert body.pop("draft_id") >= 1
+    assert body == {
         "game_state": "DOTA_GAMERULES_STATE_HERO_SELECTION",
         "in_draft": True,
         "team": "radiant",
         "hero_id": 26,
     }
+
+
+def test_draft_id_counts_new_drafts():
+    c = TestClient(create_app(demo_stats()))
+
+    def after(state):
+        c.post("/gsi", json={"map": {"game_state": state}})
+        return c.get("/api/game").json()["draft_id"]
+
+    assert c.get("/api/game").json()["draft_id"] == 0
+    assert after("DOTA_GAMERULES_STATE_HERO_SELECTION") == 1
+    assert after("DOTA_GAMERULES_STATE_STRATEGY_TIME") == 1
+    assert after("DOTA_GAMERULES_STATE_GAME_IN_PROGRESS") == 1
+    assert after("DOTA_GAMERULES_STATE_POST_GAME") == 1
+    assert after("DOTA_GAMERULES_STATE_HERO_SELECTION") == 2
 
 
 def test_gsi_rejects_bad_token():

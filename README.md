@@ -30,6 +30,9 @@ column only listing heroes commonly played there, so you don't have to pick a
 position first. Choose Top 3, 5 or 10 per position and the rank bracket at
 the top. Click a hero in a column once you pick it: that makes it your hero
 and that column your position, for the item build.
+**↺ Reset** (top right) clears all heroes, your hero and the item build for
+the next game, and keeps your rank, side and Top N. With Game State
+Integration this happens on its own when a new draft starts.
 
 To use it from a phone or second PC on the same network, run with
 `--host 0.0.0.0` and open `http://<this-pc-ip>:53000/`.
@@ -70,7 +73,7 @@ follow. A hero it isn't sure about gets a dashed border and a "?".
 
 If a hero is wrong, click it: the app reads that slot again without that hero
 and shows its next guess, if it has one. You can also type the right hero.
-Heroes you type stay until you remove them or click **New draft**, which also
+Heroes you type stay until you remove them or click **↺ Reset**, which also
 starts the screen reading afresh. Each team shows at most five, so the screen
 reads the app is least sure of make way for heroes you typed.
 
