@@ -68,8 +68,9 @@
   img.item { width:44px; height:32px; border-radius:3px; object-fit:cover; background:#000; }
   .cost { margin-left:auto; color:var(--accent); font-variant-numeric:tabular-nums; font-size:13px; }
   .chip.unsure::after { content:"?"; color:var(--accent); font-weight:700; }
-  img.icon { width:26px; height:26px; border-radius:3px; object-fit:cover; background:#000; }
-  img.portrait { width:64px; height:36px; border-radius:3px; object-fit:cover; background:#000; }
+  /* Valve's small square hero icons, the ones the minimap uses. */
+  img.icon { width:24px; height:24px; object-fit:contain; }
+  img.portrait { width:36px; height:36px; object-fit:contain; }
   .sugg { display:grid; grid-template-columns:auto minmax(0, 1fr) auto; column-gap:10px; row-gap:2px; align-items:center;
           padding:8px 0; border-top:1px solid var(--line); }
   .sugg .edges { grid-column:1 / -1; }
@@ -222,7 +223,7 @@ function chip(list, id) {
   el.title = manual[list].includes(id) ? "Click to remove"
     : (unsure.has(id) ? "Read from the screen, not sure." : "Read from the screen.") +
       " If it's wrong, click it: the app looks at that slot again without it";
-  el.innerHTML = `<img class="icon" src="${h.img_url}" alt=""><span>${h.localized_name}</span>`;
+  el.innerHTML = `<img class="icon" src="${h.icon_url}" alt=""><span>${h.localized_name}</span>`;
   if (list === "allies") {
     const star = document.createElement("span");
     star.className = "star"; star.textContent = "★";
@@ -262,7 +263,7 @@ function showResults() {
   box.replaceChildren(...matches.map((h, i) => {
     const el = document.createElement("div");
     el.className = "result" + (i === active ? " active" : "");
-    el.innerHTML = `<img class="icon" src="${h.img_url}" alt=""><span>${h.localized_name}</span>`;
+    el.innerHTML = `<img class="icon" src="${h.icon_url}" alt=""><span>${h.localized_name}</span>`;
     for (const [label, list] of [["Enemy", "enemies"], ["Ally", "allies"], ["Ban", "bans"]]) {
       const b = document.createElement("button");
       b.textContent = label; b.onclick = () => add(list, h.id);
@@ -295,7 +296,7 @@ function suggRow(s) {
     rows.map(r => `${r[key]} <span class="${r.advantage >= 0 ? "pos" : "neg"}">${pct(r.advantage)}</span>`).join(", ") +
     "</div>" : "";
   const why = edges("vs", s.reasons, "enemy") + edges("with", s.synergy, "ally");
-  el.innerHTML = `<img class="portrait" src="${s.hero.img_url}" alt="">
+  el.innerHTML = `<img class="portrait" src="${s.hero.icon_url}" alt="">
     <div class="name" title="${s.hero.localized_name}">${s.hero.localized_name}</div>
     <div class="score ${s.score >= 0 ? "pos" : "neg"}">${pct(s.score)}</div>
     <div class="edges">${why || `<div class="why">meta ${pct(s.meta)}</div>`}</div>`;
