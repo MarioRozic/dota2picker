@@ -6,6 +6,8 @@ and it ranks every available hero by how well it does against them, using
 OpenDota matchup and meta data.
 
 Design notes and the reasoning behind this approach: see `docs/design.md`.
+Step-by-step guide for trying it in a real game on Windows: see
+`docs/windows-testing.md`.
 
 ## Run it
 
