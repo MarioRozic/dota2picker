@@ -146,17 +146,21 @@ let draftId = null;  // counts the drafts GSI has seen, so a new one resets the 
 let position = null;  // 1-5: the column you picked your hero from, or null to use the hero's main position
 let POSITIONS = {};  // 1 -> "Carry", ...
 let me = null;  // the hero you picked, for counter items
+// Your hero when nothing else put it on the board (clicked in Best picks, or from GSI).
+// It only ever fills your own slot: picking another hero replaces it, and it never
+// pushes out a teammate read from the screen or typed in.
+let myPick = null;
 let drawn = "";  // the draft render() last drew, so polls that change nothing don't redraw
 
 function taken() { return new Set([...draft.enemies, ...draft.allies, ...draft.bans]); }
 
 // Work out the shown draft. Heroes you placed by hand stay where you put them,
 // and each team shows at most five, so the screen reads the app is least sure
-// of make way for heroes you added.
+// of make way for heroes you added. Your own pick comes last and only takes a free slot.
 function rebuild() {
   const mine = $("side").value || team || "radiant";
   const sides = { allies: mine, enemies: mine === "radiant" ? "dire" : "radiant" };
-  const placed = new Set([...manual.enemies, ...manual.allies, ...manual.bans]);
+  const placed = new Set([...manual.enemies, ...manual.allies, ...manual.bans, ...(myPick ? [myPick] : [])]);
   unsure.clear();
   draft.bans = [...manual.bans];
   for (const list of ["allies", "enemies"]) {
@@ -168,7 +172,9 @@ function rebuild() {
     shown.filter(r => r.score < SURE_SCORE).forEach(r => unsure.add(r.hero_id));
     draft[list] = [...shown.map(r => r.hero_id), ...manual[list]];
   }
-  if (me && !draft.allies.includes(me)) { me = null; position = null; }
+  if (myPick && draft.allies.length < 5) draft.allies.push(myPick);
+  // A full team without your pick still keeps it as your hero for the item build.
+  if (me && me !== myPick && !draft.allies.includes(me)) { me = null; position = null; }
 }
 
 function refresh() {
@@ -202,25 +208,27 @@ function remove(list, id) {
     for (const side of ["radiant", "dire"]) screen[side] = screen[side].map(r => r?.hero_id === id ? null : r);
     screenRequest("/api/screen/reject", { hero_id: id });
   }
+  if (id === myPick) myPick = null;
   if (id === me) { me = null; position = null; }
   refresh();
   $("q").focus();  // keep typing heroes without clicking back into the box
 }
+// Make id your hero. It replaces your previous pick and leaves your teammates as they are.
 function setMe(id, pos = null) {
-  if (pos) position = pos;
+  if (draft.enemies.includes(id) || draft.bans.includes(id)) return;
+  if (id !== me || pos) position = pos;
+  me = id;
   // Your own hero is certain, so keep it even if the screen read of its slot changes.
-  const elsewhere = draft.enemies.includes(id) || draft.bans.includes(id);
-  if (!elsewhere && !manual.allies.includes(id) && manual.allies.length < 5) manual.allies.push(id);
-  rebuild();
-  if (draft.allies.includes(id)) me = id;
+  myPick = manual.allies.includes(id) ? null : id;
   refresh();
 }
+function clearMe() { me = null; myPick = null; position = null; refresh(); }
 
 function chip(list, id) {
   const h = BY_ID[id];
   const el = document.createElement("div");
   el.className = "chip" + (unsure.has(id) ? " unsure" : "") + (id === me ? " me" : "");
-  el.title = manual[list].includes(id) ? "Click to remove"
+  el.title = manual[list].includes(id) || id === myPick ? "Click to remove"
     : (unsure.has(id) ? "Read from the screen, not sure." : "Read from the screen.") +
       " If it's wrong, click it: the app looks at that slot again without it";
   el.innerHTML = `<img class="icon" src="${h.icon_url}" alt=""><span>${h.localized_name}</span>`;
@@ -228,7 +236,7 @@ function chip(list, id) {
     const star = document.createElement("span");
     star.className = "star"; star.textContent = "★";
     star.title = id === me ? "Your hero" : "This is my hero";
-    star.onclick = e => { e.stopPropagation(); if (id === me) { me = null; position = null; refresh(); } else setMe(id); };
+    star.onclick = e => { e.stopPropagation(); if (id === me) clearMe(); else setMe(id); };
     el.append(star);
   }
   el.onclick = () => remove(list, id);
@@ -389,7 +397,7 @@ async function pollGame() {
 
 // Clear everything for the next game; rank, side and Top N stay.
 function reset(newGame = false) {
-  manual.enemies = []; manual.allies = []; manual.bans = []; me = null; position = null;
+  manual.enemies = []; manual.allies = []; manual.bans = []; me = null; myPick = null; position = null;
   screen = null;
   // In a new game your pick from GSI is new, and the server has already started
   // the screen reader over. A reset by hand keeps ignoring the hero GSI already
