@@ -59,7 +59,8 @@ class ScreenWatcher(threading.Thread):
     def run(self) -> None:
         import mss
 
-        with mss.mss() as sct:
+        # mss 10 renamed mss.mss to mss.MSS.
+        with getattr(mss, "MSS", mss.mss)() as sct:
             while not self._stop.is_set():
                 if self.should_run():
                     try:

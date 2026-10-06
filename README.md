@@ -47,6 +47,10 @@ you remove stay removed for that draft.
   `--no-screen`.
 - macOS asks for Screen Recording permission the first time (System Settings
   → Privacy & Security → Screen Recording).
+- The game has to fill the screen (full screen or borderless window, Dota's
+  default). A smaller Dota window, or a screenshot open in a normal Preview
+  window, won't read correctly. To test with a screenshot, open it in
+  Preview and press Ctrl+Cmd+F for real full screen.
 - Black bars around the game (e.g. a 16:9 game or screenshot on a 16:10
   screen) are trimmed automatically.
 - A hero is only added after it reads the same on two captures in a row, and
