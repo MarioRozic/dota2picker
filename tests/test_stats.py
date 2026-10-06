@@ -20,8 +20,8 @@ def test_parse_matchups():
 
 def test_parse_public_matchups_fills_both_sides():
     out = stats.parse_public_matchups([
-        {"hero": 1, "other": 2, "games": 100, "radiant_wins": 60},
-        {"hero": 2, "other": 1, "games": 50, "radiant_wins": 20},
+        {"hero": 1, "other": 2, "games": 100, "wins": 60},
+        {"hero": 2, "other": 1, "games": 50, "wins": 20},
     ])
     # AM on Radiant won 60/100; AM on Dire won 30/50.
     assert out[1][2] == stats.Record(150, 90)
@@ -29,7 +29,7 @@ def test_parse_public_matchups_fills_both_sides():
 
 
 def test_parse_public_synergy_is_symmetric():
-    out = stats.parse_public_synergy([{"hero": 1, "other": 2, "games": "40", "radiant_wins": "25"}])
+    out = stats.parse_public_synergy([{"hero": 1, "other": 2, "games": "40", "wins": "25"}])
     assert out[1][2] == out[2][1] == stats.Record(40, 25)
 
 
@@ -40,7 +40,11 @@ def fake_opendota(request: httpx.Request, explorer_ok: bool = True) -> httpx.Res
     if path == "/api/explorer":
         if not explorer_ok:
             return httpx.Response(400, json={"err": "statement timeout"})
-        row = {"hero": 1, "other": 2, "games": 1000, "radiant_wins": 550}
+        sql = request.url.params["sql"]
+        if "max(match_id)" in sql:
+            return httpx.Response(200, json={"rows": [{"max_id": 9_000_000_000}], "err": None})
+        assert "match_id > " in sql and "start_time" not in sql
+        row = {"hero": 1, "other": 2, "games": 100, "wins": 55}
         return httpx.Response(200, json={"rows": [row], "err": None})
     hero_id = int(path.split("/")[3])
     return httpx.Response(200, json=[{"hero_id": 2 if hero_id != 2 else 1, "games_played": 8, "wins": 4}])
@@ -56,15 +60,17 @@ def test_fetch_uses_public_matches_and_caches(tmp_path, monkeypatch):
     data = stats.fetch(client(), sleep=lambda s: None)
     assert data.source == "public"
     assert data.bracket[5][1] == stats.Record(10, 6)
-    assert data.matchups[2][1] == stats.Record(1000, 450)
-    assert data.synergy[2][1] == stats.Record(1000, 550)
+    # Every id window adds its games.
+    n = stats.PUBLIC_MATCH_WINDOWS
+    assert data.matchups[2][1] == stats.Record(100 * n, 45 * n)
+    assert data.synergy[2][1] == stats.Record(100 * n, 55 * n)
 
     path = tmp_path / "stats.json"
     path.write_text(json.dumps(data.to_json()))
     monkeypatch.setattr(stats, "fetch", lambda: (_ for _ in ()).throw(AssertionError("should use cache")))
     cached = stats.load(path)
-    assert cached.matchups[1][2] == stats.Record(1000, 550)
-    assert cached.synergy[1][2] == stats.Record(1000, 550)
+    assert cached.matchups[1][2] == stats.Record(100 * n, 55 * n)
+    assert cached.synergy[1][2] == stats.Record(100 * n, 55 * n)
 
 
 def test_fetch_falls_back_to_pro_matchups():

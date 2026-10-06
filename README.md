@@ -112,8 +112,8 @@ every ally (how much more often the pair wins together), plus a small bonus
 for its win rate in your bracket. These are the numbers Dota Plus shows in
 "Friends and Foes". See `dota2picker/scoring.py`.
 
-Matchups and synergy come from the last 7 days of public matches in
-OpenDota's database (all ranks). If that query fails, the app falls back to
+Matchups and synergy come from about the last day of public matches in
+OpenDota's database (~1M games, all ranks). If that query fails, the app falls back to
 OpenDota's per-hero matchup endpoint, which only counts pro games and is much
 less reliable.
 
