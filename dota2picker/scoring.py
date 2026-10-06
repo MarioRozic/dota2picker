@@ -110,16 +110,16 @@ class Scorer:
         reasons.sort(key=lambda r: r.advantage, reverse=True)
         return Suggestion(hero, total, meta, reasons)
 
-    def suggest(self, draft: Draft, role: str | None = None, limit: int = 5) -> dict:
+    def suggest(self, draft: Draft, position: int | None = None, limit: int = 5) -> dict:
         """Return the best and worst picks for this draft.
 
-        role filters on OpenDota's hero roles (e.g. "Carry", "Support").
+        position (1-5) keeps only heroes commonly played there.
         """
         taken = draft.unavailable()
         pool = [
             h.id
             for h in heroes.all_heroes()
-            if h.id not in taken and (role is None or role in h.roles)
+            if h.id not in taken and (position is None or position in h.positions)
         ]
         ranked = sorted((self.score(h, draft) for h in pool), key=lambda s: s.score, reverse=True)
         return {"best": ranked[:limit], "avoid": ranked[::-1][:3] if draft.enemies else []}

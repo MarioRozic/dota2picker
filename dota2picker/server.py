@@ -7,7 +7,7 @@ from importlib import resources
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, Response
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from . import gsi, heroes
 from .scoring import Draft, Scorer
@@ -18,7 +18,7 @@ class DraftIn(BaseModel):
     allies: list[int] = []
     enemies: list[int] = []
     bans: list[int] = []
-    role: str | None = None
+    position: int | None = Field(None, ge=1, le=5)
     bracket: str | None = None
 
 
@@ -38,7 +38,11 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
 
     @app.get("/api/meta")
     def meta() -> dict:
-        return {"brackets": list(BRACKETS), "fetched_at": stats.fetched_at}
+        return {
+            "brackets": list(BRACKETS),
+            "positions": heroes.POSITIONS,
+            "fetched_at": stats.fetched_at,
+        }
 
     @app.post("/api/suggest")
     def suggest(body: DraftIn) -> dict:
@@ -48,7 +52,7 @@ def create_app(stats: Stats, gsi_token: str | None = None, watcher=None) -> Fast
                 raise HTTPException(400, f"unknown hero id {hid}")
         bracket = BRACKETS.get(body.bracket) if body.bracket else None
         result = Scorer(stats, bracket).suggest(
-            Draft(body.allies, body.enemies, body.bans), role=body.role
+            Draft(body.allies, body.enemies, body.bans), position=body.position
         )
         return {k: [s.to_dict() for s in v] for k, v in result.items()}
 

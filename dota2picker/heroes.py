@@ -9,6 +9,9 @@ from importlib import resources
 
 STEAM_CDN = "https://cdn.cloudflare.steamstatic.com"
 
+# Dota's five positions: 1-3 are the cores (safe lane, mid, off lane), 4-5 the supports.
+POSITIONS = {1: "Carry", 2: "Mid", 3: "Offlane", 4: "Soft support", 5: "Hard support"}
+
 
 @dataclass(frozen=True)
 class Hero:
@@ -19,6 +22,7 @@ class Hero:
     roles: tuple[str, ...]
     img: str
     icon: str
+    positions: tuple[int, ...] = ()  # most played first
 
     @property
     def short_name(self) -> str:
@@ -37,12 +41,16 @@ class Hero:
             "roles": list(self.roles),
             "img_url": self.img_url,
             "icon_url": STEAM_CDN + self.icon,
+            "positions": list(self.positions),
         }
 
 
 @lru_cache(maxsize=1)
 def all_heroes() -> tuple[Hero, ...]:
-    raw = json.loads(resources.files("dota2picker.data").joinpath("heroes.json").read_text())
+    data = resources.files("dota2picker.data")
+    raw = json.loads(data.joinpath("heroes.json").read_text())
+    # Hand-curated from common play; edit positions.json when the meta shifts.
+    positions = json.loads(data.joinpath("positions.json").read_text())
     return tuple(
         Hero(
             id=h["id"],
@@ -52,6 +60,7 @@ def all_heroes() -> tuple[Hero, ...]:
             roles=tuple(h["roles"]),
             img=h["img"],
             icon=h["icon"],
+            positions=tuple(positions.get(h["name"].removeprefix("npc_dota_hero_"), ())),
         )
         for h in raw
     )
