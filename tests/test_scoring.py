@@ -44,9 +44,14 @@ def test_suggestions_skip_taken_heroes_and_rank_best_first():
     assert result["avoid"][0].score <= scores[-1]
 
 
-def test_role_filter():
-    result = Scorer(demo_stats()).suggest(Draft(enemies=[AM]), role="Support", limit=20)
-    assert all("Support" in heroes.by_id()[s.hero_id].roles for s in result["best"])
+def test_position_filter():
+    result = Scorer(demo_stats()).suggest(Draft(enemies=[AM]), position=5, limit=20)
+    assert all(5 in heroes.by_id()[s.hero_id].positions for s in result["best"])
+
+
+def test_every_hero_has_a_valid_position():
+    for h in heroes.all_heroes():
+        assert h.positions and set(h.positions) <= set(heroes.POSITIONS), h.name
 
 
 def test_no_enemies_means_no_avoid_list():

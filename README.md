@@ -22,7 +22,8 @@ dota2picker                      # real stats (first run downloads ~130 OpenDota
 
 The browser opens at http://127.0.0.1:53000/. Type a hero name and press
 Enter to add it to enemies, Shift+Enter for allies, or use the buttons. Click a
-hero chip to remove it. Pick your role and rank bracket at the top.
+hero chip to remove it. Pick your position (1 Carry ... 5 Hard support) and rank bracket at the top;
+suggestions then only include heroes commonly played in that position.
 
 To use it from a phone or second PC on the same network, run with
 `--host 0.0.0.0` and open `http://<this-pc-ip>:53000/`.

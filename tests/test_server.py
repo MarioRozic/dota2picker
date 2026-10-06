@@ -13,11 +13,15 @@ def test_index_and_heroes():
 
 
 def test_suggest():
-    res = client.post("/api/suggest", json={"enemies": [1, 2], "bracket": "divine", "role": "Carry"})
+    res = client.post("/api/suggest", json={"enemies": [1, 2], "bracket": "divine", "position": 1})
     assert res.status_code == 200
     body = res.json()
     assert len(body["best"]) == 5 and len(body["avoid"]) == 3
     assert body["best"][0]["reasons"][0]["enemy"] in {"Anti-Mage", "Axe"}
+
+
+def test_suggest_rejects_bad_position():
+    assert client.post("/api/suggest", json={"position": 6}).status_code == 422
 
 
 def test_suggest_rejects_unknown_hero():

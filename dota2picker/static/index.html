@@ -29,6 +29,10 @@
   button { background:#2a303a; color:var(--text); border:1px solid var(--line); border-radius:5px;
            padding:3px 8px; cursor:pointer; font:inherit; }
   button:hover { border-color:var(--accent); }
+  .positions { display:flex; gap:4px; margin:10px 0; }
+  .positions button { flex:1; padding:6px 4px; font-size:12px; line-height:1.2; }
+  .positions button b { display:block; font-size:15px; }
+  .positions button.on { background:var(--accent); border-color:var(--accent); color:#14171c; }
   .team { margin:8px 0; }
   .team h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 4px; }
   .chips { display:flex; flex-wrap:wrap; gap:4px; min-height:30px; }
@@ -57,12 +61,9 @@
     </span>
   </header>
 
+  <div id="positions" class="positions" title="Your position: suggestions only include heroes played there. Click again for any position."></div>
+
   <div class="row">
-    <select id="role" title="Your role">
-      <option value="">Any role</option>
-      <option>Carry</option><option>Support</option><option>Nuker</option><option>Disabler</option>
-      <option>Initiator</option><option>Durable</option><option>Escape</option><option>Pusher</option>
-    </select>
     <select id="bracket" title="Rank bracket for meta win rates"></select>
     <select id="side" title="Which side of the top bar is your team">
       <option value="">Side: auto</option><option value="radiant">Radiant (left)</option><option value="dire">Dire (right)</option>
@@ -96,6 +97,7 @@ const screenSeen = new Set();  // heroes already read from the screen, so removi
 const unsure = new Set();  // screen reads with low confidence, shown with a "?"
 const SURE_SCORE = 0.7;
 let wasInDraft = false;
+let position = null;  // 1-5, or null for any position
 
 function taken() { return new Set([...draft.enemies, ...draft.allies, ...draft.bans]); }
 
@@ -183,7 +185,7 @@ function suggRow(s, positive) {
 let pending = 0;
 async function suggest() {
   const ticket = ++pending;
-  const body = { ...draft, role: $("role").value || null, bracket: $("bracket").value || null };
+  const body = { ...draft, position, bracket: $("bracket").value || null };
   const res = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   if (ticket !== pending || !res.ok) return;
   const data = await res.json();
@@ -226,8 +228,20 @@ function newDraft() {
 }
 $("clear").onclick = newDraft;
 $("side").addEventListener("change", () => store.set("side", $("side").value));
-for (const id of ["role", "bracket"]) {
-  $(id).addEventListener("change", () => { store.set(id, $(id).value); suggest(); });
+$("bracket").addEventListener("change", () => { store.set("bracket", $("bracket").value); suggest(); });
+
+function renderPositions(names) {
+  $("positions").replaceChildren(...Object.entries(names).map(([n, name]) => {
+    const b = document.createElement("button");
+    b.className = position === +n ? "on" : "";
+    b.innerHTML = `<b>${n}</b>${name}`;
+    b.onclick = () => {
+      position = position === +n ? null : +n;
+      store.set("position", position ?? "");
+      renderPositions(names); suggest();
+    };
+    return b;
+  }));
 }
 
 (async () => {
@@ -235,7 +249,8 @@ for (const id of ["role", "bracket"]) {
   HEROES = heroes; BY_ID = Object.fromEntries(heroes.map(h => [h.id, h]));
   $("bracket").innerHTML = '<option value="">All ranks</option>' +
     meta.brackets.map(b => `<option value="${b}">${b[0].toUpperCase() + b.slice(1)}</option>`).join("");
-  $("role").value = store.get("role", "");
+  position = +store.get("position", "") || null;
+  renderPositions(meta.positions);
   $("bracket").value = store.get("bracket", "");
   $("side").value = store.get("side", "");
   render();
