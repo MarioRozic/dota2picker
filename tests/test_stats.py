@@ -1,4 +1,5 @@
 import json
+import time
 
 import httpx
 
@@ -17,23 +18,71 @@ def test_parse_matchups():
     assert out == {2: stats.Record(30, 17)}
 
 
-def fake_opendota(request: httpx.Request) -> httpx.Response:
-    if request.url.path == "/api/heroStats":
+def test_parse_public_matchups_fills_both_sides():
+    out = stats.parse_public_matchups([
+        {"hero": 1, "other": 2, "games": 100, "radiant_wins": 60},
+        {"hero": 2, "other": 1, "games": 50, "radiant_wins": 20},
+    ])
+    # AM on Radiant won 60/100; AM on Dire won 30/50.
+    assert out[1][2] == stats.Record(150, 90)
+    assert out[2][1] == stats.Record(150, 60)
+
+
+def test_parse_public_synergy_is_symmetric():
+    out = stats.parse_public_synergy([{"hero": 1, "other": 2, "games": "40", "radiant_wins": "25"}])
+    assert out[1][2] == out[2][1] == stats.Record(40, 25)
+
+
+def fake_opendota(request: httpx.Request, explorer_ok: bool = True) -> httpx.Response:
+    path = request.url.path
+    if path == "/api/heroStats":
         return httpx.Response(200, json=[{"id": 1, "5_pick": 10, "5_win": 6}])
-    hero_id = int(request.url.path.split("/")[3])
+    if path == "/api/explorer":
+        if not explorer_ok:
+            return httpx.Response(400, json={"err": "statement timeout"})
+        row = {"hero": 1, "other": 2, "games": 1000, "radiant_wins": 550}
+        return httpx.Response(200, json={"rows": [row], "err": None})
+    hero_id = int(path.split("/")[3])
     return httpx.Response(200, json=[{"hero_id": 2 if hero_id != 2 else 1, "games_played": 8, "wins": 4}])
 
 
-def test_fetch_and_cache_roundtrip(tmp_path, monkeypatch):
-    client = httpx.Client(base_url=stats.OPENDOTA, transport=httpx.MockTransport(fake_opendota))
-    data = stats.fetch(client, sleep=lambda s: None)
+def client(**kw) -> httpx.Client:
+    return httpx.Client(
+        base_url=stats.OPENDOTA, transport=httpx.MockTransport(lambda r: fake_opendota(r, **kw))
+    )
+
+
+def test_fetch_uses_public_matches_and_caches(tmp_path, monkeypatch):
+    data = stats.fetch(client(), sleep=lambda s: None)
+    assert data.source == "public"
     assert data.bracket[5][1] == stats.Record(10, 6)
-    assert len(data.matchups) == len(heroes.all_heroes())
+    assert data.matchups[2][1] == stats.Record(1000, 450)
+    assert data.synergy[2][1] == stats.Record(1000, 550)
 
     path = tmp_path / "stats.json"
     path.write_text(json.dumps(data.to_json()))
     monkeypatch.setattr(stats, "fetch", lambda: (_ for _ in ()).throw(AssertionError("should use cache")))
-    assert stats.load(path).matchups[1][2] == stats.Record(8, 4)
+    cached = stats.load(path)
+    assert cached.matchups[1][2] == stats.Record(1000, 550)
+    assert cached.synergy[1][2] == stats.Record(1000, 550)
+
+
+def test_fetch_falls_back_to_pro_matchups():
+    data = stats.fetch(client(explorer_ok=False), sleep=lambda s: None)
+    assert data.source == "pro"
+    assert len(data.matchups) == len(heroes.all_heroes())
+    assert data.matchups[1][2] == stats.Record(8, 4)
+    assert data.synergy == {}
+
+
+def test_legacy_pro_only_cache_is_refreshed(tmp_path, monkeypatch):
+    legacy = stats.Stats(fetched_at=time.time()).to_json()
+    del legacy["synergy"], legacy["source"]
+    path = tmp_path / "stats.json"
+    path.write_text(json.dumps(legacy))
+    fresh = stats.Stats(fetched_at=time.time())
+    monkeypatch.setattr(stats, "fetch", lambda: fresh)
+    assert stats.load(path) is fresh
 
 
 def test_load_falls_back_to_stale_cache(tmp_path, monkeypatch):

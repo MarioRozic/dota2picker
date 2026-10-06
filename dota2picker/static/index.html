@@ -253,13 +253,16 @@ $("q").addEventListener("keydown", e => {
 
 function pct(v) { return (v > 0 ? "+" : "") + v.toFixed(1) + "%"; }
 
-function suggRow(s, positive) {
+function suggRow(s) {
   const el = document.createElement("div");
   el.className = "sugg";
-  const reasons = (positive ? s.reasons.slice(0, 2) : s.reasons.slice(-2).reverse())
-    .map(r => `${pct(r.advantage)} vs ${r.enemy}`).join(", ");
+  // Every enemy and ally with its edge, like Dota Plus's "Friends and Foes".
+  const edges = (label, rows, key) => rows.length ? `<div class="why">${label} ` +
+    rows.map(r => `${r[key]} <span class="${r.advantage >= 0 ? "pos" : "neg"}">${pct(r.advantage)}</span>`).join(", ") +
+    "</div>" : "";
+  const why = edges("vs", s.reasons, "enemy") + edges("with", s.synergy, "ally");
   el.innerHTML = `<img class="portrait" src="${s.hero.img_url}" alt="">
-    <div><div class="name">${s.hero.localized_name}</div><div class="why">${reasons || "meta " + pct(s.meta)}</div></div>
+    <div><div class="name">${s.hero.localized_name}</div>${why || `<div class="why">meta ${pct(s.meta)}</div>`}</div>
     <div class="score ${s.score >= 0 ? "pos" : "neg"}">${pct(s.score)}</div>`;
   return el;
 }
@@ -272,14 +275,14 @@ async function suggest() {
   if (ticket !== pending || !res.ok) return;
   const data = await res.json();
   $("best").replaceChildren(...data.best.map(s => {
-    const row = suggRow(s, true);
+    const row = suggRow(s);
     row.classList.add("pickable");
     row.title = "Click when you pick this hero";
     row.onclick = () => setMe(s.hero.id);
     return row;
   }));
-  if (!draft.enemies.length) $("best").insertAdjacentHTML("afterbegin", '<div class="empty">Add enemy heroes to see counters. Showing meta picks for now.</div>');
-  $("avoid").replaceChildren(...data.avoid.map(s => suggRow(s, false)));
+  if (!draft.enemies.length && !draft.allies.length) $("best").insertAdjacentHTML("afterbegin", '<div class="empty">Add enemy or allied heroes to see counters. Showing meta picks for now.</div>');
+  $("avoid").replaceChildren(...data.avoid.map(s => suggRow(s)));
 }
 
 let pendingItems = 0;
