@@ -36,6 +36,9 @@ INNER_Y = (0.12, 0.88)
 WORK_WIDTH = 48
 SCALES = (1.0, 1.1, 1.2, 1.3, 1.45)
 MIN_SCORE = 0.55
+# A real top bar has at least one clear match; anything else on screen (a
+# browser, the desktop) only produces weak ones.
+CONFIDENT_SCORE = 0.8
 EMPTY_STD = 12.0
 
 
@@ -64,6 +67,37 @@ def slot_boxes(width: int, height: int) -> list[tuple[int, int, int, int]]:
                 )
             )
     return boxes
+
+
+def content_box(image: np.ndarray, threshold: int = 24) -> tuple[int, int, int, int]:
+    """Bounding box (x0, y0, x1, y1) of the picture inside any black bars.
+
+    Black bars appear, centred, when the game or a screenshot shown full screen
+    doesn't match the screen's aspect ratio.
+    """
+    bright = image.max(axis=2) > threshold
+    rows = np.flatnonzero(bright.mean(axis=1) > 0.01)
+    cols = np.flatnonzero(bright.mean(axis=0) > 0.01)
+    h, w = image.shape[:2]
+    if len(rows) == 0 or len(cols) == 0:
+        return 0, 0, w, h
+    # Bars are symmetric, so take the smaller margin on each axis: a dark area
+    # at one edge of the game itself must not shrink the picture.
+    my = min(int(rows[0]), h - 1 - int(rows[-1]))
+    mx = min(int(cols[0]), w - 1 - int(cols[-1]))
+    return mx, my, w - mx, h - my
+
+
+def top_strip(image: np.ndarray) -> tuple[np.ndarray, int]:
+    """Cut the game picture out of a full-screen capture.
+
+    Returns the top strip that holds the hero slots and the picture's height,
+    which is what the slot geometry scales with.
+    """
+    x0, y0, x1, y1 = content_box(image)
+    height = y1 - y0
+    bottom = y0 + int(height * (SLOT_BOTTOM + 0.01)) + 1
+    return image[y0:bottom, x0:x1], height
 
 
 def crop_slots(image: np.ndarray, screen_height: int | None = None) -> list[np.ndarray]:
@@ -138,7 +172,12 @@ class PortraitMatcher:
         return Detection(best_id, best)
 
     def read(self, image: np.ndarray, screen_height: int | None = None) -> list[Detection]:
-        """Detect all ten slots (Radiant 1-5, then Dire 1-5)."""
+        """Detect all ten slots (Radiant 1-5, then Dire 1-5).
+
+        Without screen_height, image is a full screen and black bars are trimmed first.
+        """
+        if screen_height is None:
+            image, screen_height = top_strip(image)
         found: list[Detection] = []
         for slot in crop_slots(image, screen_height):
             # A hero can only be picked once, so don't offer earlier slots' heroes again.
@@ -175,3 +214,21 @@ def load_portraits(cache_dir: Path, client=None) -> dict[int, np.ndarray]:
 
 def default_portrait_dir() -> Path:
     return Path.home() / ".dota2picker" / "portraits"
+
+
+def looks_like_draft(detections: list[Detection]) -> bool:
+    return any(d.hero_id and d.score >= CONFIDENT_SCORE for d in detections)
+
+
+def annotate(image: np.ndarray, detections: list[Detection]) -> np.ndarray:
+    """Draw the slot boxes and what was read in each, for debugging."""
+    strip, height = top_strip(image)
+    # Room under the slots for the labels.
+    out = cv2.copyMakeBorder(strip, 0, 18, 0, 0, cv2.BORDER_CONSTANT, value=(20, 20, 20))
+    for (x0, y0, x1, y1), d in zip(slot_boxes(out.shape[1], height), detections):
+        color = (80, 200, 90) if d.hero_id and d.score >= 0.7 else (40, 160, 230) if d.hero_id else (90, 90, 230)
+        cv2.rectangle(out, (x0, y0), (x1, y1), color, 2)
+        label = heroes.by_id()[d.hero_id].localized_name if d.hero_id else "-"
+        cv2.putText(out, f"{label} {d.score:.2f}", (x0, out.shape[0] - 5),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.4, color, 1, cv2.LINE_AA)
+    return out
