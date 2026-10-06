@@ -1,0 +1,206 @@
+{
+ "abyssal_blade": {
+  "id": 208,
+  "dname": "Abyssal Blade",
+  "cost": 6250,
+  "img": "/apps/dota2/images/dota_react/items/abyssal_blade.png"
+ },
+ "aeon_disk": {
+  "id": 256,
+  "dname": "Aeon Disk",
+  "cost": 3000,
+  "img": "/apps/dota2/images/dota_react/items/aeon_disk.png"
+ },
+ "assault": {
+  "id": 112,
+  "dname": "Assault Cuirass",
+  "cost": 5125,
+  "img": "/apps/dota2/images/dota_react/items/assault.png"
+ },
+ "bfury": {
+  "id": 145,
+  "dname": "Battle Fury",
+  "cost": 3900,
+  "img": "/apps/dota2/images/dota_react/items/bfury.png"
+ },
+ "black_king_bar": {
+  "id": 116,
+  "dname": "Black King Bar",
+  "cost": 4050,
+  "img": "/apps/dota2/images/dota_react/items/black_king_bar.png"
+ },
+ "bloodthorn": {
+  "id": 250,
+  "dname": "Bloodthorn",
+  "cost": 6400,
+  "img": "/apps/dota2/images/dota_react/items/bloodthorn.png"
+ },
+ "butterfly": {
+  "id": 139,
+  "dname": "Butterfly",
+  "cost": 5450,
+  "img": "/apps/dota2/images/dota_react/items/butterfly.png"
+ },
+ "crimson_guard": {
+  "id": 242,
+  "dname": "Crimson Guard",
+  "cost": 3725,
+  "img": "/apps/dota2/images/dota_react/items/crimson_guard.png"
+ },
+ "cyclone": {
+  "id": 100,
+  "dname": "Eul's Scepter of Divinity",
+  "cost": 2600,
+  "img": "/apps/dota2/images/dota_react/items/cyclone.png"
+ },
+ "diffusal_blade": {
+  "id": 174,
+  "dname": "Diffusal Blade",
+  "cost": 2500,
+  "img": "/apps/dota2/images/dota_react/items/diffusal_blade.png"
+ },
+ "dust": {
+  "id": 40,
+  "dname": "Dust of Appearance",
+  "cost": 80,
+  "img": "/apps/dota2/images/dota_react/items/dust.png"
+ },
+ "eternal_shroud": {
+  "id": 692,
+  "dname": "Eternal Shroud",
+  "cost": 3900,
+  "img": "/apps/dota2/images/dota_react/items/eternal_shroud.png"
+ },
+ "force_staff": {
+  "id": 102,
+  "dname": "Force Staff",
+  "cost": 2200,
+  "img": "/apps/dota2/images/dota_react/items/force_staff.png"
+ },
+ "gem": {
+  "id": 30,
+  "dname": "Gem of True Sight",
+  "cost": 900,
+  "img": "/apps/dota2/images/dota_react/items/gem.png"
+ },
+ "ghost": {
+  "id": 37,
+  "dname": "Ghost Scepter",
+  "cost": 1500,
+  "img": "/apps/dota2/images/dota_react/items/ghost.png"
+ },
+ "glimmer_cape": {
+  "id": 254,
+  "dname": "Glimmer Cape",
+  "cost": 2150,
+  "img": "/apps/dota2/images/dota_react/items/glimmer_cape.png"
+ },
+ "heavens_halberd": {
+  "id": 210,
+  "dname": "Heaven's Halberd",
+  "cost": 3300,
+  "img": "/apps/dota2/images/dota_react/items/heavens_halberd.png"
+ },
+ "lotus_orb": {
+  "id": 226,
+  "dname": "Lotus Orb",
+  "cost": 3850,
+  "img": "/apps/dota2/images/dota_react/items/lotus_orb.png"
+ },
+ "mage_slayer": {
+  "id": 598,
+  "dname": "Mage Slayer",
+  "cost": 3100,
+  "img": "/apps/dota2/images/dota_react/items/mage_slayer.png"
+ },
+ "manta": {
+  "id": 147,
+  "dname": "Manta Style",
+  "cost": 4650,
+  "img": "/apps/dota2/images/dota_react/items/manta.png"
+ },
+ "mjollnir": {
+  "id": 158,
+  "dname": "Mjollnir",
+  "cost": 5500,
+  "img": "/apps/dota2/images/dota_react/items/mjollnir.png"
+ },
+ "monkey_king_bar": {
+  "id": 135,
+  "dname": "Monkey King Bar",
+  "cost": 5000,
+  "img": "/apps/dota2/images/dota_react/items/monkey_king_bar.png"
+ },
+ "nullifier": {
+  "id": 225,
+  "dname": "Nullifier",
+  "cost": 4350,
+  "img": "/apps/dota2/images/dota_react/items/nullifier.png"
+ },
+ "orchid": {
+  "id": 98,
+  "dname": "Orchid Malevolence",
+  "cost": 3275,
+  "img": "/apps/dota2/images/dota_react/items/orchid.png"
+ },
+ "pipe": {
+  "id": 90,
+  "dname": "Pipe of Insight",
+  "cost": 3725,
+  "img": "/apps/dota2/images/dota_react/items/pipe.png"
+ },
+ "rod_of_atos": {
+  "id": 206,
+  "dname": "Rod of Atos",
+  "cost": 2250,
+  "img": "/apps/dota2/images/dota_react/items/rod_of_atos.png"
+ },
+ "sheepstick": {
+  "id": 96,
+  "dname": "Scythe of Vyse",
+  "cost": 5200,
+  "img": "/apps/dota2/images/dota_react/items/sheepstick.png"
+ },
+ "shivas_guard": {
+  "id": 119,
+  "dname": "Shiva's Guard",
+  "cost": 4500,
+  "img": "/apps/dota2/images/dota_react/items/shivas_guard.png"
+ },
+ "silver_edge": {
+  "id": 249,
+  "dname": "Silver Edge",
+  "cost": 5700,
+  "img": "/apps/dota2/images/dota_react/items/silver_edge.png"
+ },
+ "skadi": {
+  "id": 160,
+  "dname": "Eye of Skadi",
+  "cost": 5900,
+  "img": "/apps/dota2/images/dota_react/items/skadi.png"
+ },
+ "solar_crest": {
+  "id": 229,
+  "dname": "Solar Crest",
+  "cost": 2575,
+  "img": "/apps/dota2/images/dota_react/items/solar_crest.png"
+ },
+ "sphere": {
+  "id": 123,
+  "dname": "Linken's Sphere",
+  "cost": 4800,
+  "img": "/apps/dota2/images/dota_react/items/sphere.png"
+ },
+ "spirit_vessel": {
+  "id": 267,
+  "dname": "Spirit Vessel",
+  "cost": 2725,
+  "img": "/apps/dota2/images/dota_react/items/spirit_vessel.png"
+ },
+ "ward_sentry": {
+  "id": 43,
+  "dname": "Sentry Ward",
+  "cost": 50,
+  "img": "/apps/dota2/images/dota_react/items/ward_sentry.png"
+ }
+}

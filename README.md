@@ -31,6 +31,20 @@ To use it from a phone or second PC on the same network, run with
 Stats are cached in `~/.dota2picker/stats.json` and refreshed once a day;
 `--refresh` forces a download.
 
+## Counter items
+
+Once the app knows your hero, it lists items that answer the enemy lineup,
+each with the enemies it helps against and its cost. Your hero is set
+automatically by Game State Integration; otherwise click ★ next to your hero
+under Allies, or click a hero in Best picks when you pick it.
+
+Cores (positions 1-3) and supports (4-5) get different items. Without a
+position selected, your hero's main position decides. Each enemy is tagged
+with the threats it poses in `dota2picker/data/threats.json` (evasion,
+illusions, invisibility, magic damage, stuns, silences, healing, ...) and
+`dota2picker/data/counter_items.json` lists the items that answer each
+threat. Both files are hand-written; edit them as the meta changes.
+
 ## Reading picks from the screen
 
 By default the app reads the hero portraits in the top bar of your screen

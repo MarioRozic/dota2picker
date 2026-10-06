@@ -77,3 +77,13 @@ def test_game_includes_screen_reads():
     assert not app.state.screen_should_run()
     c.post("/gsi", json={"map": {"game_state": "DOTA_GAMERULES_STATE_HERO_SELECTION"}})
     assert app.state.screen_should_run()
+
+
+def test_items_endpoint():
+    res = client.post("/api/items", json={"hero_id": 8, "enemies": [44, 32], "position": 1})
+    assert res.status_code == 200
+    body = res.json()
+    assert body["role"] == "core"
+    assert body["items"] and {"name", "cost", "img_url", "answers"} <= set(body["items"][0])
+    assert client.post("/api/items", json={"hero_id": 99999}).status_code == 400
+    assert client.post("/api/items", json={"hero_id": 8, "position": 9}).status_code == 422
