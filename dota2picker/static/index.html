@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dota2Picker</title>
+<style>
+  :root { --bg:#14171c; --panel:#1d2128; --line:#2c323c; --text:#e6e8eb; --muted:#8a93a0;
+          --good:#5cc87a; --bad:#e2655a; --accent:#d9a441; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:14px/1.4 system-ui, sans-serif; }
+  main { max-width: 520px; margin: 0 auto; padding: 12px 16px 32px; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+  h1 { font-size:16px; margin:0; }
+  .status { font-size:12px; color:var(--muted); }
+  .status.live { color:var(--good); }
+  .row { display:flex; gap:8px; margin:10px 0; }
+  select, input { background:var(--panel); color:var(--text); border:1px solid var(--line);
+                  border-radius:6px; padding:7px 8px; font:inherit; }
+  input { width:100%; }
+  .search { position:relative; }
+  .results { position:absolute; z-index:5; left:0; right:0; background:var(--panel);
+             border:1px solid var(--line); border-radius:6px; margin-top:2px; max-height:260px; overflow:auto; }
+  .result { display:flex; align-items:center; gap:8px; padding:4px 8px; }
+  .result.active { background:#2a303a; }
+  .result span { flex:1; }
+  .result button { font-size:12px; }
+  button { background:#2a303a; color:var(--text); border:1px solid var(--line); border-radius:5px;
+           padding:3px 8px; cursor:pointer; font:inherit; }
+  button:hover { border-color:var(--accent); }
+  .team { margin:8px 0; }
+  .team h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 4px; }
+  .chips { display:flex; flex-wrap:wrap; gap:4px; min-height:30px; }
+  .chip { display:flex; align-items:center; gap:4px; background:var(--panel); border:1px solid var(--line);
+          border-radius:5px; padding:2px 6px 2px 2px; cursor:pointer; font-size:13px; }
+  .chip:hover { border-color:var(--bad); }
+  img.icon { width:26px; height:26px; border-radius:3px; object-fit:cover; background:#000; }
+  img.portrait { width:64px; height:36px; border-radius:3px; object-fit:cover; background:#000; }
+  .sugg { display:flex; gap:10px; align-items:center; padding:6px 0; border-top:1px solid var(--line); }
+  .sugg .name { font-weight:600; }
+  .sugg .why { font-size:12px; color:var(--muted); }
+  .score { margin-left:auto; font-variant-numeric:tabular-nums; font-weight:600; }
+  .pos { color:var(--good); } .neg { color:var(--bad); }
+  .empty { color:var(--muted); font-size:13px; padding:6px 0; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Dota2Picker</h1>
+    <span id="status" class="status">Game not detected</span>
+  </header>
+
+  <div class="row">
+    <select id="role" title="Your role">
+      <option value="">Any role</option>
+      <option>Carry</option><option>Support</option><option>Nuker</option><option>Disabler</option>
+      <option>Initiator</option><option>Durable</option><option>Escape</option><option>Pusher</option>
+    </select>
+    <select id="bracket" title="Rank bracket for meta win rates"></select>
+    <button id="clear">New draft</button>
+  </div>
+
+  <div class="search">
+    <input id="q" placeholder="Type a hero, Enter adds to enemies (Shift+Enter: allies)" autocomplete="off">
+    <div id="results" class="results" hidden></div>
+  </div>
+
+  <div class="team"><h2>Enemies</h2><div id="enemies" class="chips"></div></div>
+  <div class="team"><h2>Allies</h2><div id="allies" class="chips"></div></div>
+  <div class="team"><h2>Bans</h2><div id="bans" class="chips"></div></div>
+
+  <div class="team"><h2>Best picks</h2><div id="best"></div></div>
+  <div class="team"><h2>Avoid</h2><div id="avoid"></div></div>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+};
+let HEROES = [], BY_ID = {};
+const draft = { enemies: [], allies: [], bans: [] };
+let active = 0, matches = [];
+const gsiSeen = new Set();  // own picks already auto-added, so removing one sticks
+
+function taken() { return new Set([...draft.enemies, ...draft.allies, ...draft.bans]); }
+
+function add(list, id) {
+  if (taken().has(id)) return;
+  if (list !== "bans" && draft[list].length >= 5) return;
+  draft[list].push(id);
+  $("q").value = ""; closeResults(); render();
+}
+function remove(list, id) { draft[list] = draft[list].filter(x => x !== id); render(); }
+
+function chip(list, id) {
+  const h = BY_ID[id];
+  const el = document.createElement("div");
+  el.className = "chip"; el.title = "Click to remove";
+  el.innerHTML = `<img class="icon" src="${h.img_url}" alt=""><span>${h.localized_name}</span>`;
+  el.onclick = () => remove(list, id);
+  return el;
+}
+
+function render() {
+  for (const list of ["enemies", "allies", "bans"]) {
+    $(list).replaceChildren(...draft[list].map(id => chip(list, id)));
+  }
+  suggest();
+}
+
+function search(q) {
+  q = q.trim().toLowerCase();
+  if (!q) return [];
+  const t = taken();
+  return HEROES.filter(h => !t.has(h.id) && (
+    h.localized_name.toLowerCase().includes(q) ||
+    h.localized_name.split(/[\s-]/).map(w => w[0]).join("").toLowerCase() === q
+  )).slice(0, 8);
+}
+
+function closeResults() { $("results").hidden = true; matches = []; }
+
+function showResults() {
+  matches = search($("q").value);
+  active = 0;
+  const box = $("results");
+  if (!matches.length) return closeResults();
+  box.replaceChildren(...matches.map((h, i) => {
+    const el = document.createElement("div");
+    el.className = "result" + (i === active ? " active" : "");
+    el.innerHTML = `<img class="icon" src="${h.img_url}" alt=""><span>${h.localized_name}</span>`;
+    for (const [label, list] of [["Enemy", "enemies"], ["Ally", "allies"], ["Ban", "bans"]]) {
+      const b = document.createElement("button");
+      b.textContent = label; b.onclick = () => add(list, h.id);
+      el.append(b);
+    }
+    return el;
+  }));
+  box.hidden = false;
+}
+
+$("q").addEventListener("input", showResults);
+$("q").addEventListener("keydown", e => {
+  if (!matches.length) return;
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    e.preventDefault();
+    active = (active + (e.key === "ArrowDown" ? 1 : matches.length - 1)) % matches.length;
+    [...$("results").children].forEach((el, i) => el.classList.toggle("active", i === active));
+  } else if (e.key === "Enter") {
+    add(e.shiftKey ? "allies" : "enemies", matches[active].id);
+  } else if (e.key === "Escape") closeResults();
+});
+
+function pct(v) { return (v > 0 ? "+" : "") + v.toFixed(1) + "%"; }
+
+function suggRow(s, positive) {
+  const el = document.createElement("div");
+  el.className = "sugg";
+  const reasons = (positive ? s.reasons.slice(0, 2) : s.reasons.slice(-2).reverse())
+    .map(r => `${pct(r.advantage)} vs ${r.enemy}`).join(", ");
+  el.innerHTML = `<img class="portrait" src="${s.hero.img_url}" alt="">
+    <div><div class="name">${s.hero.localized_name}</div><div class="why">${reasons || "meta " + pct(s.meta)}</div></div>
+    <div class="score ${s.score >= 0 ? "pos" : "neg"}">${pct(s.score)}</div>`;
+  return el;
+}
+
+let pending = 0;
+async function suggest() {
+  const ticket = ++pending;
+  const body = { ...draft, role: $("role").value || null, bracket: $("bracket").value || null };
+  const res = await fetch("/api/suggest", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (ticket !== pending || !res.ok) return;
+  const data = await res.json();
+  $("best").replaceChildren(...data.best.map(s => suggRow(s, true)));
+  if (!draft.enemies.length) $("best").insertAdjacentHTML("afterbegin", '<div class="empty">Add enemy heroes to see counters. Showing meta picks for now.</div>');
+  $("avoid").replaceChildren(...data.avoid.map(s => suggRow(s, false)));
+}
+
+async function pollGame() {
+  try {
+    const g = await (await fetch("/api/game")).json();
+    const st = $("status");
+    st.textContent = g.game_state ? (g.in_draft ? "Draft in progress" : "In game") : "Game not detected";
+    st.classList.toggle("live", !!g.in_draft);
+    if (g.hero_id && !gsiSeen.has(g.hero_id)) { gsiSeen.add(g.hero_id); add("allies", g.hero_id); }
+  } catch {}
+  setTimeout(pollGame, 1000);
+}
+
+$("clear").onclick = () => { draft.enemies = []; draft.allies = []; draft.bans = []; render(); };
+for (const id of ["role", "bracket"]) {
+  $(id).addEventListener("change", () => { store.set(id, $(id).value); suggest(); });
+}
+
+(async () => {
+  const [heroes, meta] = await Promise.all([fetch("/api/heroes").then(r => r.json()), fetch("/api/meta").then(r => r.json())]);
+  HEROES = heroes; BY_ID = Object.fromEntries(heroes.map(h => [h.id, h]));
+  $("bracket").innerHTML = '<option value="">All ranks</option>' +
+    meta.brackets.map(b => `<option value="${b}">${b[0].toUpperCase() + b.slice(1)}</option>`).join("");
+  $("role").value = store.get("role", "");
+  $("bracket").value = store.get("bracket", "");
+  render();
+  pollGame();
+})();
+</script>
+</body>
+</html>
