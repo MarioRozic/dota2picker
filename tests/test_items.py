@@ -78,3 +78,31 @@ def test_break_against_passive_heroes():
     assert out[0] == "Silver Edge"
     # Dust doesn't reveal Shadow Dance, so it isn't suggested against Slark.
     assert "Dust of Appearance" not in out
+
+
+def test_hero_rules_name_real_heroes_and_items():
+    rules = items._hero_rules()
+    known_heroes = {h.short_name for h in heroes.all_heroes()}
+    groups = list(rules["groups"].values()) + list(rules["heroes"].values())
+    for group in groups:
+        assert set(group["items"]) <= set(items.all_items()), group["why"]
+    for group in rules["groups"].values():
+        assert set(group["heroes"]) <= known_heroes, group["why"]
+    assert set(rules["heroes"]) <= known_heroes
+
+
+def test_meepo_gets_no_one_body_items():
+    # Lion, Lina and Shadow Shaman would normally point a core at BKB, Linken's and Aeon Disk.
+    enemies = [by_name["Lion"], by_name["Lina"], by_name["Shadow Shaman"], by_name["Phantom Assassin"]]
+    out = names(items.suggest_items(by_name["Meepo"], enemies, position=2, limit=20))
+    for bad in ["Black King Bar", "Aeon Disk", "Linken's Sphere", "Monkey King Bar"]:
+        assert bad not in out
+    assert "Pipe of Insight" in out  # its barrier covers every clone
+
+
+def test_spell_cores_skip_attack_items():
+    enemies = [by_name["Phantom Assassin"], by_name["Phantom Lancer"]]
+    zeus = names(items.suggest_items(by_name["Zeus"], enemies, position=2, limit=20))
+    sven = names(items.suggest_items(by_name["Sven"], enemies, position=1, limit=20))
+    assert "Monkey King Bar" in sven and "Monkey King Bar" not in zeus
+    assert "Mjollnir" not in zeus and "Shiva's Guard" in zeus

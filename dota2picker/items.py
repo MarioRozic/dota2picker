@@ -79,6 +79,22 @@ def counters() -> dict[str, dict]:
     return {k: v for k, v in _data("counter_items.json").items() if not k.startswith("_")}
 
 
+@lru_cache(maxsize=1)
+def _hero_rules() -> dict:
+    return _data("hero_items.json")
+
+
+def unsuitable_for(hero: heroes.Hero) -> set[str]:
+    """Counter items that don't suit this hero (data/hero_items.json), e.g. BKB on Meepo."""
+    rules = _hero_rules()
+    out = set(MELEE_ONLY) if hero.attack_type == "Ranged" else set()
+    for group in rules["groups"].values():
+        if hero.short_name in group["heroes"]:
+            out.update(group["items"])
+    out.update(rules["heroes"].get(hero.short_name, {}).get("items", []))
+    return out
+
+
 def role_for(hero: heroes.Hero, position: int | None) -> str:
     """Positions 1-3 build like cores, 4-5 like supports."""
     position = position or (hero.positions[0] if hero.positions else 1)
@@ -91,13 +107,14 @@ def suggest_items(
     hero = heroes.by_id()[hero_id]
     role = role_for(hero, position)
     catalogue = all_items()
+    skip = unsuitable_for(hero)
     found: dict[str, ItemSuggestion] = {}
     for enemy_id in enemies:
         enemy = heroes.by_id()[enemy_id]
         for t_rank, tag in enumerate(threats().get(enemy.short_name, [])):
             rule = counters()[tag]
             for i_rank, key in enumerate(rule[role]):
-                if hero.attack_type == "Ranged" and key in MELEE_ONLY:
+                if key in skip:
                     continue
                 weight = (
                     rule.get("weight", 1.0)
