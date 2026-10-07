@@ -1,0 +1,118 @@
+{
+ "_comment": "Counter items that don't suit your own hero. 'groups' apply one item list to many heroes; 'heroes' lists extra items for one hero. 'why' is shown nowhere yet; it records the reason for whoever edits this file.",
+ "groups": {
+  "spell_cores": {
+   "why": "These cores win with spells, blinks and auras, not right-clicks, so items made for attacking agility carries (more attack damage, evasion, procs) do little for them. Evasion doesn't stop spells either.",
+   "items": [
+    "monkey_king_bar",
+    "butterfly",
+    "mjollnir",
+    "bfury",
+    "diffusal_blade",
+    "bloodthorn",
+    "manta",
+    "skadi",
+    "abyssal_blade",
+    "nullifier"
+   ],
+   "heroes": [
+    "zuus",
+    "puck",
+    "tinker",
+    "leshrac",
+    "pugna",
+    "death_prophet",
+    "queenofpain",
+    "storm_spirit",
+    "skywrath_mage",
+    "dark_seer",
+    "enigma",
+    "earthshaker",
+    "sand_king",
+    "tidehunter",
+    "batrider",
+    "magnataur",
+    "necrolyte",
+    "axe",
+    "centaur",
+    "mars",
+    "bristleback",
+    "undying",
+    "void_spirit",
+    "primal_beast",
+    "shredder",
+    "abyssal_underlord",
+    "doom_bringer",
+    "beastmaster",
+    "visage",
+    "venomancer",
+    "pudge",
+    "tusk",
+    "earth_spirit",
+    "nyx_assassin",
+    "spirit_breaker",
+    "rattletrap",
+    "brewmaster",
+    "elder_titan",
+    "techies",
+    "lich",
+    "lion",
+    "witch_doctor",
+    "jakiro",
+    "crystal_maiden",
+    "warlock",
+    "shadow_shaman"
+   ]
+  },
+  "illusion_carries": {
+   "why": "Most of their damage comes from illusions, and Mjollnir's lightning and Battle Fury's cleave don't work on illusions.",
+   "items": [
+    "mjollnir",
+    "bfury"
+   ],
+   "heroes": [
+    "phantom_lancer",
+    "terrorblade",
+    "naga_siren",
+    "chaos_knight"
+   ]
+  }
+ },
+ "heroes": {
+  "meepo": {
+   "why": "Items only work on the Meepo carrying them, and Meepo dies when any clone dies. Protecting one body (BKB, Aeon Disk, Linken's, Lotus, Manta) leaves the other clones to be caught, and attack items only help one of them.",
+   "items": [
+    "black_king_bar",
+    "aeon_disk",
+    "sphere",
+    "lotus_orb",
+    "manta",
+    "monkey_king_bar",
+    "butterfly",
+    "mjollnir",
+    "bfury",
+    "mage_slayer",
+    "silver_edge"
+   ]
+  },
+  "lone_druid": {
+   "why": "The Spirit Bear carries the build; one-body defensive items on the druid himself are rarely bought.",
+   "items": [
+    "aeon_disk",
+    "sphere"
+   ]
+  },
+  "life_stealer": {
+   "why": "Rage already makes Lifestealer immune to spells.",
+   "items": [
+    "black_king_bar"
+   ]
+  },
+  "medusa": {
+   "why": "Mana Shield and her mana pool are her defence; Aeon Disk is rarely worth it.",
+   "items": [
+    "aeon_disk"
+   ]
+  }
+ }
+}
